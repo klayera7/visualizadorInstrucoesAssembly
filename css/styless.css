@@ -43,6 +43,44 @@ header > button.btn_icon_play:active {
   background-color: #79ee80;
 }
 
+.simulator_container {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: flex-start;
+    margin-top: 1px;
+}
+
+.cpu_section, .ram_section {
+    display: flex;
+    flex-direction: column;
+}
+
+.title_container {
+    font-size: 2.5em;
+    margin: 5px 0 10px 0;
+    text-align: left;
+    color: white;
+}
+
+.cpu_base {
+    width: 800px;
+    height: 480px;
+    background-color: #4a412a;
+    border: 2px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
+.ram_base {
+    width: 350px;
+    height: 480px;
+    background-color: #347c7d;
+    border: 2px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
 
 
 

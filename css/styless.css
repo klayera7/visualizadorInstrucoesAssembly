@@ -52,6 +52,44 @@ div.execution_stages {
   display: flex;
   align-items: center;
 }
+.simulator_container {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: flex-start;
+    margin-top: 1px;
+}
+
+.cpu_section, .ram_section {
+    display: flex;
+    flex-direction: column;
+}
+
+.title_container {
+    font-size: 2.5em;
+    margin: 5px 0 10px 0;
+    text-align: left;
+    color: white;
+}
+
+.cpu_base {
+    width: 800px;
+    height: 480px;
+    background-color: #4a412a;
+    border: 2px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
+.ram_base {
+    width: 350px;
+    height: 480px;
+    background-color: #347c7d;
+    border: 2px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
 
 div.execution_stages > p {
   margin-right: 0.6rem;
@@ -133,4 +171,35 @@ button#btn_reset_program:hover {
 }
 .creator_name {
   text-align: center;
+.creators_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.creator{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.creator_links_container{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5;
+}
+
+.creator_links_container > a{
+    width: 2rem;
+    transition-duration: 0.2s;
+}
+
+.creator_links_container > a:hover{
+    scale: 1.1;
+}
+
+.creator_name{
+    text-align: center;
 }

@@ -42,3 +42,32 @@ header > button.btn_icon_play:hover {
 header > button.btn_icon_play:active {
   background-color: #79ee80;
 }
+
+
+
+
+.footer_container{
+    position: absolute;
+    min-width: 100%;
+    bottom: 0;
+    background-color: #444444;
+    min-height: 6rem;
+}
+
+.creators_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.creator{
+    display: flex;
+    flex-direction: column;
+}
+
+.creator_links_container{
+    display: flex;
+}
+.creator_name{
+    text-align: center;
+}

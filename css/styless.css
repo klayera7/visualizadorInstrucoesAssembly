@@ -156,6 +156,7 @@ button#btn_reset_program:hover {
 }
 
 .creators_container {
+    margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,6 +172,8 @@ button#btn_reset_program:hover {
 }
 .creator_name {
   text-align: center;
+}
+
 .creators_container{
     display: flex;
     justify-content: center;
@@ -200,6 +203,6 @@ button#btn_reset_program:hover {
     scale: 1.1;
 }
 
-.creator_name{
+.creator_name {
     text-align: center;
 }

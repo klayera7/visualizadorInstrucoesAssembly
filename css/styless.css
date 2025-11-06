@@ -5,3 +5,40 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  background-color: #0f0f0f;
+  font-family: "Arial", sans-serif;
+}
+
+header {
+  background-color: #212020;
+  display: flex;
+
+  padding: 1rem;
+}
+
+header > button.btn_icon_play {
+  background-color: #46a44d;
+  cursor: pointer;
+  border-radius: 0.7rem;
+  outline: none;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+
+  transition: all 0.3s ease-in-out;
+}
+
+header > button.btn_icon_play:hover {
+  background-color: #2b642f;
+  box-shadow: 0px 0px 8px #1f4922;
+  scale: 1.1;
+}
+
+header > button.btn_icon_play:active {
+  background-color: #79ee80;
+}

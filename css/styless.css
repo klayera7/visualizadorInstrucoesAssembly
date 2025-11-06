@@ -58,16 +58,31 @@ header > button.btn_icon_play:active {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 3rem;
 }
 
 .creator{
     display: flex;
     flex-direction: column;
+    padding: 1rem;
 }
 
 .creator_links_container{
     display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5;
 }
+
+.creator_links_container > a{
+    width: 2rem;
+    transition-duration: 0.2s;
+}
+
+.creator_links_container > a:hover{
+    scale: 1.1;
+}
+
 .creator_name{
     text-align: center;
 }

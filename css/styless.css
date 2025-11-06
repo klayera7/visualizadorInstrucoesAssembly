@@ -7,6 +7,7 @@
 }
 
 body {
+  color: white;
   background-color: #0f0f0f;
   font-family: "Arial", sans-serif;
 }
@@ -14,6 +15,9 @@ body {
 header {
   background-color: #212020;
   display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.7rem;
 
   padding: 1rem;
 }
@@ -43,6 +47,11 @@ header > button.btn_icon_play:active {
   background-color: #79ee80;
 }
 
+div.execution_stages {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
 .simulator_container {
     display: flex;
     justify-content: center;
@@ -82,16 +91,86 @@ header > button.btn_icon_play:active {
 }
 
 
-
-
-.footer_container{
-    position: absolute;
-    min-width: 100%;
-    bottom: 0;
-    background-color: #444444;
-    min-height: 6rem;
+div.execution_stages > p {
+  margin-right: 0.6rem;
 }
 
+ul.ul_stages {
+  list-style: none;
+
+  display: flex;
+  gap: 0.7rem;
+}
+
+ul.ul_stages > li {
+  background-color: #6f6f6f;
+
+  padding: 1rem;
+}
+
+div.cont_load_reset_program {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+div.cont_load_reset_program > button {
+  color: white;
+  font-size: 1.08rem;
+  cursor: pointer;
+  border-radius: 0.4rem;
+
+  padding: 0.65rem;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+div.cont_load_reset_program > button:hover {
+  scale: 1.03;
+}
+
+button#btn_load_program {
+  background-color: #46a44d;
+}
+
+button#btn_load_program:hover {
+  background-color: #2b642f;
+}
+
+button#btn_reset_program {
+  background-color: #830606;
+}
+
+button#btn_reset_program:hover {
+  background-color: #5f0505;
+}
+
+.footer_container {
+  position: absolute;
+  min-width: 100%;
+  bottom: 0;
+  background-color: #444444;
+  min-height: 6rem;
+}
+
+.creators_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.creator {
+  display: flex;
+  flex-direction: column;
+}
+
+.creator_links_container {
+  display: flex;
+}
+.creator_name {
+  text-align: center;
 .creators_container{
     display: flex;
     justify-content: center;

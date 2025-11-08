@@ -307,15 +307,21 @@ button#btn_reset_program:hover {
   max-height: 28px;
 }
 
-.bus-endereco {
-  background-color: #1e88e5;
+.ula_bus_container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 0;
 }
-.bus-dados {
-  background-color: #43a047;
+
+.ula_bus{
+    position: relative;
+    min-width: 115px;
+    min-height: 20px;
+    left: -6rem;
+    background-color: ghostwhite;
 }
-.bus-controle {
-  background-color: #e53935;
-}
+
 
 /* =================================
   Section Cálculo Endereço Físico

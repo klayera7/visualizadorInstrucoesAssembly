@@ -314,12 +314,26 @@ button#btn_reset_program:hover {
     z-index: 0;
 }
 
+#ula_img{
+    width: 15rem;
+    z-index: 1;
+}
+
 .ula_bus{
     position: relative;
     min-width: 115px;
     min-height: 20px;
     left: -6rem;
     background-color: ghostwhite;
+}
+
+#ula_container{
+    display: flex;
+    min-height: 658px;
+    max-width: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }
 
 

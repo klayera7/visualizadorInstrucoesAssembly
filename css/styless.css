@@ -175,6 +175,16 @@ button#btn_reset_program:hover {
 
 #ula_img{
     width: 20rem;
+    z-index: 1;
+}
+
+#ula_bus{
+    height: 20px;
+    background-color: mediumspringgreen;
+    min-width: 100px;
+    z-index: 0;
+    position: relative;
+    left: -9rem;
 }
 
 .title_container {

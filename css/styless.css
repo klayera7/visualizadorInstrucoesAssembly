@@ -181,7 +181,7 @@ button#btn_reset_program:hover {
 #ula_bus{
     height: 20px;
     background-color: mediumspringgreen;
-    min-width: 100px;
+    min-width: 130px;
     z-index: 0;
     position: relative;
     left: -9rem;

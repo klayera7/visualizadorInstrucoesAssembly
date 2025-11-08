@@ -278,7 +278,33 @@ button#btn_reset_program:hover {
 .linha-codigo:last-child {
     margin-bottom: 0;
 }
+/* =================================
+    Barramentos
+==================================== */
 
+.barramentos-visualizacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;                          
+    min-width: 10px;               
+    max-width: 20px;             
+    padding-top: 150px;          
+    gap: 150px;                     
+}
+
+
+.barramento {
+    width: 180px;
+    height: calc( (100% / 4) ); 
+    min-height: 8px;
+    max-height: 28px;
+}
+
+
+.bus-endereco { background-color: #1e88e5; } 
+.bus-dados    { background-color: #43a047; }
+.bus-controle { background-color: #e53935; } 
 
 /* =================================
   Footer

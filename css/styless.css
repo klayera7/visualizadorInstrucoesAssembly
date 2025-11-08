@@ -155,7 +155,7 @@ button#btn_reset_program:hover {
     justify-content: center;
     gap: 80px;
     align-items: flex-start;
-    margin-top: 1px;
+    margin-top: 1.5rem;
 }
 
 .cpu_section, .ram_section {

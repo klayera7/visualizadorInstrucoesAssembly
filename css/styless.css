@@ -167,23 +167,15 @@ button#btn_reset_program:hover {
 
 .ula_container{
     display: flex;
+    max-width: 6rem;
     justify-content: center;
     align-items: center;
-    width: fit-content;
 }
 
 #ula_img{
-    width: 15rem;
+    width: 12rem;
 }
 
-#ula_register_bus{
-    min-height: 10px;
-    background-color: green;
-    min-width: 130px;
-    position: relative;
-    left: -20%;
-    
-}
 
 .title_container {
   font-size: 2.5em;

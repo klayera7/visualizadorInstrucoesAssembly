@@ -176,6 +176,14 @@ button#btn_reset_program:hover {
     width: 15rem;
 }
 
+#ula_register_bus{
+    min-height: 10px;
+    background-color: green;
+    min-width: 130px;
+    position: relative;
+    left: -20%;
+    
+}
 
 .title_container {
   font-size: 2.5em;

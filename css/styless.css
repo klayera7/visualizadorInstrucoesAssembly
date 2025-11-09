@@ -246,6 +246,13 @@ button#btn_reset_program:hover {
   padding: 1rem;
 }
 
+.main_registers > div > span > p {
+  font-size: 1.3rem;
+  font-weight: 200;
+  color: #e0e0e0;
+  text-transform: capitalize;
+}
+
 .register_data_container {
   padding: 1rem;
   border-radius: 5%;

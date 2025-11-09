@@ -167,25 +167,15 @@ button#btn_reset_program:hover {
 
 .ula_container{
     display: flex;
-    min-height: 658px;
+    max-width: 10rem;
     justify-content: center;
     align-items: center;
-    width: 10px;
 }
 
 #ula_img{
-    width: 20rem;
-    z-index: 1;
+    width: 15rem;
 }
 
-#ula_bus{
-    height: 20px;
-    background-color: mediumspringgreen;
-    min-width: 130px;
-    z-index: 0;
-    position: relative;
-    left: -9rem;
-}
 
 .title_container {
   font-size: 2.5em;
@@ -200,22 +190,31 @@ button#btn_reset_program:hover {
 ==================================== */
 
 .cpu_base {
-  width: 800px;
+  width: fit-content;
   min-height: 480px;
   background-color: #4a412a;
   border: 2px solid #000;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
-#title_cpu > p {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+#title_cpu_container  {
   padding: 0.5rem 0;
   margin-bottom: 1rem;
+  display: flex;
+    justify-content: center;
+}
+
+#control_unit_title{
+    background-color: lightslategray;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 2rem;
+    width: fit-content;
+    padding: 1rem;
 }
 
 .registers_container {
@@ -224,6 +223,13 @@ button#btn_reset_program:hover {
   gap: 2rem;
   padding: 1rem;
   justify-content: center;
+}
+
+.main_registers{
+    display: flex;
+    border: 5px solid gray;
+    padding: 0.5rem;
+    background-color: darkslategrey;
 }
 
 .general_registers_container,
@@ -238,6 +244,13 @@ button#btn_reset_program:hover {
 
 .register > h2 {
   padding: 1rem;
+}
+
+.main_registers > div > span > p {
+  font-size: 1.3rem;
+  font-weight: 200;
+  color: #e0e0e0;
+  text-transform: capitalize;
 }
 
 .register_data_container {

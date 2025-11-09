@@ -167,13 +167,13 @@ button#btn_reset_program:hover {
 
 .ula_container{
     display: flex;
-    max-width: 6rem;
+    max-width: 10rem;
     justify-content: center;
     align-items: center;
 }
 
 #ula_img{
-    width: 12rem;
+    width: 15rem;
 }
 
 

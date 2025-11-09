@@ -225,6 +225,13 @@ button#btn_reset_program:hover {
   justify-content: center;
 }
 
+.main_registers{
+    display: flex;
+    border: 5px solid gray;
+    padding: 0.5rem;
+    background-color: darkslategrey;
+}
+
 .general_registers_container,
 .segment_registers_container,
 .pointers_container {

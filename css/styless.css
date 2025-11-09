@@ -167,25 +167,15 @@ button#btn_reset_program:hover {
 
 .ula_container{
     display: flex;
-    min-height: 658px;
     justify-content: center;
     align-items: center;
-    width: 10px;
+    width: fit-content;
 }
 
 #ula_img{
-    width: 20rem;
-    z-index: 1;
+    width: 15rem;
 }
 
-#ula_bus{
-    height: 20px;
-    background-color: mediumspringgreen;
-    min-width: 130px;
-    z-index: 0;
-    position: relative;
-    left: -9rem;
-}
 
 .title_container {
   font-size: 2.5em;
@@ -200,13 +190,15 @@ button#btn_reset_program:hover {
 ==================================== */
 
 .cpu_base {
-  width: 800px;
+  width: fit-content;
   min-height: 480px;
   background-color: #4a412a;
   border: 2px solid #000;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 #title_cpu > p {

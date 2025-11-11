@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+}
+
+div.pop_up_instruction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #222222;
+  border: 2px solid #555555;
+  border-radius: 1.3rem;
+  width: 710px;
+  height: 400px;
+  padding: 1rem;
+}
+
+div.cont_selection {
+  display: flex;
+  gap: 1.7rem;
+  margin: 1.7rem 0;
+}
+
+div.cont_selection select {
+  font-size: 1rem;
+  padding: 0.7rem;
+}
+
+div.inputs_area {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.3rem;
+  margin: 1.7rem 0;
+}
+
+div.inputs_area input {
+  padding: 0.7rem;
+}
+
+div.cont_btns {
+  display: flex;
+  gap: 1.7rem;
+
+  margin-top: 1.8rem;
+}
+
+div.cont_btns button {
+  color: white;
+  border: 1.3px solid #000;
+  outline: none;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 140px;
+  padding: 0.75rem;
+  transition: all 0.3s ease-in-out;
+}
+
+button#btn_confirm_instruction {
+  background-color: #25884e;
+}
+
+button#btn_confirm_instruction:hover {
+  background-color: #1a5f37;
+  transform: translateY(-4px);
+}
+
+button#btn_cancel_instruction {
+  background-color: #a12a2a;
+}
+
+button#btn_cancel_instruction:hover {
+  background-color: #701c1c;
+  transform: translateY(-4px);
+}

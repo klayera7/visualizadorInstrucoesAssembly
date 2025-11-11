@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
 html {
-  transform: scale(0.8);
-  transform-origin: top center;
+  font-size: 90%;
 }
 
 * {

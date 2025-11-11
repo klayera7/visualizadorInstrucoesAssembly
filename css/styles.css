@@ -156,7 +156,7 @@ button#btn_reset_program:hover {
   gap: 80px;
   align-items: flex-start;
   margin-top: 1px;
-  padding: 3rem;
+  padding: 1rem;
 }
 
 .cpu_section,

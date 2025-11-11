@@ -28,7 +28,7 @@
       </div>
 
       <div class="cont_load_reset_program">
-        <button id="btn_load_program">Carregar Programa</button>
+        <button id="btn_load_program" data-modal="abrir">Carregar Programa</button>
         <button id="btn_reset_program">Resetar Programa</button>
       </div>
     </header>
@@ -272,5 +272,22 @@
       id="iframe_popup_instrucao"
       class="iframe_position_page"
     ></iframe>
+
+    <div class="modal-container" data-modal="container">
+    <div class="modal-content">
+        <button class="modal-fechar" data-modal="fechar">X</button>
+        <iframe 
+            class="modal-iframe" 
+            src="html/pop-up/popUp-instruction.html" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    </div>
+    
+    <script type="module" src="JS/script.js"></script>
+  </body>
+</html>
+
+    <script type="module" src="JS/script.js"></script>
   </body>
 </html>

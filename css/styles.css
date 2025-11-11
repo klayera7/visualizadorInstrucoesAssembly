@@ -361,7 +361,7 @@ button#btn_reset_program:hover {
 
 .barramento {
   width: 180px;
-  height: 28px);
+  height: 28px;
   min-height: 8px;
   max-height: 28px;
 }

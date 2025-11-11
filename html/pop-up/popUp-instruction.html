@@ -4,6 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PopUp Instruction</title>
+    <link rel="stylesheet" href="../../css/popup-instruction.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="pop_up_instruction">
+      <h1>Selecione a Instrução:</h1>
+
+      <div class="cont_selection">
+        <select name="instruction_addres" id="instruction_addres">
+          <option value="" disabled selected>Endereço da Instrução</option>
+        </select>
+        <select name="instruction" id="instruction">
+          <option value="" disabled selected>Instruções</option>
+          <optgroup label="Moves">
+            <option value="mov">Mov</option>
+            <option value="push">Push</option>
+            <option value="pop">Pop</option>
+            <option value="xchg">Xchg</option>
+          </optgroup>
+          <optgroup label="Arithmetic">
+            <option value="increment">Increment</option>
+            <option value="decrement">Decrement</option>
+            <option value="add">Add</option>
+            <option value="sub">Sub</option>
+            <option value="mul">Mul</option>
+            <option value="neg">Neg</option>
+            <option value="div">Div</option>
+          </optgroup>
+          <optgroup label="Boolean">
+            <option value="and">And</option>
+            <option value="or">Or</option>
+            <option value="xor">Xor</option>
+            <option value="not">Not</option>
+          </optgroup>
+          <optgroup label="Test/Compare">
+            <option value="cmp">Cmp</option>
+            <option value="jmp">Jmp</option>
+            <option value="jxx">Jxx</option>
+            <option value="call">Call</option>
+            <option value="ret">Ret</option>
+            <option value="iret">Iret</option>
+            <option value="loop">Loop</option>
+            <option value="in_ax">In Ax</option>
+            <option value="out">Out</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="inputs_area">
+        <input type="text" name="text1" id="text1" placeholder="input1" />
+
+        <input type="text" name="text2" id="text2" placeholder="input2" />
+
+        <input type="text" name="text1" id="text2" placeholder="input2" />
+      </div>
+
+      <div class="cont_btns">
+        <button id="btn_confirm_instruction">Confirmar</button>
+        <button id="btn_cancel_instruction">Cancelar</button>
+      </div>
+    </div>
+  </body>
 </html>

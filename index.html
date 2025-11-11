@@ -27,11 +27,38 @@
         </ul>
       </div>
 
-      <div class="cont_load_reset_program">
-        <button id="btn_load_program">Carregar Programa</button>
-        <button id="btn_reset_program">Resetar Programa</button>
-      </div>
-    </header>
+        <section class="simulator_container">
+            <article class="cpu_section">
+                <h2 class="title_container">CPU</h2>
+                <div class="cpu_base">
+                   
+                        <section class="calc_ef">
+                            <h2>Cálculo de Endereço Físico</h2>
+                
+                            <div class="cont_calc">
+                                <p>CS * 10H + IP / DS,ES * 10H + SI, DI</p>
+                            </div>
+                        </section>
+                  
+                    <div class="registers_container">
+                        <div class="ula_container">
+                            <img
+                                src="./assets/ula_representacao.png"
+                                id="ula_img"
+                            />
+                            <div class="ula_bus"></div>
+                        </div>
+                        <div class="main_registers">
+                            <div class="general_registers_container">
+                                <span>
+                                    <p>Registradores gerais</p>
+                                </span>
+                                <div class="register">
+                                    <h2>AX</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
 
     <section class="simulator_container">
       <article class="cpu_section">
@@ -64,9 +91,73 @@
                   <span class="register_data_container"> 0000 </span>
                 </div>
 
-                <div class="register">
-                  <h2>DX</h2>
-                  <span class="register_data_container"> 0000 </span>
+                            <div class="segment_registers_container">
+                                <span>
+                                    <p>Registradores de segmento</p>
+                                </span>
+                                <div class="register">
+                                    <h2>DS</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                                <div class="register">
+                                    <h2>CS</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                                <div class="register">
+                                    <h2>SS</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                                <div class="register">
+                                    <h2>ES</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pointers_container">
+                                <span>
+                                    <p>Registradores de offset</p>
+                                </span>
+                                <div class="register">
+                                    <h2>SI</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                                <div class="register">
+                                    <h2>IP</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                                <div class="register">
+                                    <h2>BP</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                                <div class="register">
+                                    <h2>SP</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                                
+                                <div class="register">
+                                    <h2>DI</h2>
+                                    <span class="register_data_container">
+                                        0000
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
               </div>
 
@@ -141,24 +232,7 @@
             </div>
           </div>
 
-          <div class="separador_visualizadores">
-            <div class="visualizador">
-              <p>Segmento de dados</p>
-              <div class="linha-codigo">000000</div>
-              <div class="linha-codigo">000000</div>
-              <div class="linha-codigo">000000</div>
-            </div>
-
-            <div class="visualizador">
-              <p>Segmento de Ext. D</p>
-              <div class="linha-codigo">000000</div>
-              <div class="linha-codigo">000000</div>
-              <div class="linha-codigo">000000</div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </section>
+       
 
     <section class="calc_ef">
       <h2>Cálculo de Endereço Físico</h2>

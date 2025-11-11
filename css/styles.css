@@ -156,6 +156,7 @@ button#btn_reset_program:hover {
   gap: 80px;
   align-items: flex-start;
   margin-top: 1px;
+  padding: 3rem;
 }
 
 .cpu_section,
@@ -165,15 +166,27 @@ button#btn_reset_program:hover {
   margin-top: 1.5rem;
 }
 
-.ula_container {
-  display: flex;
-  max-width: 10rem;
-  justify-content: center;
-  align-items: center;
+.ula_container{
+    display: flex;
+    max-width: 10rem;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 2rem;
 }
 
-#ula_img {
-  width: 15rem;
+#ula_img{
+    width: 15rem;
+    z-index: 1;
+}
+
+.ula_bus{
+    min-width: 115px;
+    position: relative;
+    min-height: 15px;
+    background-color: greenyellow;
+    z-index: 0;
+    right: 6rem;
 }
 
 .title_container {
@@ -200,35 +213,21 @@ button#btn_reset_program:hover {
   flex-direction: column;
 }
 
-#title_cpu_container {
-  padding: 0.5rem 0;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
-}
-
-#control_unit_title {
-  background-color: lightslategray;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  font-weight: bold;
-  font-size: 2rem;
-  width: fit-content;
-  padding: 1rem;
-}
-
 .registers_container {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   padding: 1rem;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 
-.main_registers {
-  display: flex;
-  border: 5px solid gray;
-  padding: 0.5rem;
-  background-color: darkslategrey;
+.main_registers{
+    display: flex;
+    border: 5px solid gray;
+    padding: 0.5rem;
+    background-color: darkslategrey;
+    z-index: 1;
 }
 
 .general_registers_container,
@@ -257,6 +256,7 @@ button#btn_reset_program:hover {
   border-radius: 5%;
   font-size: 1.5rem;
   background-color: #3c3c3c;
+  font-family: "Courier New", Courier, monospace;
 }
 
 /* =================================

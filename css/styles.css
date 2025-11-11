@@ -332,6 +332,21 @@ button#btn_reset_program:hover {
 /* =================================
     Barramentos
 ==================================== */
+.barramento-legenda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+  gap: 15px;
+}
+
+.legenda-bus {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e0e0e0;
+  text-align: center;
+  width: 180px; /* Largura igual à do barramento */
+}
 
 .barramentos-visualizacao {
   display: flex;
@@ -340,13 +355,13 @@ button#btn_reset_program:hover {
   align-self: stretch;
   min-width: 10px;
   max-width: 20px;
-  padding-top: 150px;
-  gap: 150px;
+  justify-content: center;
+  gap: 120px;
 }
 
 .barramento {
   width: 180px;
-  height: calc((100% / 4));
+  height: 28px;
   min-height: 8px;
   max-height: 28px;
 }

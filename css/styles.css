@@ -156,6 +156,7 @@ button#btn_reset_program:hover {
   gap: 80px;
   align-items: flex-start;
   margin-top: 1px;
+  padding: 5rem;
 }
 
 .cpu_section,
@@ -223,6 +224,7 @@ button#btn_reset_program:hover {
   gap: 2rem;
   padding: 1rem;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 
 .main_registers{

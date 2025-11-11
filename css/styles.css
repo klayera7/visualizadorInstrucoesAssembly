@@ -171,12 +171,23 @@ button#btn_reset_program:hover {
     max-width: 10rem;
     justify-content: center;
     align-items: center;
+    position: relative;
+    left: 2rem;
 }
 
 #ula_img{
     width: 15rem;
+    z-index: 1;
 }
 
+.ula_bus{
+    min-width: 115px;
+    position: relative;
+    min-height: 15px;
+    background-color: greenyellow;
+    z-index: 0;
+    right: 6rem;
+}
 
 .title_container {
   font-size: 2.5em;
@@ -232,6 +243,7 @@ button#btn_reset_program:hover {
     border: 5px solid gray;
     padding: 0.5rem;
     background-color: darkslategrey;
+    z-index: 1;
 }
 
 .general_registers_container,

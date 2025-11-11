@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Popup seletores segmento</title>
+        <link rel="stylesheet" href="../../css/popup-segment.css" />
+    </head>
+    <body>
+        <div id="popup_container">
+            <span id="title_subtitle"
+                ><h1>Insira o valor inicial dos segmentos</h1>
+                <p>Insira todos os valores em hexadecimal</p></span
+            >
+
+            <div id="segments_container">
+                <span class="segment">
+                    <label for="data_segment">DS (Segmento de Dados)</label>
+                    <input
+                        type="text"
+                        name="data_segment"
+                        placeholder="ex: 2A00"
+                /></span>
+
+                <span class="segment">
+                    <label for="extra_segment"
+                        >ES (Segmento Extra de Dados)</label
+                    >
+                    <input
+                        type="text"
+                        name="extra_segment"
+                        placeholder="ex: 4A00"
+                /></span>
+
+                <span class="segment"
+                    ><label for="stack_segment">SS (code segment)</label>
+                    <input
+                        type="text"
+                        name="stack_segment"
+                        placeholder="ex: 6A00"
+                /></span>
+
+                <span class="segment">
+                    <label for="code_segment">CS (code segment)</label>
+                    <input
+                        type="text"
+                        name="code_segment"
+                        placeholder="ex: 8A00"
+                /></span>
+
+                <span class="segment">
+                    <label for="cx_register"
+                        >CX (Contador de instruções loop)</label
+                    >
+                    <input
+                        type="number"
+                        name="cx_register"
+                        placeholder="ex: 10"
+                        min="0"
+                /></span>
+            </div>
+
+            <span id="buttons_container">
+                <button type="button" id="confirm_btn">Confirmar</button>
+                <button type="button" id="cancel_btn">Cancelar</button>
+            </span>
+        </div>
+    </body>
+</html>

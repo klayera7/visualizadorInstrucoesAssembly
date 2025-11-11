@@ -355,13 +355,13 @@ button#btn_reset_program:hover {
   align-self: stretch;
   min-width: 10px;
   max-width: 20px;
-  padding-top: 150px;
-  gap: 150px;
+  justify-content: center;
+  gap: 120px;
 }
 
 .barramento {
   width: 180px;
-  height: calc((100% / 4));
+  height: 28px);
   min-height: 8px;
   max-height: 28px;
 }

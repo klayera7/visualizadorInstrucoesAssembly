@@ -1,40 +1,40 @@
-export default function initModalAnimado() {
-    
-    // 1. Seleciona os 3 elementos principais
-    const botaoAbrir = document.querySelector('[data-modal="abrir"]');
-    const botaoFechar = document.querySelector('[data-modal="fechar"]');
-    const containerModal = document.querySelector('[data-modal="container"]');
+const botaoAbrir = document.querySelector('[data-modal="abrir"]');
+const botaoFechar = document.querySelector('[data-modal="fechar"]');
+const containerModal = document.querySelector('[data-modal="container"]');
+const cancelarInputModal = document.querySelector('[data-modal="cancel_segment_input"]')
 
-    // 2. Verifica se os 3 elementos existem na página
-    if (botaoAbrir && botaoFechar && containerModal) {
-    
-        // 3. Função para ABRIR o modal
-        function abrirModal(event) {
-            // event.preventDefault() previne o comportamento padrão do
-            // elemento (ex: um link de navegar)
-            event.preventDefault();
-            containerModal.classList.add('ativo'); 
-        }
+const abrirModal = ()=>{
+    containerModal.classList.add("ativo");
+}
 
-        // 4. Função para FECHAR o modal
-        function fecharModal(event) {
-            event.preventDefault();
-            containerModal.classList.remove('ativo'); 
-        }
+const fecharModal = () => {
+  const containerModal = document.querySelector('[data-modal="container"]');
+  containerModal.classList.remove("ativo");
+  console.log('era pra fechar')
+}
 
-        // 5. Função para fechar ao clicar FORA do modal
-        function cliqueForaModal(event) {
-            // Se o alvo do clique (event.target) for exatamente
-            // o contêiner (o fundo preto), ele fecha.
-            if (event.target === this) {
-                fecharModal(event);
-            }
-        }
+const cliqueForaModal = ()=> {
+  if ('click'.target === this) {
+    fecharModal();
+  }
+}
 
-        // 6. Adiciona os "escutadores" de evento
-        botaoAbrir.addEventListener('click', abrirModal); 
-        botaoFechar.addEventListener('click', fecharModal);
-        // O clique "fora" é, na verdade, um clique no contêiner
-        containerModal.addEventListener('click', cliqueForaModal);
+// para fechar o modal a partir do iframe (clicando no botao de cancelar)
+const fecharModalDoIframe = () => {
+    const modalNoParent = window.parent.document.querySelector('[data-modal="container"]');
+    if (modalNoParent) {
+        modalNoParent.classList.remove("ativo");
+    } else {
+        console.error("Erro: O container modal não foi encontrado na janela pai.");
     }
 }
+
+// para evitar que os itens sejam nulos (o browser acusava erro no console)
+if (containerModal && botaoAbrir && botaoFechar){
+  botaoAbrir.addEventListener("click", abrirModal);
+  botaoFechar.addEventListener("click", fecharModal);
+  containerModal.addEventListener("click", cliqueForaModal);
+}
+
+if (cancelarInputModal) cancelarInputModal.addEventListener('click', fecharModalDoIframe)
+

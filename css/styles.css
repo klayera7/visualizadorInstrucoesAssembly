@@ -372,6 +372,14 @@ button#btn_reset_program:hover {
 .data_bus {
   background-color: #43a047;
 }
+
+.active_bus_address {
+    background-color: rgb(14, 10, 250) !important;     
+}
+
+.active_bus_data {
+    background-color: rgb(4, 241, 12) !important;     
+}
 /* =================================
   Section Cálculo Endereço Físico
 ==================================== */

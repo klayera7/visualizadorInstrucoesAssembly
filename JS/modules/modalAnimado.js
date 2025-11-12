@@ -7,7 +7,7 @@ const abrirModal = ()=>{
     containerModal.classList.add("ativo");
 }
 
-const fecharModal = () => {
+export const fecharModal = () => {
   const containerModal = document.querySelector('[data-modal="container"]');
   containerModal.classList.remove("ativo");
   console.log('era pra fechar')

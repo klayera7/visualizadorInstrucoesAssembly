@@ -8,13 +8,11 @@ const abrirModal = ()=>{
 }
 
 export const fecharModal = () => {
-  const containerModal = document.querySelector('[data-modal="container"]');
   containerModal.classList.remove("ativo");
-  console.log('era pra fechar')
 }
 
-const cliqueForaModal = ()=> {
-  if ('click'.target === this) {
+const cliqueForaModal = (event)=> {
+  if (event.target === event.currentTarget) {
     fecharModal();
   }
 }

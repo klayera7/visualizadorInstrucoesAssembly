@@ -44,12 +44,6 @@ const loadSegmentsIntoRegisters = () => {
   }
 };
 
-const hasDuplicates = (valueToBeAdded, object) => {
-  const normalizedValue = valueToBeAdded.trim().toUpperCase();
-  const values = Object.values(object).map((v) => v.trim().toUpperCase());
-  console.log("chegou na verificação")
-  return values.includes(normalizedValue);
-};
 
 const getSegmentValues = () => {
   const iframeWindow = iframeSegmentPopup.contentWindow;
@@ -58,28 +52,33 @@ const getSegmentValues = () => {
     console.log("Botão de confirmação não encontrado no iframe.");
     return;
   }
+  
   confirmBtn.addEventListener("click", () => {
-    if (iframeWindow) {
-      for (const key in segmentDataInfos) {
-        const inputId = segmentDataInfos[key].inputId;
-        const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
-
-        if (inputElement) {
-          if (hasDuplicates(inputElement.value, segmentValues)) {
-            iframeWindow.alert("Os valores devem ser únicos");
-            return;
-          } else {
-            const value = inputElement.value
-            segmentValues[key] = value.toUpperCase().padStart(4, "0");
-          }
+    if (!iframeWindow) return
+    const inputs = {}
+    
+    for (const key in segmentDataInfos) {
+      
+      const inputId = segmentDataInfos[key].inputId;
+      const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
+      if (inputElement) {
+        inputs[key] = inputElement.value.trim().toUpperCase().padStart(4, "0")
         }
       }
-
-      loadSegmentsIntoRegisters();
-      ativaIfInstrucao();
-      console.log("Valores dos segmentos lidos e armazenados:", segmentValues);
+      const inputHexValues = Object.values(inputs) 
+      const uniqueValues = new Set(inputHexValues)
+      console.log(uniqueValues, inputHexValues)
+      if (inputHexValues.length !== uniqueValues.size){
+        iframeWindow.alert("Os valores dos segmentos devem ser diferentes um dos outros")
+        return
+      }
+      console.log("Segmentos adicionados: ", segmentValues)
+      Object.assign(segmentValues, inputs)
+      ativaIfInstrucao()
+      loadSegmentsIntoRegisters()
     }
-  });
+    
+  );
 };
 
 export const initSegments = () => {

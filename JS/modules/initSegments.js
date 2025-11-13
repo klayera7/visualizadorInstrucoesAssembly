@@ -1,6 +1,3 @@
-import { fecharModal } from "./modalAnimado.js";
-import { desativaIframes } from "./modalAnimadoInstruction.js";
-import { ativaIfSegmento } from "./modalAnimadoInstruction.js";
 import { ativaIfInstrucao } from "./modalAnimadoInstruction.js";
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 
@@ -42,16 +39,9 @@ const loadSegmentsIntoRegisters = () => {
     const valorLido = segmentValues[key];
 
     if (registerElement && valorLido !== undefined) {
-      const valorFormatado = valorLido.toUpperCase().padStart(4, "0");
-      registerElement.textContent = valorFormatado;
+      registerElement.textContent = valorLido;
     }
   }
-};
-
-const hasDuplicates = (valueToBeAdded, object) => {
-  const normalizedValue = valueToBeAdded.trim().toUpperCase();
-  const values = Object.values(object).map((v) => v.trim().toUpperCase());
-  return values.includes(normalizedValue);
 };
 
 const getSegmentValues = () => {
@@ -61,26 +51,32 @@ const getSegmentValues = () => {
     console.log("Botão de confirmação não encontrado no iframe.");
     return;
   }
+
   confirmBtn.addEventListener("click", () => {
-    if (iframeWindow) {
-      for (const key in segmentDataInfos) {
-        const inputId = segmentDataInfos[key].inputId;
-        const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
+    if (!iframeWindow) return;
+    const inputs = {};
 
-        if (inputElement) {
-          if (hasDuplicates(inputElement.value, segmentValues)) {
-            iframeWindow.alert("Os valores devem ser únicos");
-            return;
-          } else {
-            segmentValues[key] = inputElement.value;
-          }
-        }
+    for (const key in segmentDataInfos) {
+      const inputId = segmentDataInfos[key].inputId;
+      const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
+      if (inputElement) {
+        inputs[key] = inputElement.value.trim().toUpperCase().padStart(4, "0");
       }
-
-      loadSegmentsIntoRegisters();
-      ativaIfInstrucao();
-      console.log("Valores dos segmentos lidos e armazenados:", segmentValues);
     }
+    const inputHexValues = Object.values(inputs);
+    const uniqueValues = new Set(inputHexValues);
+    console.log(uniqueValues, inputHexValues);
+    if (inputHexValues.length !== uniqueValues.size) {
+      iframeWindow.alert(
+        "Os valores dos segmentos devem ser diferentes um dos outros",
+      );
+      return;
+    }
+    console.log("Segmentos adicionados: ", segmentValues);
+    Object.assign(segmentValues, inputs);
+
+    ativaIfInstrucao();
+    loadSegmentsIntoRegisters();
   });
 };
 

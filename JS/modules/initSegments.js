@@ -1,4 +1,6 @@
 import { fecharModal } from "./modalAnimado.js";
+import { desativaIframes } from "./modalAnimadoInstruction.js";
+import { ativaIfSegmento } from "./modalAnimadoInstruction.js";
 import { ativaIfInstrucao } from "./modalAnimadoInstruction.js";
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 

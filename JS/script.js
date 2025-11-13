@@ -67,7 +67,7 @@ const getSegmentValues = () => {
         if (inputElement) {
           if (hasDuplicates(inputElement.value, segmentValues)) {
             iframeWindow.alert("Os valores devem ser únicos");
-            break;
+            return;
           } else {
             segmentValues[key] = inputElement.value;
           }

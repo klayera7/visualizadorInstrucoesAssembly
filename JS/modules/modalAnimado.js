@@ -34,5 +34,5 @@ export const initModals = ()=>{
     containerModal.addEventListener("click", cliqueForaModal);
   }
   
-  if (cancelarInputModal) cancelarInputModal.addEventListener('click', fecharModalDoIframe)
+  if (cancelarInputModal) return cancelarInputModal.addEventListener('click', fecharModalDoIframe)
 }

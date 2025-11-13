@@ -1,4 +1,5 @@
 import { fecharModal } from "./modalAnimado.js";
+import { ativaIfInstrucao } from "./modalAnimadoInstruction.js";
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 
 const segmentValues = {
@@ -74,16 +75,15 @@ const getSegmentValues = () => {
         }
       }
 
-      fecharModal();
       loadSegmentsIntoRegisters();
+      ativaIfInstrucao();
       console.log("Valores dos segmentos lidos e armazenados:", segmentValues);
     }
   });
 };
 
-
-export const initSegments = () =>{
+export const initSegments = () => {
   if (iframeSegmentPopup) {
     return iframeSegmentPopup.addEventListener("load", getSegmentValues);
   }
-}
+};

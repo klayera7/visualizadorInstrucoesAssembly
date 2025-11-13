@@ -163,7 +163,7 @@ button#btn_reset_program:hover {
 .ram_section {
   display: flex;
   flex-direction: column;
-  margin-top: 1.0rem;
+  margin-top: 1rem;
 }
 
 .ula_container {
@@ -325,9 +325,9 @@ button#btn_reset_program:hover {
   margin-bottom: 0;
 }
 
-.linha-codigo > h5{
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 0.5rem;
+.linha-codigo > h5 {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem;
 }
 /* =================================
     Barramentos
@@ -374,11 +374,11 @@ button#btn_reset_program:hover {
 }
 
 .active_bus_address {
-    background-color: rgb(14, 10, 250) !important;     
+  background-color: rgb(14, 10, 250) !important;
 }
 
 .active_bus_data {
-    background-color: rgb(4, 241, 12) !important;     
+  background-color: rgb(4, 241, 12) !important;
 }
 /* =================================
   Section Cálculo Endereço Físico
@@ -463,52 +463,56 @@ div.cont_calc {
 ==================================== */
 
 .modal-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s, visibility 0.3s;
-    visibility: hidden;
-    opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s, visibility 0.3s;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .modal-container.ativo {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
 
 .modal-content {
-    position: relative;
+  position: relative;
 }
 
 iframe.modal-iframe {
-    width: 710px;
-    height: 500px;
-    border-radius: 1.3rem;
-    display: block;
-    border: none;
+  width: 710px;
+  height: 500px;
+  border-radius: 1.3rem;
+  display: block;
+  border: none;
 }
 
 button.modal-fechar {
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    background: white;
-    color: #333;
-    border: none;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    line-height: 35px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    z-index: 1001;
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: white;
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 35px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+iframe.active_if_instruction {
+  display: none;
 }

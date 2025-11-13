@@ -27,12 +27,12 @@ const fecharModalDoIframe = () => {
     }
 }
 
-// para evitar que os itens sejam nulos (o browser acusava erro no console)
-if (containerModal && botaoAbrir && botaoFechar){
-  botaoAbrir.addEventListener("click", abrirModal);
-  botaoFechar.addEventListener("click", fecharModal);
-  containerModal.addEventListener("click", cliqueForaModal);
+export const initModals = ()=>{
+  if (containerModal && botaoAbrir && botaoFechar){
+    botaoAbrir.addEventListener("click", abrirModal);
+    botaoFechar.addEventListener("click", fecharModal);
+    containerModal.addEventListener("click", cliqueForaModal);
+  }
+  
+  if (cancelarInputModal) cancelarInputModal.addEventListener('click', fecharModalDoIframe)
 }
-
-if (cancelarInputModal) cancelarInputModal.addEventListener('click', fecharModalDoIframe)
-

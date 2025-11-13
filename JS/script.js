@@ -1,21 +1,73 @@
 import { fecharModal } from "./modules/modalAnimado.js";
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 
-const segmentValues = {}
+const segmentValues = {
+  dataSegment: "0000",
+  extraSegment: "0000",
+  stackSegment: "0000",
+  codeSegment: "0000",
+  cxCounter: "0000",
+};
+
+const segmentDataInfos = {
+  dataSegment: {
+    inputId: "data_segment",
+    registerSelector: '[data-name-segment="data"]',
+  },
+  extraSegment: {
+    inputId: "extra_segment",
+    registerSelector: '[data-name-segment="extra"]',
+  },
+  stackSegment: {
+    inputId: "stack_segment",
+    registerSelector: '[data-name-segment="stack"]',
+  },
+  codeSegment: {
+    inputId: "code_segment",
+    registerSelector: '[data-name-segment="code"]',
+  },
+  cxCounter: {
+    inputId: "cx_counter",
+    registerSelector: '[data-register="cx"]',
+  },
+};
+
+const loadSegmentsIntoRegisters = () => {
+  for (const key in segmentDataInfos) {
+    const selector = segmentDataInfos[key].registerSelector;
+    const registerElement = document.querySelector(selector);
+    const valorLido = segmentValues[key];
+
+    if (registerElement && valorLido !== undefined) {
+      const valorFormatado = valorLido.toUpperCase().padStart(4, "0");
+      registerElement.textContent = valorFormatado;
+    }
+  }
+};
 
 const getSegmentValues = () => {
   const iframeWindow = iframeSegmentPopup.contentWindow;
   const confirmBtn = iframeWindow.document.querySelector("#confirm_btn");
+
+  if (!confirmBtn) {
+    console.warn("Botão de confirmação não encontrado no iframe.");
+    return;
+  }
+
   confirmBtn.addEventListener("click", () => {
     if (iframeWindow) {
-      segmentValues.dataSegment = iframeWindow.document.querySelector("#data_segment").value;
-      segmentValues.extraSegment = iframeWindow.document.querySelector("#extra_segment").value;
-      segmentValues.stackSegment = iframeWindow.document.querySelector("#stack_segment").value;
-      segmentValues.codeSegment = iframeWindow.document.querySelector("#code_segment").value;
-      segmentValues.cxCounter = iframeWindow.document.querySelector("#cx_counter").value;
-      fecharModal()
-      
-      console.log(segmentValues);
+      for (const key in segmentDataInfos) {
+        const inputId = segmentDataInfos[key].inputId;
+        const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
+
+        if (inputElement) {
+          segmentValues[key] = inputElement.value;
+        }
+      }
+
+      fecharModal();
+      loadSegmentsIntoRegisters();
+      console.log("Valores dos segmentos lidos e armazenados:", segmentValues);
     }
   });
 };

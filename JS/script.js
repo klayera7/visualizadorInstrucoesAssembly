@@ -45,15 +45,19 @@ const loadSegmentsIntoRegisters = () => {
   }
 };
 
+const hasDuplicates = (valueToBeAdded, object) => {
+  const normalizedValue = valueToBeAdded.trim().toUpperCase();
+  const values = Object.values(object).map((v) => v.trim().toUpperCase());
+  return values.includes(normalizedValue);
+};
+
 const getSegmentValues = () => {
   const iframeWindow = iframeSegmentPopup.contentWindow;
   const confirmBtn = iframeWindow.document.querySelector("#confirm_btn");
-
   if (!confirmBtn) {
-    console.warn("Botão de confirmação não encontrado no iframe.");
+    console.log("Botão de confirmação não encontrado no iframe.");
     return;
   }
-
   confirmBtn.addEventListener("click", () => {
     if (iframeWindow) {
       for (const key in segmentDataInfos) {
@@ -61,7 +65,12 @@ const getSegmentValues = () => {
         const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
 
         if (inputElement) {
-          segmentValues[key] = inputElement.value;
+          if (hasDuplicates(inputElement.value, segmentValues)) {
+            iframeWindow.alert("Os valores devem ser únicos");
+            break;
+          } else {
+            segmentValues[key] = inputElement.value;
+          }
         }
       }
 

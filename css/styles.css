@@ -513,6 +513,6 @@ button.modal-fechar {
   z-index: 1001;
 }
 
-iframe.active_if_instruction {
+iframe.disable_if_instruction {
   display: none;
 }

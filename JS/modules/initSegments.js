@@ -1,4 +1,3 @@
-import { fecharModal } from "./modalAnimado.js";
 import { ativaIfInstrucao } from "./modalAnimadoInstruction.js";
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 
@@ -40,8 +39,7 @@ const loadSegmentsIntoRegisters = () => {
     const valorLido = segmentValues[key];
 
     if (registerElement && valorLido !== undefined) {
-      const valorFormatado = valorLido.toUpperCase().padStart(4, "0");
-      registerElement.textContent = valorFormatado;
+      registerElement.textContent = valorLido;
     }
   }
 };
@@ -49,6 +47,7 @@ const loadSegmentsIntoRegisters = () => {
 const hasDuplicates = (valueToBeAdded, object) => {
   const normalizedValue = valueToBeAdded.trim().toUpperCase();
   const values = Object.values(object).map((v) => v.trim().toUpperCase());
+  console.log("chegou na verificação")
   return values.includes(normalizedValue);
 };
 
@@ -70,7 +69,8 @@ const getSegmentValues = () => {
             iframeWindow.alert("Os valores devem ser únicos");
             return;
           } else {
-            segmentValues[key] = inputElement.value;
+            const value = inputElement.value
+            segmentValues[key] = value.toUpperCase().padStart(4, "0");
           }
         }
       }

@@ -30,4 +30,8 @@ function fluxo_dados_endereco() {
 }
 
 const botaoIniciar = document.querySelector('.btn_icon_play');
-botaoIniciar.addEventListener('click', fluxo_dados_endereco);
+if (botaoIniciar) botaoIniciar.addEventListener('click', fluxo_dados_endereco);
+
+export function exibirValoresInstrucao({...infos}){
+  console.log(infos)
+}

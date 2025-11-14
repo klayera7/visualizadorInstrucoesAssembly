@@ -1,3 +1,4 @@
+
 // Objeto de Configuração
 const CONFIGURACOES_INSTRUCOES = {
   //instrucoes com 2 operandos

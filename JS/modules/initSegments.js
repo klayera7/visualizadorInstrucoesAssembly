@@ -1,7 +1,7 @@
 import { ativaIfInstrucao } from "./modalAnimadoInstruction.js";
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 
-const segmentValues = {
+export const segmentValues = {
   dataSegment: "0000",
   extraSegment: "0000",
   stackSegment: "0000",
@@ -61,14 +61,12 @@ const getSegmentValues = () => {
     }
     const inputHexValues = Object.values(inputs);
     const uniqueValues = new Set(inputHexValues);
-    console.log(uniqueValues, inputHexValues);
     if (inputHexValues.length !== uniqueValues.size) {
       iframeWindow.alert(
         "Os valores dos segmentos devem ser diferentes um dos outros",
       );
       return;
     }
-    console.log("Segmentos adicionados: ", segmentValues);
     Object.assign(segmentValues, inputs);
 
     ativaIfInstrucao();

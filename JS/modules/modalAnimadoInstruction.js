@@ -1,3 +1,4 @@
+import { updateInputs } from "./initInputInstructions.js";
 import { fecharModal } from "./modalAnimado.js";
 
 const iframeInstruction = document.getElementById("instruction_iframe");
@@ -16,5 +17,10 @@ export function ativaIfSegmento() {
 
 if (iframeInstruction){
   const cancelInputButton = iframeInstruction.contentDocument.getElementById("btn_cancel_instruction")
+  const select = iframeInstruction.contentDocument.getElementById("instruction")
   cancelInputButton.addEventListener('click', fecharModal)
+  select.addEventListener('change', ()=> updateInputs(iframeInstruction))
+  
 }
+
+

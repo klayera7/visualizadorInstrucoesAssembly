@@ -10,10 +10,9 @@
     <div class="pop_up_instruction">
       <h1>Selecione a Instrução:</h1>
 
+          <label for="address">Endereço da instrução</label>
+          <input type="text" name="adress" placeholder="ex: AE00">
       <div class="cont_selection">
-        <select name="instruction_addres" id="instruction_addres">
-          <option value="" disabled selected>Endereço da Instrução</option>
-        </select>
         <select name="instruction" id="instruction">
           <option value="" disabled selected>Instruções</option>
           <optgroup label="Moves">
@@ -23,8 +22,8 @@
             <option value="xchg">Xchg</option>
           </optgroup>
           <optgroup label="Arithmetic">
-            <option value="increment">Increment</option>
-            <option value="decrement">Decrement</option>
+            <option value="inc">Increment</option>
+            <option value="dec">Decrement</option>
             <option value="add">Add</option>
             <option value="sub">Sub</option>
             <option value="mul">Mul</option>

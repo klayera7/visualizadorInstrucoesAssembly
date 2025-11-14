@@ -84,3 +84,7 @@ button#btn_cancel_instruction:hover {
   background-color: #701c1c;
   transform: translateY(-4px);
 }
+
+.input-container.hidden {
+    display: none;
+}

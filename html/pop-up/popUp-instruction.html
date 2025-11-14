@@ -10,10 +10,9 @@
     <div class="pop_up_instruction">
       <h1>Selecione a Instrução:</h1>
 
+          <label for="address">Endereço da instrução</label>
+          <input type="text" name="adress" placeholder="ex: AE00">
       <div class="cont_selection">
-        <select name="instruction_addres" id="instruction_addres">
-          <option value="" disabled selected>Endereço da Instrução</option>
-        </select>
         <select name="instruction" id="instruction">
           <option value="" disabled selected>Instruções</option>
           <optgroup label="Moves">
@@ -23,8 +22,8 @@
             <option value="xchg">Xchg</option>
           </optgroup>
           <optgroup label="Arithmetic">
-            <option value="increment">Increment</option>
-            <option value="decrement">Decrement</option>
+            <option value="inc">Increment</option>
+            <option value="dec">Decrement</option>
             <option value="add">Add</option>
             <option value="sub">Sub</option>
             <option value="mul">Mul</option>
@@ -52,12 +51,17 @@
       </div>
 
       <div class="inputs_area">
-        <input type="text" name="text1" id="text1" placeholder="input1" />
+          
+                  <div id="operand1-container" class="input-container hidden">
+                      <label for="operand1">Operando 1:</label>
+                      <input type_text" name="operand1" id="operand1" placeholder="Destino" />
+                  </div>
 
-        <input type="text" name="text2" id="text2" placeholder="input2" />
-
-        <input type="text" name="text1" id="text2" placeholder="input2" />
-      </div>
+                  <div id="operand2-container" class="input-container hidden">
+                      <label for="operand2">Operando 2:</label>
+                      <input type="text" name="operand2" id="operand2" placeholder="Fonte" />
+                  </div>
+              </div>
 
       <div class="cont_btns">
         <button id="btn_confirm_instruction">Confirmar</button>

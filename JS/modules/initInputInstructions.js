@@ -1,40 +1,83 @@
-
-// Objeto de Configuração
+/**
+ * Objeto de Configuração
+ * Mapeia a instrução para um array de IDs de container que devem ser mostrados.
+ */
 const CONFIGURACOES_INSTRUCOES = {
-  //instrucoes com 2 operandos
-  xchg: { qtd_operandos: 2, p1: "Operando 1", p2: "Operando 2" },
-  cmp: { qtd_operandos: 2, p1: "Operando 1", p2: "Operando 2" },
+  // --- REGRA 1: 1 Operando (Registrador) ---
+  push_reg: { inputs: ["cont_registrador"] },
+  pop_reg: { inputs: ["cont_registrador"] },
+  inc_reg: { inputs: ["cont_registrador"] },
+  dec_reg: { inputs: ["cont_registrador"] },
+  mul_reg: { inputs: ["cont_registrador"] },
+  neg_reg: { inputs: ["cont_registrador"] },
+  div_reg: { inputs: ["cont_registrador"] },
+  not_reg: { inputs: ["cont_registrador"] },
 
-  // 1 Operando
-  inc: { qtd_operandos: 1, p1: "Operando (ex: AX)" },
-  dec: { qtd_operandos: 1, p1: "Operando (ex: AX)" },
-  not: { qtd_operandos: 1, p1: "Operando (ex: AX)" },
+  // --- REGRA 2: 2 Operandos (Registrador + Memória) ---
+  mov_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  xchg_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  add_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  sub_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  and_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  or_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  xor_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  cmp_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+
+  // --- REGRA 3: 2 Operandos (Registrador + Valor) - O QUE VOCÊ PEDIU ---
+  mov_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+  add_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+  sub_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+  cmp_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+  // (adicione and_reg_val, or_reg_val, xor_reg_val se precisar)
+
+  // --- EXCEÇÕES (JMP, CALL, etc.) ---
+  jmp: { inputs: ["cont_endereco"] },
+  jxx: { inputs: ["cont_endereco"] },
+  call: { inputs: ["cont_endereco"] },
+  loop: { inputs: ["cont_endereco"] },
+
+  // --- Casos Especiais ---
+  in_ax: { inputs: ["cont_endereco"] },
+  out: { inputs: ["cont_endereco"] },
+
+  // --- 0 Operandos ---
+  ret: { inputs: [] },
+  iret: { inputs: [] },
 };
 
+/**
+ * Atualiza a UI para mostrar apenas os inputs relevantes.
+ * @param {HTMLIFrameElement} iframeDoc - O ELEMENTO iframe (conforme seu código)
+ */
 export function updateInputs(iframeDoc) {
-  const instructionSelect =
-    iframeDoc.contentDocument.getElementById("instruction");
-  const op1Container =
-    iframeDoc.contentDocument.getElementById("operand1-container");
-  const op2Container =
-    iframeDoc.contentDocument.getElementById("operand2-container");
-  const op1Input = iframeDoc.contentDocument.getElementById("operand1");
-  const op2Input = iframeDoc.contentDocument.getElementById("operand2");
+  // Pega o <select> de instruções
+  // Mantendo sua sintaxe .contentDocument
+  const instructionSelect = iframeDoc.contentDocument.getElementById("instruction");
   const selectedInstruction = instructionSelect.value;
 
-  const config = CONFIGURACOES_INSTRUCOES[selectedInstruction] || {
-    qtd_operandos: 0,
-  };
+  // Lista de TODOS os containers de input possíveis
+  const allContainers = [
+    iframeDoc.contentDocument.getElementById("cont_registrador"),
+    iframeDoc.contentDocument.getElementById("cont_memoria"),
+    iframeDoc.contentDocument.getElementById("cont_endereco"),
+    iframeDoc.contentDocument.getElementById("cont_imediato"), // ADICIONADO
+  ];
 
-  op1Container.classList.add("hidden");
-  op2Container.classList.add("hidden");
+  // 1. Reseta o estado (esconde tudo)
+  allContainers.forEach((container) => {
+    if (container) {
+      container.classList.add("hidden");
+    }
+  });
 
-  if (config.qtd_operandos >= 1) {
-    op1Input.placeholder = config.p1 || "Operando 1";
-    op1Container.classList.remove("hidden");
-  }
-  if (config.qtd_operandos === 2) {
-    op2Input.placeholder = config.p2 || "Operando 2";
-    op2Container.classList.remove("hidden");
-  }
+  // 2. Pega a configuração para a instrução selecionada
+  const config = CONFIGURACOES_INSTRUCOES[selectedInstruction] || { inputs: [] };
+
+  // 3. Mostra apenas os inputs necessários
+  config.inputs.forEach((containerId) => {
+    const containerToShow = iframeDoc.contentDocument.getElementById(containerId);
+    if (containerToShow) {
+      containerToShow.classList.remove("hidden");
+    }
+  });
 }

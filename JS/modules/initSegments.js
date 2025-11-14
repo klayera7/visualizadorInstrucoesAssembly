@@ -47,10 +47,6 @@ const loadSegmentsIntoRegisters = () => {
 const getSegmentValues = () => {
   const iframeWindow = iframeSegmentPopup.contentWindow;
   const confirmBtn = iframeWindow.document.querySelector("#confirm_btn");
-  if (!confirmBtn) {
-    console.log("Botão de confirmação não encontrado no iframe.");
-    return;
-  }
 
   confirmBtn.addEventListener("click", () => {
     if (!iframeWindow) return;

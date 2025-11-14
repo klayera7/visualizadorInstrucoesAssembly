@@ -5,16 +5,19 @@ import { exibirValoresInstrucao } from "./fluxos.js";
 const iframeInstruction = document.getElementById("instruction_iframe");
 const ifrmaeSegment = document.getElementById("segment_popup");
 
+//ativar o iframe de instrucoes
 export function ativaIfInstrucao() {
   iframeInstruction.classList.remove("disable_if_instruction");
   ifrmaeSegment.classList.add("disable_if_instruction");
 }
 
+//ativar o iframe de segmentos
 export function ativaIfSegmento() {
   iframeInstruction.classList.add("disable_if_instruction");
   ifrmaeSegment.classList.remove("disable_if_instruction");
 }
 
+//a cada mudanca no select de instrucoes essa funcao eh chamada
 if (iframeInstruction) {
   iframeInstruction.addEventListener("load", () => {
     const doc = iframeInstruction.contentDocument;
@@ -30,7 +33,6 @@ if (iframeInstruction) {
     if (cancelInputButton) {
       cancelInputButton.addEventListener("click", fecharModal);
     }
-
     if (select) {
       select.addEventListener("change", () => updateInputs(iframeInstruction));
 
@@ -39,19 +41,13 @@ if (iframeInstruction) {
 
     if (confirmButton) {
       confirmButton.addEventListener("click", (e) => {
-        e.preventDefault();
-
+        //essa funcao ta no fluxos.js e vai manipular com base nesses valores
         exibirValoresInstrucao(receberValoresInputsInstrucoes(doc));
       });
     }
   });
 }
 
-/**
- * === CORREÇÃO 2: FUNÇÃO DE COLETA ATUALIZADA ===
- * Agora ela coleta o valor inicial do registrador do input 'value_reg'
- * @param {Document} doc - O contentDocument do iframe
- */
 function receberValoresInputsInstrucoes(doc) {
   if (!doc) doc = iframeInstruction.contentDocument;
 
@@ -60,24 +56,22 @@ function receberValoresInputsInstrucoes(doc) {
 
   let operando1 = "";
   let operando2 = "";
-  let valorInicialReg = ""; // <-- NOVA VARIÁVEL
+  let valorInicialReg = ""; 
 
-  // Pega os containers de input
+
   const contRegistrador = doc.getElementById("cont_registrador");
   const contMemoria = doc.getElementById("cont_memoria");
   const contImediato = doc.getElementById("cont_imediato");
   const contEndereco = doc.getElementById("cont_endereco");
 
-  // LÓGICA PARA OPERANDO 1 (e seu valor inicial)
+  
   if (contRegistrador && !contRegistrador.classList.contains("hidden")) {
     operando1 = doc.getElementById("input_registrador").value;
-    // COLETA O VALOR INICIAL JUNTO
-    valorInicialReg = doc.getElementById("value_reg").value; // <-- LEITURA DO NOVO ID
+    valorInicialReg = doc.getElementById("value_reg").value; 
   } else if (contEndereco && !contEndereco.classList.contains("hidden")) {
     operando1 = doc.getElementById("input_endereco").value;
   }
 
-  // LÓGICA PARA OPERANDO 2
   if (contMemoria && !contMemoria.classList.contains("hidden")) {
     operando2 = doc.getElementById("input_memoria").value;
   } else if (contImediato && !contImediato.classList.contains("hidden")) {
@@ -92,7 +86,7 @@ function receberValoresInputsInstrucoes(doc) {
     valorInicialReg,
   });
 
-  // Retorna tudo para seu 'fluxos.js'
+  // Retorna tudo para 'fluxos.js'
   return {
     instructionAdress,
     instruction,

@@ -15,7 +15,6 @@
       
       <div class="cont_selection">
         <select name="instruction" id="instruction">
-          <option value="" disabled selected>Instruções</option>
           <optgroup label="Moves">
             <option value="mov_reg_mem">Mov (Reg, Mem)</option>
             <option value="mov_reg_val">Mov (Reg, Valor)</option> <option value="push_reg">Push (Reg)</option>
@@ -52,23 +51,27 @@
       </div>
 
       <div class="inputs_area">
-        <div id="cont_registrador" class="input-container hidden">
-          <label for="input_registrador">Operando 1 (Registrador):</label>
-          <select name="input_registrador" id="input_registrador">
-            <option value="" disabled selected>Registrador</option>
-            <option value="AX">AX</option>
-            <option value="BX">BX</option>
-            <option value="CX">CX</option>
-            <option value="DX">DX</option>
-          </select>
-          <label for="value_reg">Valor Inicial do Registrador:</label>
+        
+        <div id="cont_registrador" class="input-container row hidden">
+          <div class="input-group">
+            <label for="input_registrador">Operando 1 (Registrador):</label>
+            <select name="input_registrador" id="input_registrador">
+              <option value="" disabled selected>Registrador</option>
+              <option value="AX">AX</option>
+              <option value="BX">BX</option>
+              <option value="CX">CX</option>
+              <option value="DX">DX</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="value_reg">Valor Inicial do Registrador:</label>
             <input
               type="text"
               name="value_reg"
               id="value_reg" placeholder="Valor inicial (ex: 1000h)"
             />
+          </div>
         </div>
-
         <div id="cont_memoria" class="input-container hidden">
           <label for="input_memoria">Operando 2 (Memória):</label>
           <input type="text" name="input_memoria" id="input_memoria" placeholder="Endereço (ex: [100h])" />

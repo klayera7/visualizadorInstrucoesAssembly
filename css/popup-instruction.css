@@ -34,7 +34,15 @@ input[name="adress"] {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input[name="adress"], [name="operand1"], [name="operand2"]:focus {
+input[name="operand1"], [name="operand2"] {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[name="adress"]:focus, [name="operand1"]:focus, [name="operand2"]:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);

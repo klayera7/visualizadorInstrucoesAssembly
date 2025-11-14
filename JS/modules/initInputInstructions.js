@@ -43,7 +43,7 @@ export function updateInputs(iframeDoc) {
     iframeDoc.contentDocument.getElementById("cont_registrador"),
     iframeDoc.contentDocument.getElementById("cont_memoria"),
     iframeDoc.contentDocument.getElementById("cont_endereco"),
-    iframeDoc.contentDocument.getElementById("cont_imediato"), // ADICIONADO
+    iframeDoc.contentDocument.getElementById("cont_imediato"),
   ];
 
   allContainers.forEach((container) => {
@@ -55,7 +55,6 @@ export function updateInputs(iframeDoc) {
   const config = CONFIGURACOES_INSTRUCOES[selectedInstruction] || {
     inputs: [],
   };
-
   config.inputs.forEach((containerId) => {
     const containerToShow =
       iframeDoc.contentDocument.getElementById(containerId);

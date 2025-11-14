@@ -1,3 +1,5 @@
+import { fecharModal } from "./modalAnimado.js";
+
 function fluxoendereco() {
   const endereco = document.getElementById("address_bus");
 
@@ -27,9 +29,13 @@ function fluxo_dados_endereco() {
   fluxodados();
 }
 
-const botaoIniciar = document.querySelector(".btn_icon_play");
-if (botaoIniciar) botaoIniciar.addEventListener("click", fluxo_dados_endereco);
 
 export function exibirValoresInstrucao({ ...infos }) {
-  console.log(infos);
+  fecharModal()
+  const botaoIniciar = document.querySelector(".btn_icon_play");
+  if (botaoIniciar) botaoIniciar.addEventListener("click", ()=>{
+    fluxo_dados_endereco()
+    fecharModal()
+    console.log(infos)
+  } );
 }

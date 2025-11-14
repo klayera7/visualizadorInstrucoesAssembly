@@ -78,14 +78,6 @@ function receberValoresInputsInstrucoes(doc) {
     operando2 = doc.getElementById("input_imediato").value;
   }
 
-  console.log("Valores Coletados:", {
-    instructionAdress,
-    instruction,
-    operando1,
-    operando2,
-    valorInicialReg,
-  });
-
   // Retorna tudo para 'fluxos.js'
   return {
     instructionAdress,

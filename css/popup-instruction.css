@@ -12,6 +12,46 @@ body {
   font-family: "Arial", sans-serif;
 }
 
+#h1 {
+  font-size: 3rem;
+  margin-bottom: 2px;
+}
+
+#tittle_popUp {
+  padding: 10px;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+input[name="adress"] {
+    width: 250px;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[name="operand1"], [name="operand2"] {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[name="adress"]:focus, [name="operand1"]:focus, [name="operand2"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+input[name="adress"], [name="operand1"], [name="operand2"]::placeholder {
+    color: #0000008a;
+}
+
 div.pop_up_instruction {
   display: flex;
   flex-direction: column;
@@ -20,7 +60,7 @@ div.pop_up_instruction {
   border: 2px solid #555555;
   border-radius: 1.3rem;
   width: 710px;
-  height: 400px;
+  height: 460px;
   padding: 1rem;
 }
 

@@ -21,36 +21,50 @@ body {
   padding: 10px;
   font-size: 1.6rem;
   font-weight: bold;
+  /* Alinha o label com os outros (opcional, mas recomendado) */
+  width: 100%;
+  max-width: 512px; /* (250px + 250px + 12px de gap) */
+  padding-left: 0;
 }
 
-input[name="adress"] {
-    width: 250px;
-    padding: 8px 15px;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+/* * === REGRA DE PADRONIZAÇÃO (REQ 2) === 
+ * Estilo base para TODOS os inputs e selects no popup.
+*/
+.pop_up_instruction input[type="text"],
+.pop_up_instruction select {
+  width: 250px; /* Largura padrão */
+  padding: 0.7rem; /* Padding padrão */
+  font-size: 1rem; /* Fonte padrão */
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 4px; /* Espaço entre label e input */
 }
 
-input[name="operand1"], [name="operand2"] {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+/* Regra de foco para os elementos padronizados */
+.pop_up_instruction input[type="text"]:focus,
+.pop_up_instruction select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-input[name="adress"]:focus, [name="operand1"]:focus, [name="operand2"]:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+/* Cor do placeholder para os inputs padronizados */
+.pop_up_instruction input[type="text"]::placeholder {
+  color: #0000008a;
 }
 
-input[name="adress"], [name="operand1"], [name="operand2"]::placeholder {
-    color: #0000008a;
-}
+/* === FIM DA PADRONIZAÇÃO === */
+
+
+/* Regras antigas removidas pois foram substituídas pela regra geral acima */
+/* input[name="adress"] { ... } */
+/* input[name="operand1"], [name="operand2"] { ... } */
+/* input[name="adress"]:focus, [name="operand1"]:focus, [name="operand2"]:focus { ... } */
+/* input[name="adress"], [name="operand1"], [name="operand2"]::placeholder { ... } */
+
 
 div.pop_up_instruction {
   display: flex;
@@ -69,11 +83,7 @@ div.cont_selection {
   gap: 1.7rem;
   margin: 1.7rem 0;
 }
-
-div.cont_selection select {
-  font-size: 1rem;
-  padding: 0.7rem;
-}
+/* Regra 'div.cont_selection select' removida, coberta pela padronização */
 
 div.inputs_area {
   display: flex;
@@ -81,16 +91,46 @@ div.inputs_area {
   flex-wrap: wrap;
   gap: 1.3rem;
   margin: 1.7rem 0;
+  width: 100%; /* Garante que a área use o espaço disponível */
+}
+/* Regra 'div.inputs_area input' removida, coberta pela padronização */
+
+
+/* * === REQ 3: Layout Lado-a-Lado === 
+*/
+
+/* O container de input padrão (vertical: label em cima, input embaixo) */
+.input-container {
+  display: flex;
+  flex-direction: column;
 }
 
-div.inputs_area input {
-  padding: 0.7rem;
+/* Um grupo para agrupar verticalmente um label e seu input */
+.input-group {
+  display: flex;
+  flex-direction: column;
 }
+
+/* O container especial .row (para #cont_registrador) */
+.input-container.row {
+  flex-direction: row; /* Faz os .input-group ficarem lado a lado */
+  gap: 1.3rem; /* Espaço entre as duas colunas */
+  justify-content: center;
+  flex-wrap: wrap; /* Permite quebrar em telas menores */
+}
+
+/* Ajusta a largura dos inputs/selects DENTRO do container .row */
+.input-container.row .input-group input,
+.input-container.row .input-group select {
+  width: 250px; /* Mantém a largura padrão de 250px */
+}
+
+/* === FIM DO LAYOUT LADO-A-LADO === */
+
 
 div.cont_btns {
   display: flex;
   gap: 1.7rem;
-
   margin-top: 1.8rem;
 }
 
@@ -126,5 +166,5 @@ button#btn_cancel_instruction:hover {
 }
 
 .input-container.hidden {
-    display: none;
+  display: none;
 }

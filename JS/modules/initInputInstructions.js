@@ -1,40 +1,65 @@
-
-// Objeto de Configuração
 const CONFIGURACOES_INSTRUCOES = {
-  //instrucoes com 2 operandos
-  xchg: { qtd_operandos: 2, p1: "Operando 1", p2: "Operando 2" },
-  cmp: { qtd_operandos: 2, p1: "Operando 1", p2: "Operando 2" },
+  push_reg: { inputs: ["cont_registrador"] },
+  pop_reg: { inputs: ["cont_registrador"] },
+  inc_reg: { inputs: ["cont_registrador"] },
+  dec_reg: { inputs: ["cont_registrador"] },
+  mul_reg: { inputs: ["cont_registrador"] },
+  neg_reg: { inputs: ["cont_registrador"] },
+  div_reg: { inputs: ["cont_registrador"] },
+  not_reg: { inputs: ["cont_registrador"] },
 
-  // 1 Operando
-  inc: { qtd_operandos: 1, p1: "Operando (ex: AX)" },
-  dec: { qtd_operandos: 1, p1: "Operando (ex: AX)" },
-  not: { qtd_operandos: 1, p1: "Operando (ex: AX)" },
+  mov_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  xchg_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  add_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  sub_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  and_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  or_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  xor_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  cmp_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+
+  mov_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+  add_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+  sub_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+  cmp_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
+
+  jmp: { inputs: ["cont_endereco"] },
+  jxx: { inputs: ["cont_endereco"] },
+  call: { inputs: ["cont_endereco"] },
+  loop: { inputs: ["cont_endereco"] },
+
+  in_ax: { inputs: ["cont_endereco"] },
+  out: { inputs: ["cont_endereco"] },
+
+  ret: { inputs: [] },
+  iret: { inputs: [] },
 };
 
 export function updateInputs(iframeDoc) {
   const instructionSelect =
     iframeDoc.contentDocument.getElementById("instruction");
-  const op1Container =
-    iframeDoc.contentDocument.getElementById("operand1-container");
-  const op2Container =
-    iframeDoc.contentDocument.getElementById("operand2-container");
-  const op1Input = iframeDoc.contentDocument.getElementById("operand1");
-  const op2Input = iframeDoc.contentDocument.getElementById("operand2");
   const selectedInstruction = instructionSelect.value;
 
+  const allContainers = [
+    iframeDoc.contentDocument.getElementById("cont_registrador"),
+    iframeDoc.contentDocument.getElementById("cont_memoria"),
+    iframeDoc.contentDocument.getElementById("cont_endereco"),
+    iframeDoc.contentDocument.getElementById("cont_imediato"),
+  ];
+
+  allContainers.forEach((container) => {
+    if (container) {
+      container.classList.add("hidden");
+    }
+  });
+
   const config = CONFIGURACOES_INSTRUCOES[selectedInstruction] || {
-    qtd_operandos: 0,
+    inputs: [],
   };
-
-  op1Container.classList.add("hidden");
-  op2Container.classList.add("hidden");
-
-  if (config.qtd_operandos >= 1) {
-    op1Input.placeholder = config.p1 || "Operando 1";
-    op1Container.classList.remove("hidden");
-  }
-  if (config.qtd_operandos === 2) {
-    op2Input.placeholder = config.p2 || "Operando 2";
-    op2Container.classList.remove("hidden");
-  }
+  config.inputs.forEach((containerId) => {
+    const containerToShow =
+      iframeDoc.contentDocument.getElementById(containerId);
+    if (containerToShow) {
+      containerToShow.classList.remove("hidden");
+    }
+  });
 }

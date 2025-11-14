@@ -10,40 +10,40 @@
     <div class="pop_up_instruction">
       <h1 id="h1">Selecione a Instrução:</h1>
 
-          <label for="address" id="tittle_popUp">Endereço da instrução</label>
-          <input type="text" name="adress" placeholder="ex: AE00" id="instruction_address">
+      <label for="instruction_address" id="tittle_popUp">Endereço da instrução</label>
+      <input type="text" name="adress" placeholder="ex: AE00" id="instruction_address">
+      
       <div class="cont_selection">
         <select name="instruction" id="instruction">
-          <option value="" disabled selected>Instruções</option>
           <optgroup label="Moves">
-            <option value="mov">Mov</option>
-            <option value="push">Push</option>
-            <option value="pop">Pop</option>
-            <option value="xchg">Xchg</option>
+            <option value="mov_reg_mem">Mov (Reg, Mem)</option>
+            <option value="mov_reg_val">Mov (Reg, Valor)</option> <option value="push_reg">Push (Reg)</option>
+            <option value="pop_reg">Pop (Reg)</option>
+            <option value="xchg_reg_mem">Xchg (Reg, Mem)</option>
           </optgroup>
           <optgroup label="Arithmetic">
-            <option value="inc">Increment</option>
-            <option value="dec">Decrement</option>
-            <option value="add">Add</option>
-            <option value="sub">Sub</option>
-            <option value="mul">Mul</option>
-            <option value="neg">Neg</option>
-            <option value="div">Div</option>
+            <option value="inc_reg">Increment (Reg)</option>
+            <option value="dec_reg">Decrement (Reg)</option>
+            <option value="add_reg_mem">Add (Reg, Mem)</option>
+            <option value="add_reg_val">Add (Reg, Valor)</option> <option value="sub_reg_mem">Sub (Reg, Mem)</option>
+            <option value="sub_reg_val">Sub (Reg, Valor)</option> <option value="mul_reg">Mul (Reg)</option>
+            <option value="neg_reg">Neg (Reg)</option>
+            <option value="div_reg">Div (Reg)</option>
           </optgroup>
           <optgroup label="Boolean">
-            <option value="and">And</option>
-            <option value="or">Or</option>
-            <option value="xor">Xor</option>
-            <option value="not">Not</option>
+            <option value="and_reg_mem">And (Reg, Mem)</option>
+            <option value="or_reg_mem">Or (Reg, Mem)</option>
+            <option value="xor_reg_mem">Xor (Reg, Mem)</option>
+            <option value="not_reg">Not (Reg)</option>
           </optgroup>
           <optgroup label="Test/Compare">
-            <option value="cmp">Cmp</option>
-            <option value="jmp">Jmp</option>
-            <option value="jxx">Jxx</option>
-            <option value="call">Call</option>
+            <option value="cmp_reg_mem">Cmp (Reg, Mem)</option>
+            <option value="cmp_reg_val">Cmp (Reg, Valor)</option> <option value_jmp">Jmp (Endereço)</option>
+            <option value="jxx">Jxx (Endereço)</option>
+            <option value="call">Call (Endereço)</option>
             <option value="ret">Ret</option>
             <option value="iret">Iret</option>
-            <option value="loop">Loop</option>
+            <option value="loop">Loop (Endereço)</option>
             <option value="in_ax">In Ax</option>
             <option value="out">Out</option>
           </optgroup>
@@ -51,18 +51,43 @@
       </div>
 
       <div class="inputs_area">
-          
-                  <div id="operand1-container" class="input-container hidden">
-                      <label for="operand1">Operando 1:</label>
-                      <input type="text" name="operand1" id="operand1" placeholder="Destino" />
-                  </div>
-
-                  <div id="operand2-container" class="input-container hidden">
-                      <label for="operand2">Operando 2:</label>
-                      <input type="text" name="operand2" id="operand2" placeholder="Fonte" />
-                  </div>
-              </div>
-
+        
+        <div id="cont_registrador" class="input-container row hidden">
+          <div class="input-group">
+            <label for="input_registrador">Operando 1 (Registrador):</label>
+            <select name="input_registrador" id="input_registrador">
+              <option value="" disabled selected>Registrador</option>
+              <option value="AX">AX</option>
+              <option value="BX">BX</option>
+              <option value="CX">CX</option>
+              <option value="DX">DX</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="value_reg">Valor Inicial do Registrador:</label>
+            <input
+              type="text"
+              name="value_reg"
+              id="value_reg" placeholder="Valor inicial (ex: 1000h)"
+            />
+          </div>
+        </div>
+        <div id="cont_memoria" class="input-container hidden">
+          <label for="input_memoria">Operando 2 (Memória):</label>
+          <input type="text" name="input_memoria" id="input_memoria" placeholder="Endereço (ex: [100h])" />
+        </div>
+        
+        <div id="cont_imediato" class="input-container hidden">
+          <label for="input_imediato">Operando 2 (Valor Imediato):</label>
+          <input type="text" name="input_imediato" id="input_imediato" placeholder="Valor (ex: 1234h)" />
+        </div>
+        
+        <div id="cont_endereco" class="input-container hidden">
+            <label for="input_endereco">Endereço (JMP/CALL):</label>
+            <input type="text" name="input_endereco" id="input_endereco" placeholder="Valor/Endereço (ex: 1000h)" />
+        </div>
+      </div>
+      
       <div class="cont_btns">
         <button id="btn_confirm_instruction">Confirmar</button>
         <button id="btn_cancel_instruction">Cancelar</button>

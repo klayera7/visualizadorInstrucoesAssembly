@@ -1,6 +1,7 @@
 import { fecharModal } from "./controleModal.js";
+import { executarXCHG_Reg_Mem } from "../instrucoes/importacaoInstrucoes.js";
 
-function animarBarramentoEndereco() {
+export function animarBarramentoEndereco() {
   const endereco = document.getElementById("address_bus");
   endereco.classList.add("active_bus_address");
   const time = 500;
@@ -9,7 +10,7 @@ function animarBarramentoEndereco() {
   }, time);
 }
 
-function animarBarramentoDados() {
+export function animarBarramentoDados() {
   const dados = document.getElementById("data_bus");
   dados.classList.add("active_bus_data");
   const time = 500;
@@ -24,16 +25,11 @@ function animarBarramentosAmbos() {
 }
 
 function converter_hex_formatar_16bits(valorDecimal) {
-  // Aplica a máscara final (se a função chamadora não aplicou, garante 16 bits)
   const valor16Bits = valorDecimal & 0xffff;
 
-  // Converte, coloca em maiúsculo e garante 4 dígitos
   return valor16Bits.toString(16).toUpperCase().padStart(4, "0");
 }
 
-/* =================================
-Funções de Simulação Visual
-================================= */
 function simularNot(params) {
   const valorDecimal = parseInt(params, 16);
 
@@ -72,48 +68,38 @@ function simularNeg(params) {
   return valorRegistrador;
 }
 
-function simularXCHG(params) {
-  console.log("SIMULANDO XCHG (Reg, Mem):", params);
-  // ... (sua lógica visual aqui) ...
-  animarBarramentosAmbos();
-}
-
 function simularMOV(params) {
   console.log("SIMULANDO MOV:", params);
-  // ... (sua lógica visual aqui) ...
+
   animarBarramentosAmbos();
 }
 
 function simularJMP(params) {
   console.log("SIMULANDO JMP:", params);
-  // ... (sua lógica visual aqui) ...
+
   animarBarramentoEndereco();
 }
 
 function simularADD(params) {
   console.log("SIMULANDO ADD:", params);
-  // ... (sua lógica visual aqui) ...
+
   animarBarramentoEndereco();
 }
 
-// Mapeia a string da instrução para a função de simulação
 const MAPA_SIMULACAO_INSTRUCAO = {
-  xchg_reg_mem: simularXCHG,
+  xchg_reg_mem: executarXCHG_Reg_Mem,
   mov_reg_mem: simularMOV,
   mov_reg_val: simularMOV,
   add_reg_mem: simularADD,
   add_reg_val: simularADD,
   inc_reg: simularINC,
   jmp: simularJMP,
-  not_reg: simularNot, // Adicionei a 'simularNOT' que estava faltando
-  // ... (Adicione todas as suas outras instruções)
+  not_reg: simularNot,
 };
 
-// Renomeado de exibirValoresInstrucao
 export function prepararExecucaoInstrucao(params) {
   fecharModal();
 
-  // Encontra a função correta no mapa
   const funcaoDeSimulacao = MAPA_SIMULACAO_INSTRUCAO[params.instrucaoCompleta];
 
   if (!funcaoDeSimulacao) {
@@ -129,7 +115,6 @@ export function prepararExecucaoInstrucao(params) {
     const novoBotao = botaoIniciar.cloneNode(true);
     botaoIniciar.parentNode.replaceChild(novoBotao, botaoIniciar);
 
-    // Adiciona o novo listener que chama a função de simulação específica
     novoBotao.addEventListener("click", () => {
       console.log(
         `Botão 'Play' clicado. Executando: ${params.instrucaoCompleta}`

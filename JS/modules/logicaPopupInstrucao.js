@@ -1,4 +1,4 @@
-import { updateInputs } from "./initInputInstructions.js";
+import { updateInputs } from "./configuracaoEntradas.js";
 import { fecharModal } from "./controleModal.js";
 import { exibirValoresInstrucao } from "./fluxos.js";
 

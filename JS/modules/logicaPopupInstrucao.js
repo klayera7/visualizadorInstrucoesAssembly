@@ -1,54 +1,23 @@
-import { updateInputs } from "./configuracaoEntradas.js";
-import { fecharModal } from "./controleModal.js";
-import { exibirValoresInstrucao } from "./simulador.js";
+import { atualizarCamposDeEntrada } from "./configuracaoEntradas.js"; // Renomeado
+import { fecharModal } from "./controleModal.js"; // Renomeado
+import { prepararExecucaoInstrucao } from "./simulador.js"; // Renomeado
 
 const iframeInstruction = document.getElementById("instruction_iframe");
 const ifrmaeSegment = document.getElementById("segment_popup");
 
-//ativar o iframe de instrucoes
-export function ativaIfInstrucao() {
+// Funções que trocam a visibilidade dos iframes
+export function alternarParaPopupInstrucoes() {
   iframeInstruction.classList.remove("disable_if_instruction");
   ifrmaeSegment.classList.add("disable_if_instruction");
 }
 
-//ativar o iframe de segmentos
-export function ativaIfSegmento() {
+export function alternarParaPopupSegmentos() {
   iframeInstruction.classList.add("disable_if_instruction");
   ifrmaeSegment.classList.remove("disable_if_instruction");
 }
 
-//a cada mudanca no select de instrucoes essa funcao eh chamada
-if (iframeInstruction) {
-  iframeInstruction.addEventListener("load", () => {
-    const doc = iframeInstruction.contentDocument;
-    if (!doc) {
-      console.error("Falha ao carregar contentDocument do iframe.");
-      return;
-    }
-
-    const cancelInputButton = doc.getElementById("btn_cancel_instruction");
-    const select = doc.getElementById("instruction");
-    const confirmButton = doc.getElementById("btn_confirm_instruction");
-
-    if (cancelInputButton) {
-      cancelInputButton.addEventListener("click", fecharModal);
-    }
-    if (select) {
-      select.addEventListener("change", () => updateInputs(iframeInstruction));
-
-      updateInputs(iframeInstruction);
-    }
-
-    if (confirmButton) {
-      confirmButton.addEventListener("click", (e) => {
-        //essa funcao ta no fluxos.js e vai manipular com base nesses valores
-        exibirValoresInstrucao(receberValoresInputsInstrucoes(doc));
-      });
-    }
-  });
-}
-
-function receberValoresInputsInstrucoes(doc) {
+// Renomeado de receberValoresInputsInstrucoes
+function obterDadosDaInstrucao(doc) {
   if (!doc) doc = iframeInstruction.contentDocument;
 
   const instrucao = doc.getElementById("instruction").value;
@@ -63,9 +32,7 @@ function receberValoresInputsInstrucoes(doc) {
   const contImediato = doc.getElementById("cont_imediato");
   const contEndereco = doc.getElementById("cont_endereco");
 
-  // --- LÓGICA DE COLETA CORRIGIDA ---
-
-  // Operando 1 (Registrador ou Endereço de Pulo)
+  // Lógica de coleta (estava correta)
   if (contRegistrador && !contRegistrador.classList.contains("hidden")) {
     op1 = {
       tipo: "registrador",
@@ -79,12 +46,10 @@ function receberValoresInputsInstrucoes(doc) {
     };
   }
 
-  // Operando 2 (Memória ou Imediato)
   if (contMemoria && !contMemoria.classList.contains("hidden")) {
     op2 = {
       tipo: "memoria",
       endereco: doc.getElementById("input_memoria").value,
-      // (Assumindo que você tem um input com id 'value_mem' dentro do 'cont_memoria')
       valorInicial: doc.getElementById("value_mem")
         ? doc.getElementById("value_mem").value
         : null,
@@ -96,7 +61,7 @@ function receberValoresInputsInstrucoes(doc) {
     };
   }
 
-  // Retorna o objeto LIMPO e PRONTO para o 'fluxos.js'
+  // Retorna o objeto limpo
   return {
     instrucaoCompleta: instrucao,
     endereco: endereco_instrucao,
@@ -104,3 +69,36 @@ function receberValoresInputsInstrucoes(doc) {
     op2: op2,
   };
 }
+
+// Função principal de inicialização
+export const inicializarLogicaPopupInstrucao = () => {
+  if (iframeInstruction) {
+    iframeInstruction.addEventListener("load", () => {
+      const doc = iframeInstruction.contentDocument;
+      if (!doc) {
+        console.error("Falha ao carregar contentDocument do iframe.");
+        return;
+      }
+
+      const cancelInputButton = doc.getElementById("btn_cancel_instruction");
+      const select = doc.getElementById("instruction");
+      const confirmButton = doc.getElementById("btn_confirm_instruction");
+
+      if (cancelInputButton) {
+        cancelInputButton.addEventListener("click", fecharModal);
+      }
+      
+      if (select) {
+        select.addEventListener("change", () => atualizarCamposDeEntrada(iframeInstruction)); // Renomeado
+        atualizarCamposDeEntrada(iframeInstruction); // Renomeado
+      }
+
+      if (confirmButton) {
+        confirmButton.addEventListener("click", (e) => {
+          // Passa os dados formatados para o simulador
+          prepararExecucaoInstrucao(obterDadosDaInstrucao(doc)); // Renomeado
+        });
+      }
+    });
+  }
+};

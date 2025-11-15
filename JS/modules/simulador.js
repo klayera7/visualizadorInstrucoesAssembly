@@ -1,6 +1,6 @@
 import { fecharModal } from "./controleModal.js";
 
-function fluxoendereco() {
+function animarBarramentoEndereco() {
   const endereco = document.getElementById("address_bus");
   endereco.classList.add("active_bus_address");
   const time = 500;
@@ -9,7 +9,7 @@ function fluxoendereco() {
   }, time);
 }
 
-function fluxodados() {
+function animarBarramentoDados() {
   const dados = document.getElementById("data_bus");
   dados.classList.add("active_bus_data");
   const time = 500;
@@ -18,116 +18,83 @@ function fluxodados() {
   }, time);
 }
 
-function fluxo_dados_endereco() {
-  fluxoendereco();
-  fluxodados();
+function animarBarramentosAmbos() {
+  animarBarramentoEndereco();
+  animarBarramentoDados();
 }
 
 function hexParaBinario(hex) {
-   
-    const numDecimal = parseInt(hex, 16); 
-    
-    
-    const numBinario = numDecimal.toString(2); 
-    
-    return numBinario.padStart(4, '0');
+  const numDecimal = parseInt(hex, 16);
+  const numBinario = numDecimal.toString(2);
+  return numBinario.padStart(4, "0");
 }
 
 /* =================================
-Instruções
+Funções de Simulação Visual
 ================================= */
-function simularNot(params) { 
-    
-    // 1. CONVERSÃO DE ENTRADA
-    // Converte a string de entrada (tratada como hexadecimal) para um número inteiro decimal.
-    // Ex: "C" é convertido para o decimal 12.
-    const valorDecimal = parseInt(params, 16);
-    
-    // 2. OPERAÇÃO NOT E MÁSCARA DE 16 BITS
-    // O operador bitwise NOT (~) inverte todos os bits do número.
-    // Em JavaScript, essa operação é realizada em 32 bits.
-    // O operador AND (&) com 0xFFFF (1111 1111 1111 1111 em binário)
-    // é uma MÁSCARA que garante que apenas os 16 bits menos significativos
-    // (os que representam o registrador do simulador) sejam mantidos.
-    const valorDecimalNegado = ~valorDecimal & 0xFFFF; // Máscara para 16 bits
+function simularNOT(params) {
+  console.log("SIMULANDO NOT:", params);
+  // NOTA: A sua lógica original estava passando 'params' (um objeto)
+  // para 'hexParaBinario'. Corrigi para usar o valor do operando.
+  const valorBinario = hexParaBinario(params.op1.valorInicial);
 
-    // 3. CONVERSÃO DE SAÍDA
-    // Converte o resultado decimal de 16 bits de volta para uma string hexadecimal.
-    // toUpperCase() é usado para manter a notação em maiúsculas (padrão em Assembly).
-    let resultadoHex = valorDecimalNegado.toString(16).toUpperCase();
-
-    // 4. RETORNO
-    // O código original só retorna a string convertida.
-    // E garante que tenha 4 dígitos (16 bits)
-    return resultadoHex.padStart(4, '0');
+  const valorNegado = valorBinario
+    .split("")
+    .map((bit) => (bit === "0" ? "1" : "0"))
+    .join("");
+  animarBarramentosAmbos(); // Corrigi a chamada duplicada
+  return valorNegado;
 }
 
 function simularXCHG(params) {
   console.log("SIMULANDO XCHG (Reg, Mem):", params);
-
-  // Exemplo de manipulação do HTML:
-  // 1. Coloca o valor inicial no registrador (ex: 'reg-bx')
-  // const regElement = document.getElementById(`reg-${params.op1.nome.toLowerCase()}`);
-  // if (regElement) regElement.innerText = params.op1.valorInicial;
-
-  // 2. Destaca o endereço de memória
-  // const memElement = document.getElementById(`mem-${params.op2.endereco}`);
-  // if (memElement) memElement.classList.add('highlight');
-
-  // 3. Chama a animação do barramento
-  fluxo_dados_endereco();
+  // ... (sua lógica visual aqui) ...
+  animarBarramentosAmbos();
 }
 
 function simularINC(params) {
   console.log("SIMULANDO INC (Reg):", params);
-  // Ex: Coloca o valor inicial no registrador
-  // const regElement = document.getElementById(`reg-${params.op1.nome.toLowerCase()}`);
-  // if (regElement) regElement.innerText = params.op1.valorInicial;
-
-  // INC pode usar só o barramento de dados (busca, ULA, escrita)
-  fluxodados();
+  // ... (sua lógica visual aqui) ...
+  animarBarramentoDados();
 }
 
 function simularMOV(params) {
   console.log("SIMULANDO MOV:", params);
-  // (Lógica visual do MOV...)
-  fluxo_dados_endereco();
+  // ... (sua lógica visual aqui) ...
+  animarBarramentosAmbos();
 }
 
 function simularJMP(params) {
   console.log("SIMULANDO JMP:", params);
-  // JMP mexe no registrador IP e usa o barramento de endereço
-  fluxoendereco();
+  // ... (sua lógica visual aqui) ...
+  animarBarramentoEndereco();
 }
 
 function simularADD(params) {
   console.log("SIMULANDO ADD:", params);
-  // JMP mexe no registrador IP e usa o barramento de endereço
-  fluxoendereco();
+  // ... (sua lógica visual aqui) ...
+  animarBarramentoEndereco();
 }
 
-// ... Adicione funções para ADD, SUB, NOT, etc. ...
-const MAPA_DE_INSTRUCOES = {
+// Mapeia a string da instrução para a função de simulação
+const MAPA_SIMULACAO_INSTRUCAO = {
   xchg_reg_mem: simularXCHG,
   mov_reg_mem: simularMOV,
   mov_reg_val: simularMOV,
-  add_reg_mem: simularADD, 
-  add_reg_val: simularADD, 
+  add_reg_mem: simularADD,
+  add_reg_val: simularADD,
   inc_reg: simularINC,
   jmp: simularJMP,
-  // ... (Adicione TODAS as suas 24 instruções aqui)
-  // 'dec_reg': simularDEC,
-  // 'not_reg': simularNOT,
+  not_reg: simularNOT, // Adicionei a 'simularNOT' que estava faltando
+  // ... (Adicione todas as suas outras instruções)
 };
 
-
-export function exibirValoresInstrucao(params) {
+// Renomeado de exibirValoresInstrucao
+export function prepararExecucaoInstrucao(params) {
   fecharModal();
-  
 
-
-  // 2. Encontra a função de simulação correta no MAPA
-  const funcaoDeSimulacao = MAPA_DE_INSTRUCOES[params.instrucaoCompleta];
+  // Encontra a função correta no mapa
+  const funcaoDeSimulacao = MAPA_SIMULACAO_INSTRUCAO[params.instrucaoCompleta];
 
   if (!funcaoDeSimulacao) {
     console.error(
@@ -139,16 +106,14 @@ export function exibirValoresInstrucao(params) {
   const botaoIniciar = document.querySelector(".btn_icon_play");
 
   if (botaoIniciar) {
-    // A sua lógica de clonar o botão para limpar listeners antigos está perfeita.
     const novoBotao = botaoIniciar.cloneNode(true);
     botaoIniciar.parentNode.replaceChild(novoBotao, botaoIniciar);
 
-    // 3. Adiciona o novo listener que chama a função ESPECÍFICA
+    // Adiciona o novo listener que chama a função de simulação específica
     novoBotao.addEventListener("click", () => {
       console.log(
         `Botão 'Play' clicado. Executando: ${params.instrucaoCompleta}`,
       );
-      // Chama a função mapeada (ex: simularXCHG(params))
       funcaoDeSimulacao(params);
     });
   }

@@ -1,4 +1,4 @@
-import { fecharModal } from "./modalAnimado.js";
+import { fecharModal } from "./controleModal.js";
 
 function fluxoendereco() {
   const endereco = document.getElementById("address_bus");

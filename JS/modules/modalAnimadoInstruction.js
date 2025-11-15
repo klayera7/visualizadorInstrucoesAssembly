@@ -1,5 +1,5 @@
 import { updateInputs } from "./initInputInstructions.js";
-import { fecharModal } from "./modalAnimado.js";
+import { fecharModal } from "./controleModal.js";
 import { exibirValoresInstrucao } from "./fluxos.js";
 
 const iframeInstruction = document.getElementById("instruction_iframe");

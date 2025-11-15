@@ -1,4 +1,4 @@
-import { ativaIfInstrucao } from "./modalAnimadoInstruction.js";
+import { ativaIfInstrucao } from "./logicaPopupInstrucao.js";
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 
 export const segmentValues = {

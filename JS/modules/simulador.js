@@ -24,59 +24,53 @@ function animarBarramentosAmbos() {
 }
 
 function converter_hex_formatar_16bits(valorDecimal) {
-    // Aplica a máscara final (se a função chamadora não aplicou, garante 16 bits)
-    const valor16Bits = valorDecimal & 0xFFFF;
-    
-    // Converte, coloca em maiúsculo e garante 4 dígitos
-    return valor16Bits.toString(16).toUpperCase().padStart(4, '0');
+  // Aplica a máscara final (se a função chamadora não aplicou, garante 16 bits)
+  const valor16Bits = valorDecimal & 0xffff;
+
+  // Converte, coloca em maiúsculo e garante 4 dígitos
+  return valor16Bits.toString(16).toUpperCase().padStart(4, "0");
 }
 
 /* =================================
 Funções de Simulação Visual
 ================================= */
-function simularNot(params) { 
-    
-    const valorDecimal = parseInt(params, 16);
-    
-    let valorDecimalNegado = ~valorDecimal & 0xFFFF; 
+function simularNot(params) {
+  const valorDecimal = parseInt(params, 16);
 
-    let resultadoHex = converter_hex_formatar_16bits(valorDecimalNegado);
+  let valorDecimalNegado = ~valorDecimal & 0xffff;
 
-    return resultadoHex;
+  let resultadoHex = converter_hex_formatar_16bits(valorDecimalNegado);
+
+  return resultadoHex;
 }
 
-
 function simularINC(params) {
+  let valorRegistrador = parseInt(params, 16);
 
-    let valorRegistrador = parseInt(params, 16);
-    
-    valorRegistrador = valorRegistrador + 1; 
-    
-    let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
-    
-    return resultadoHex;
+  valorRegistrador = valorRegistrador + 1;
+
+  let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
+
+  return resultadoHex;
 }
 
 function simularDEC(params) {
+  let valorRegistrador = parseInt(params, 16);
 
-    let valorRegistrador = parseInt(params, 16); 
+  valorRegistrador = valorRegistrador - 1;
 
-    valorRegistrador = valorRegistrador - 1; 
+  let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
 
-    let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
-    
-    return resultadoHex;
+  return resultadoHex;
 }
 
 function simularNeg(params) {
+  let valorRegistrador = simularNot(params);
 
-    let valorRegistrador = simularNot(params);
+  valorRegistrador = simularINC(valorRegistrador);
 
-    valorRegistrador = simularINC(valorRegistrador);
-
-    return valorRegistrador;
+  return valorRegistrador;
 }
-
 
 function simularXCHG(params) {
   console.log("SIMULANDO XCHG (Reg, Mem):", params);
@@ -111,7 +105,7 @@ const MAPA_SIMULACAO_INSTRUCAO = {
   add_reg_val: simularADD,
   inc_reg: simularINC,
   jmp: simularJMP,
-  not_reg: simularNOT, // Adicionei a 'simularNOT' que estava faltando
+  not_reg: simularNot, // Adicionei a 'simularNOT' que estava faltando
   // ... (Adicione todas as suas outras instruções)
 };
 
@@ -124,7 +118,7 @@ export function prepararExecucaoInstrucao(params) {
 
   if (!funcaoDeSimulacao) {
     console.error(
-      `Simulação não encontrada para a instrução: ${params.instrucaoCompleta}`,
+      `Simulação não encontrada para a instrução: ${params.instrucaoCompleta}`
     );
     return;
   }
@@ -138,7 +132,7 @@ export function prepararExecucaoInstrucao(params) {
     // Adiciona o novo listener que chama a função de simulação específica
     novoBotao.addEventListener("click", () => {
       console.log(
-        `Botão 'Play' clicado. Executando: ${params.instrucaoCompleta}`,
+        `Botão 'Play' clicado. Executando: ${params.instrucaoCompleta}`
       );
       funcaoDeSimulacao(params);
     });

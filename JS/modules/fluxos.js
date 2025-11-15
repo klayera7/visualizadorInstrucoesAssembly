@@ -98,8 +98,8 @@ const MAPA_DE_INSTRUCOES = {
   xchg_reg_mem: simularXCHG,
   mov_reg_mem: simularMOV,
   mov_reg_val: simularMOV,
-  add_reg_mem: simularADD, // (Você precisará criar a função simularADD)
-  add_reg_val: simularADD, // (Você precisará criar a função simularADD)
+  add_reg_mem: simularADD, 
+  add_reg_val: simularADD, 
   inc_reg: simularINC,
   jmp: simularJMP,
   // ... (Adicione TODAS as suas 24 instruções aqui)
@@ -107,60 +107,12 @@ const MAPA_DE_INSTRUCOES = {
   // 'not_reg': simularNOT,
 };
 
-function formatarParametros(infosBrutas) {
-  const {
-    instruction,
-    instructionAdress,
-    operando1,
-    operando2,
-    valorInicialReg,
-  } = infosBrutas;
 
-  let op1_formatado = null;
-  let op2_formatado = null;
-
-  // Lógica para determinar os tipos com base na string da instrução
-  if (instruction.includes("_reg_mem")) {
-    op1_formatado = {
-      tipo: "registrador",
-      nome: operando1,
-      valorInicial: valorInicialReg,
-    };
-    op2_formatado = { tipo: "memoria", endereco: operando2 };
-  } else if (instruction.includes("_reg_val")) {
-    op1_formatado = {
-      tipo: "registrador",
-      nome: operando1,
-      valorInicial: valorInicialReg,
-    };
-    op2_formatado = { tipo: "imediato", valor: operando2 };
-  } else if (instruction.includes("_reg")) {
-    // Para instruções de 1 operando (ex: 'inc_reg')
-    op1_formatado = {
-      tipo: "registrador",
-      nome: operando1,
-      valorInicial: valorInicialReg,
-    };
-  } else if (
-    instruction === "jmp" ||
-    instruction === "call" ||
-    instruction === "jxx"
-  ) {
-    // Para instruções de pulo
-    op1_formatado = { tipo: "endereco", valor: operando1 }; // (Baseado no seu JS anterior)
-  }
-  return {
-    instrucaoCompleta: instruction,
-    endereco: instructionAdress,
-    op1: op1_formatado,
-    op2: op2_formatado,
-  };
-}
-
-export function exibirValoresInstrucao(infosBrutas) {
+export function exibirValoresInstrucao(params) {
   fecharModal();
-  // 1. Limpa o objeto bruto para ficar legível
-  const params = formatarParametros(infosBrutas);
+  
+
+
   // 2. Encontra a função de simulação correta no MAPA
   const funcaoDeSimulacao = MAPA_DE_INSTRUCOES[params.instrucaoCompleta];
 
@@ -168,16 +120,13 @@ export function exibirValoresInstrucao(infosBrutas) {
     console.error(
       `Simulação não encontrada para a instrução: ${params.instrucaoCompleta}`,
     );
-    // (Você pode mostrar um alerta para o usuário aqui)
     return;
   }
 
   const botaoIniciar = document.querySelector(".btn_icon_play");
 
   if (botaoIniciar) {
-    // --- Ponto Crítico ---
-    // Clonamos o botão para REMOVER listeners antigos.
-    // Isso impede que o botão "Play" execute 5 instruções de uma vez.
+    // A sua lógica de clonar o botão para limpar listeners antigos está perfeita.
     const novoBotao = botaoIniciar.cloneNode(true);
     botaoIniciar.parentNode.replaceChild(novoBotao, botaoIniciar);
 
@@ -186,7 +135,7 @@ export function exibirValoresInstrucao(infosBrutas) {
       console.log(
         `Botão 'Play' clicado. Executando: ${params.instrucaoCompleta}`,
       );
-      // CHAMA A FUNÇÃO MAPEADA (ex: simularXCHG(params))
+      // Chama a função mapeada (ex: simularXCHG(params))
       funcaoDeSimulacao(params);
     });
   }

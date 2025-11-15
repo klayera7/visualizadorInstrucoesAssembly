@@ -51,39 +51,56 @@ if (iframeInstruction) {
 function receberValoresInputsInstrucoes(doc) {
   if (!doc) doc = iframeInstruction.contentDocument;
 
-  const instructionAdress = doc.getElementById("instruction_address").value;
-  const instruction = doc.getElementById("instruction").value;
+  const instrucao = doc.getElementById("instruction").value;
+  const endereco_instrucao = doc.getElementById("instruction_address").value;
 
-  let operando1 = "";
-  let operando2 = "";
-  let valorInicialReg = ""; 
+  let op1 = null;
+  let op2 = null;
 
-
+  // Pega os containers
   const contRegistrador = doc.getElementById("cont_registrador");
   const contMemoria = doc.getElementById("cont_memoria");
   const contImediato = doc.getElementById("cont_imediato");
   const contEndereco = doc.getElementById("cont_endereco");
 
-  
+  // --- LÓGICA DE COLETA CORRIGIDA ---
+
+  // Operando 1 (Registrador ou Endereço de Pulo)
   if (contRegistrador && !contRegistrador.classList.contains("hidden")) {
-    operando1 = doc.getElementById("input_registrador").value;
-    valorInicialReg = doc.getElementById("value_reg").value; 
+    op1 = {
+      tipo: "registrador",
+      nome: doc.getElementById("input_registrador").value,
+      valorInicial: doc.getElementById("value_reg").value,
+    };
   } else if (contEndereco && !contEndereco.classList.contains("hidden")) {
-    operando1 = doc.getElementById("input_endereco").value;
+    op1 = {
+      tipo: "endereco",
+      valor: doc.getElementById("input_endereco").value,
+    };
   }
 
+  // Operando 2 (Memória ou Imediato)
   if (contMemoria && !contMemoria.classList.contains("hidden")) {
-    operando2 = doc.getElementById("input_memoria").value;
+    op2 = {
+      tipo: "memoria",
+      endereco: doc.getElementById("input_memoria").value,
+      // (Assumindo que você tem um input com id 'value_mem' dentro do 'cont_memoria')
+      valorInicial: doc.getElementById("value_mem")
+        ? doc.getElementById("value_mem").value
+        : null,
+    };
   } else if (contImediato && !contImediato.classList.contains("hidden")) {
-    operando2 = doc.getElementById("input_imediato").value;
+    op2 = {
+      tipo: "imediato",
+      valor: doc.getElementById("input_imediato").value,
+    };
   }
 
-  // Retorna tudo para 'fluxos.js'
+  // Retorna o objeto LIMPO e PRONTO para o 'fluxos.js'
   return {
-    instructionAdress,
-    instruction,
-    operando1,
-    operando2,
-    valorInicialReg,
+    instrucaoCompleta: instrucao,
+    endereco: endereco_instrucao,
+    op1: op1,
+    op2: op2,
   };
 }

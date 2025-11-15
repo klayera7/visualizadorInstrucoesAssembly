@@ -1,13 +1,16 @@
-import { ativaIfSegmento } from "./modalAnimadoInstruction.js";
+import { alternarParaPopupSegmentos } from "./logicaPopupInstrucao.js"; // Importa o "alternador"
+
+// Seletores dos elementos principais do modal
 const botaoAbrir = document.querySelector('[data-modal="abrir"]');
 const botaoFechar = document.querySelector('[data-modal="fechar"]');
 const containerModal = document.querySelector('[data-modal="container"]');
 const cancelarInputModal = document.querySelector(
   '[data-modal="cancel_segment_input"]'
-);
+); // (Este parece ser de dentro de um iframe, pode causar bugs)
 
+// Funções de controle
 const abrirModal = () => {
-  ativaIfSegmento();
+  alternarParaPopupSegmentos(); // Garante que o popup de segmentos seja o primeiro a ser visto
   containerModal.classList.add("ativo");
 };
 
@@ -15,14 +18,14 @@ export const fecharModal = () => {
   containerModal.classList.remove("ativo");
 };
 
-const cliqueForaModal = (event) => {
+const cliqueForaDoModal = (event) => {
   if (event.target === event.currentTarget) {
     fecharModal();
   }
 };
 
 // para fechar o modal a partir do iframe (clicando no botao de cancelar)
-const fecharModalDoIframe = () => {
+const fecharModalPeloIframe = () => {
   const modalNoParent = window.parent.document.querySelector(
     '[data-modal="container"]'
   );
@@ -33,14 +36,15 @@ const fecharModalDoIframe = () => {
   }
 };
 
-export const initModals = () => {
+// Função principal de inicialização que será chamada pelo principal.js
+export const inicializarModalPrincipal = () => {
   if (containerModal && botaoAbrir && botaoFechar) {
     botaoAbrir.addEventListener("click", abrirModal);
     botaoFechar.addEventListener("click", fecharModal);
-    containerModal.addEventListener("click", cliqueForaModal);
+    containerModal.addEventListener("click", cliqueForaDoModal);
   }
 
+  // (Este listener pode precisar ir para o logicaPopupSegmentos.js se o botão estiver lá)
   if (cancelarInputModal)
-    return cancelarInputModal.addEventListener("click", fecharModalDoIframe);
+    return cancelarInputModal.addEventListener("click", fecharModalPeloIframe);
 };
-  

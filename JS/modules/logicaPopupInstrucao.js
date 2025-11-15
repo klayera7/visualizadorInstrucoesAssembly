@@ -26,7 +26,6 @@ function obterDadosDaInstrucao(doc) {
   let op1 = null;
   let op2 = null;
 
-  // Pega os containers
   const contRegistrador = doc.getElementById("cont_registrador");
   const contMemoria = doc.getElementById("cont_memoria");
   const contImediato = doc.getElementById("cont_imediato");
@@ -87,9 +86,11 @@ export const inicializarLogicaPopupInstrucao = () => {
       if (cancelInputButton) {
         cancelInputButton.addEventListener("click", fecharModal);
       }
-      
+
       if (select) {
-        select.addEventListener("change", () => atualizarCamposDeEntrada(iframeInstruction)); // Renomeado
+        select.addEventListener("change", () =>
+          atualizarCamposDeEntrada(iframeInstruction)
+        ); // Renomeado
         atualizarCamposDeEntrada(iframeInstruction); // Renomeado
       }
 

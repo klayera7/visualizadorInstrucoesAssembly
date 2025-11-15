@@ -516,3 +516,8 @@ button.modal-fechar {
 iframe.disable_if_instruction {
   display: none;
 }
+
+.highlight {
+  background: yellow;
+  transition: background 0.3s;
+}

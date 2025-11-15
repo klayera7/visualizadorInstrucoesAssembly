@@ -38,15 +38,28 @@ Instruções
 ================================= */
 function simularNot(params) { 
     
-    const valorBinario = hexParaBinario(params); 
+    // 1. CONVERSÃO DE ENTRADA
+    // Converte a string de entrada (tratada como hexadecimal) para um número inteiro decimal.
+    // Ex: "C" é convertido para o decimal 12.
+    const valorDecimal = parseInt(params, 16);
+    
+    // 2. OPERAÇÃO NOT E MÁSCARA DE 16 BITS
+    // O operador bitwise NOT (~) inverte todos os bits do número.
+    // Em JavaScript, essa operação é realizada em 32 bits.
+    // O operador AND (&) com 0xFFFF (1111 1111 1111 1111 em binário)
+    // é uma MÁSCARA que garante que apenas os 16 bits menos significativos
+    // (os que representam o registrador do simulador) sejam mantidos.
+    const valorDecimalNegado = ~valorDecimal & 0xFFFF; // Máscara para 16 bits
 
-    const valorNegado = valorBinario
-        .split('') 
-        .map(bit => (bit === '0' ? '1' : '0')) 
-        .join(''); 
-    fluxo_dados_endereco();
-    fluxo_dados();
-    return valorNegado;
+    // 3. CONVERSÃO DE SAÍDA
+    // Converte o resultado decimal de 16 bits de volta para uma string hexadecimal.
+    // toUpperCase() é usado para manter a notação em maiúsculas (padrão em Assembly).
+    let resultadoHex = valorDecimalNegado.toString(16).toUpperCase();
+
+    // 4. RETORNO
+    // O código original só retorna a string convertida.
+    // E garante que tenha 4 dígitos (16 bits)
+    return resultadoHex.padStart(4, '0');
 }
 
 function simularXCHG(params) {

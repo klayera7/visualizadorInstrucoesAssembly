@@ -29,33 +29,72 @@ function hexParaBinario(hex) {
   return numBinario.padStart(4, "0");
 }
 
+function converter_hex_formatar_16bits(valorDecimal) {
+    // Aplica a máscara final (se a função chamadora não aplicou, garante 16 bits)
+    const valor16Bits = valorDecimal & 0xFFFF;
+    
+    // Converte, coloca em maiúsculo e garante 4 dígitos
+    return valor16Bits.toString(16).toUpperCase().padStart(4, '0');
+}
+
+
 /* =================================
 Funções de Simulação Visual
 ================================= */
-function simularNOT(params) {
-  console.log("SIMULANDO NOT:", params);
-  // NOTA: A sua lógica original estava passando 'params' (um objeto)
-  // para 'hexParaBinario'. Corrigi para usar o valor do operando.
-  const valorBinario = hexParaBinario(params.op1.valorInicial);
+function simularNot(params) { 
+    
 
-  const valorNegado = valorBinario
-    .split("")
-    .map((bit) => (bit === "0" ? "1" : "0"))
-    .join("");
-  animarBarramentosAmbos(); // Corrigi a chamada duplicada
-  return valorNegado;
+    const valorDecimal = parseInt(params, 16);
+    
+
+    let valorDecimalNegado = ~valorDecimal & 0xFFFF; 
+
+    let resultadoHex = converter_hex_formatar_16bits(valorDecimalNegado);
+
+    return resultadoHex;
 }
+
+
+function simularINC(params) {
+
+    let valorRegistrador = parseInt(params, 16);
+    
+
+    valorRegistrador = valorRegistrador + 1; 
+    
+    let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
+    
+    return resultadoHex;
+}
+
+function simularDEC(params) {
+
+    let valorRegistrador = parseInt(params, 16); 
+
+    valorRegistrador = valorRegistrador - 1; 
+
+
+    let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
+    
+    return resultadoHex;
+}
+
+function simularNeg(params) {
+
+    let valorRegistrador = simularNot(params);
+
+
+    valorRegistrador = simularINC(valorRegistrador);
+
+
+    return valorRegistrador;
+}
+
 
 function simularXCHG(params) {
   console.log("SIMULANDO XCHG (Reg, Mem):", params);
   // ... (sua lógica visual aqui) ...
   animarBarramentosAmbos();
-}
-
-function simularINC(params) {
-  console.log("SIMULANDO INC (Reg):", params);
-  // ... (sua lógica visual aqui) ...
-  animarBarramentoDados();
 }
 
 function simularMOV(params) {

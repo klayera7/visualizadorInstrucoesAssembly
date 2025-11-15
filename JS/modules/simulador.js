@@ -23,12 +23,6 @@ function animarBarramentosAmbos() {
   animarBarramentoDados();
 }
 
-function hexParaBinario(hex) {
-  const numDecimal = parseInt(hex, 16);
-  const numBinario = numDecimal.toString(2);
-  return numBinario.padStart(4, "0");
-}
-
 function converter_hex_formatar_16bits(valorDecimal) {
     // Aplica a máscara final (se a função chamadora não aplicou, garante 16 bits)
     const valor16Bits = valorDecimal & 0xFFFF;
@@ -37,16 +31,13 @@ function converter_hex_formatar_16bits(valorDecimal) {
     return valor16Bits.toString(16).toUpperCase().padStart(4, '0');
 }
 
-
 /* =================================
 Funções de Simulação Visual
 ================================= */
 function simularNot(params) { 
     
-
     const valorDecimal = parseInt(params, 16);
     
-
     let valorDecimalNegado = ~valorDecimal & 0xFFFF; 
 
     let resultadoHex = converter_hex_formatar_16bits(valorDecimalNegado);
@@ -59,7 +50,6 @@ function simularINC(params) {
 
     let valorRegistrador = parseInt(params, 16);
     
-
     valorRegistrador = valorRegistrador + 1; 
     
     let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
@@ -73,7 +63,6 @@ function simularDEC(params) {
 
     valorRegistrador = valorRegistrador - 1; 
 
-
     let resultadoHex = converter_hex_formatar_16bits(valorRegistrador);
     
     return resultadoHex;
@@ -83,9 +72,7 @@ function simularNeg(params) {
 
     let valorRegistrador = simularNot(params);
 
-
     valorRegistrador = simularINC(valorRegistrador);
-
 
     return valorRegistrador;
 }

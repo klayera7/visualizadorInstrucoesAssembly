@@ -9,36 +9,35 @@ export const segmentValues = {
   cxCounter: "0000",
 };
 
-// --- MODIFICAÇÃO 1: Mapeie os novos IDs da RAM aqui ---
+// O seu mapeamento 'segmentDataInfos' está perfeito.
 const segmentDataInfos = {
   dataSegment: {
     inputId: "data_segment",
     registerSelector: '[data-name-segment="data"]',
-    ramContainerId: "ram_data_segment", // <-- NOVO
+    ramContainerId: "ram_data_segment",
   },
   extraSegment: {
     inputId: "extra_segment",
     registerSelector: '[data-name-segment="extra"]',
-    ramContainerId: "ram_extra_segment", // <-- NOVO
+    ramContainerId: "ram_extra_segment",
   },
   stackSegment: {
     inputId: "stack_segment",
     registerSelector: '[data-name-segment="stack"]',
-    ramContainerId: "ram_stack_segment", // <-- NOVO
+    ramContainerId: "ram_stack_segment",
   },
   codeSegment: {
     inputId: "code_segment",
     registerSelector: '[data-name-segment="code"]',
-    ramContainerId: "ram_code_segment", // <-- NOVO
+    ramContainerId: "ram_code_segment",
   },
   cxCounter: {
     inputId: "cx_counter",
     registerSelector: '[data-register="cx"]',
-    // (CX não tem um visualizador de RAM, então deixamos em branco)
   },
 };
 
-// Esta função (atualizar registradores da CPU) está perfeita, sem mudanças.
+// Sua função 'loadSegmentsIntoRegisters' está perfeita.
 const loadSegmentsIntoRegisters = () => {
   for (const key in segmentDataInfos) {
     const selector = segmentDataInfos[key].registerSelector;
@@ -52,46 +51,53 @@ const loadSegmentsIntoRegisters = () => {
 };
 
 
-
-function updateRamView(containerId, baseAddressHex) {
+function updateRamView(containerId, segmentAddressHex) {
   const container = document.getElementById(containerId);
-  if (!container) return; // Retorna se o ID não for encontrado (ex: para CX)
+  if (!container) return; 
 
-  const baseAddress = parseInt(baseAddressHex, 16);
-  if (isNaN(baseAddress)) return; // Retorna se o valor não for um hex válido
+  // 1. Converte o valor do SEGMENTO (4 dígitos) para um número
+  const segmentAddress = parseInt(segmentAddressHex, 16);
+  if (isNaN(segmentAddress)) return;
 
-  // Pega todas as "linhas" de código dentro daquele container
+  
+  const physicalBaseAddress = segmentAddress * 16; 
+
   const linhas = container.querySelectorAll(".linha-codigo");
+  const numLinhas = linhas.length;
 
   linhas.forEach((linha, offset) => {
     const addressElement = linha.querySelector("h5");
     if (addressElement) {
-      // Calcula o novo endereço (Base + offset)
-      // (Assumindo que cada linha é 1 byte. Se for 2, use 'offset * 2')
-      const novoEndereco = (baseAddress + offset).toString(16).toUpperCase();
       
-      // Formata para 4 dígitos (ex: 1000, 100A, 100B)
-      addressElement.textContent = novoEndereco.padStart(4, "0");
+      //    Inverte a ordem: a célula mais baixa (offset N-1)
+      //    deve ter o endereço base (physicalBaseAddress + 0).
+      //    A célula mais alta (offset 0) deve ter o endereço (physicalBaseAddress + N - 1).
+      const reverseOffset = numLinhas - 1 - offset;
+      const novoEnderecoNum = physicalBaseAddress + reverseOffset;
+      
+      const novoEnderecoHex = novoEnderecoNum.toString(16).toUpperCase();
+      
+      // 4. (Goal 2) Formata para 5 dígitos hexadecimais (20 bits)
+      addressElement.textContent = novoEnderecoHex.padStart(5, "0");
     }
   });
 }
 
-/**
- * Loop principal que atualiza TODOS os visualizadores da RAM.
- */
+// Sua função 'loadSegmentsIntoRAM' está perfeita.
 const loadSegmentsIntoRAM = () => {
   for (const key in segmentDataInfos) {
     const info = segmentDataInfos[key];
     const valorLido = segmentValues[key];
 
-    // Se o segmento tiver um ID de RAM e um valor, atualize-o
     if (info.ramContainerId && valorLido !== undefined) {
       updateRamView(info.ramContainerId, valorLido);
     }
   }
 };
 
-// --- MODIFICAÇÃO 3: Chame a nova função no listener do botão ---
+// Sua função 'getSegmentValues' está perfeita.
+// Ela já padroniza para 4 dígitos (padStart(4, "0")),
+// que é o correto para o valor do segmento.
 const getSegmentValues = () => {
   const iframeWindow = iframeSegmentPopup.contentWindow;
   const confirmBtn = iframeWindow.document.querySelector("#confirm_btn");
@@ -104,6 +110,7 @@ const getSegmentValues = () => {
       const inputId = segmentDataInfos[key].inputId;
       const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
       if (inputElement) {
+        // padStart(4, "0") está CORRETO aqui.
         inputs[key] = inputElement.value.trim().toUpperCase().padStart(4, "0");
       }
     }
@@ -119,11 +126,11 @@ const getSegmentValues = () => {
 
     ativaIfInstrucao();
     loadSegmentsIntoRegisters();
-    loadSegmentsIntoRAM(); // <-- ADICIONE ESTA LINHA
+    loadSegmentsIntoRAM(); 
   });
 };
 
-// Esta função está perfeita, sem mudanças.
+// Sua função 'initSegments' está perfeita.
 export const initSegments = () => {
   if (iframeSegmentPopup) {
     return iframeSegmentPopup.addEventListener("load", getSegmentValues);

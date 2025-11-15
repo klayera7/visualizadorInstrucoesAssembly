@@ -1,6 +1,6 @@
 import { updateInputs } from "./configuracaoEntradas.js";
 import { fecharModal } from "./controleModal.js";
-import { exibirValoresInstrucao } from "./fluxos.js";
+import { exibirValoresInstrucao } from "./simulador.js";
 
 const iframeInstruction = document.getElementById("instruction_iframe");
 const ifrmaeSegment = document.getElementById("segment_popup");

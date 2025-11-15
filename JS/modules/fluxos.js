@@ -23,6 +23,32 @@ function fluxo_dados_endereco() {
   fluxodados();
 }
 
+function hexParaBinario(hex) {
+   
+    const numDecimal = parseInt(hex, 16); 
+    
+    
+    const numBinario = numDecimal.toString(2); 
+    
+    return numBinario.padStart(4, '0');
+}
+
+/* =================================
+Instruções
+================================= */
+function simularNot(params) { 
+    
+    const valorBinario = hexParaBinario(params); 
+
+    const valorNegado = valorBinario
+        .split('') 
+        .map(bit => (bit === '0' ? '1' : '0')) 
+        .join(''); 
+    fluxo_dados_endereco();
+    fluxo_dados();
+    return valorNegado;
+}
+
 function simularXCHG(params) {
   console.log("SIMULANDO XCHG (Reg, Mem):", params);
 

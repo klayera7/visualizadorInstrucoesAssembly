@@ -8,7 +8,6 @@ export const valoresSegmentos = {
   extraSegment: "0000",
   stackSegment: "0000",
   codeSegment: "0000",
-  cxCounter: "0000",
 };
 
 // Objeto para mapear os campos (dentro do popup e no index)
@@ -32,10 +31,6 @@ const configSegmentos = {
     inputId: "code_segment",
     registerSelector: '[data-name-segment="code"]',
     ramContainerId: "ram_code_segment",
-  },
-  cxCounter: {
-    inputId: "cx_counter",
-    registerSelector: '[data-register="cx"]',
   },
 };
 
@@ -143,7 +138,7 @@ const anexarListenerPopupSegmentos = () => {
       }
     }
 
-    // Atualiza o objeto para mapeamento
+    // Atualiza o objeto para mapeamento dos segmentos
     Object.assign(valoresSegmentos, inputs);
 
     // Funções de atualização da UI

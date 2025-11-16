@@ -6,11 +6,11 @@ const botaoFechar = document.querySelector('[data-modal="fechar"]');
 const containerModal = document.querySelector('[data-modal="container"]');
 const cancelarInputModal = document.querySelector(
   '[data-modal="cancel_segment_input"]'
-); // (Este parece ser de dentro de um iframe, pode causar bugs)
+); 
 
-// Funções de controle
+
 const abrirModal = () => {
-  alternarParaPopupSegmentos(); // Garante que o popup de segmentos seja o primeiro a ser visto
+  alternarParaPopupSegmentos();
   containerModal.classList.add("ativo");
 };
 
@@ -24,7 +24,7 @@ const cliqueForaDoModal = (event) => {
   }
 };
 
-// para fechar o modal a partir do iframe (clicando no botao de cancelar)
+// p fechar o modal a partir do iframe (clicando no botao de cancelar)
 const fecharModalPeloIframe = () => {
   const modalNoParent = window.parent.document.querySelector(
     '[data-modal="container"]'
@@ -36,7 +36,7 @@ const fecharModalPeloIframe = () => {
   }
 };
 
-// Função principal de inicialização que será chamada pelo principal.js
+// inicialização que será chamada pelo principal.js
 export const inicializarModalPrincipal = () => {
   if (containerModal && botaoAbrir && botaoFechar) {
     botaoAbrir.addEventListener("click", abrirModal);
@@ -44,7 +44,6 @@ export const inicializarModalPrincipal = () => {
     containerModal.addEventListener("click", cliqueForaDoModal);
   }
 
-  // (Este listener pode precisar ir para o logicaPopupSegmentos.js se o botão estiver lá)
   if (cancelarInputModal)
     return cancelarInputModal.addEventListener("click", fecharModalPeloIframe);
 };

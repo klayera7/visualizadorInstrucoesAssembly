@@ -17,7 +17,7 @@ export function alternarParaPopupSegmentos() {
 function obterDadosDaInstrucao(doc) {
   if (!doc) doc = iframeInstruction.contentDocument;
   const instrucao = doc.getElementById("instruction").value;
-  const endereco_instrucao = doc.getElementById("instruction_address").value.trim();
+  const offset_instrucao = doc.getElementById("offset-address-instruction").value.trim();
 
   let op1 = null;
   let op2 = null;
@@ -57,7 +57,7 @@ function obterDadosDaInstrucao(doc) {
 
   return {
     instrucaoCompleta: instrucao,
-    endereco: endereco_instrucao,
+    deslocamento: offset_instrucao,
     op1: op1,
     op2: op2,
   };
@@ -111,7 +111,7 @@ function validarEntradasDaInstrucao(dados, janelaAlerta) {
     return false;
   }
 
-  if (!eHexValido16Bit(dados.endereco)) {
+  if (!eHexValido16Bit(dados.deslocamento)) {
     alertar("Erro: O 'Endereço da instrução' (IP) deve ser um valor HEXADECIMAL válido (0000-FFFF).");
     return false;
   }

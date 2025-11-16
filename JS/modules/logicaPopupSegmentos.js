@@ -2,7 +2,7 @@ import { alternarParaPopupInstrucoes } from "./logicaPopupInstrucao.js"; // Impo
 
 const iframeSegmentPopup = document.querySelector("#segment_popup");
 
-// "Fonte da verdade" para os valores dos segmentos
+// Objeto para referência dos valores dos segmentos
 export const valoresSegmentos = {
   dataSegment: "0000",
   extraSegment: "0000",
@@ -11,7 +11,7 @@ export const valoresSegmentos = {
   cxCounter: "0000",
 };
 
-// Mapeia os dados internos aos IDs do HTML (dentro do popup e no index)
+// Objeto para mapear os campos (dentro do popup e no index)
 const configSegmentos = {
   dataSegment: {
     inputId: "data_segment",
@@ -55,12 +55,12 @@ const carregarSegmentosNosRegistradores = () => {
 // Atualiza a UI dos endereços na RAM
 function atualizarVisualizacaoRAM(containerId, segmentAddressHex) {
   const container = document.getElementById(containerId);
-  if (!container) return; 
+  if (!container) return;
 
   const segmentAddress = parseInt(segmentAddressHex, 16);
   if (isNaN(segmentAddress)) return;
 
-  const physicalBaseAddress = segmentAddress * 16; 
+  const physicalBaseAddress = segmentAddress * 16;
   const linhas = container.querySelectorAll(".linha-codigo");
   const numLinhas = linhas.length;
 
@@ -93,8 +93,10 @@ const anexarListenerPopupSegmentos = () => {
   const confirmBtn = iframeWindow.document.querySelector("#confirm_btn");
 
   if (!confirmBtn) {
-      console.error("Botão de confirmação de segmentos não encontrado no iframe.");
-      return;
+    console.error(
+      "Botão de confirmação de segmentos não encontrado no iframe.",
+    );
+    return;
   }
 
   confirmBtn.addEventListener("click", () => {
@@ -108,24 +110,46 @@ const anexarListenerPopupSegmentos = () => {
         inputs[key] = inputElement.value.trim().toUpperCase().padStart(4, "0");
       }
     }
-    
-    // Validação de duplicados
-    const inputHexValues = Object.values(inputs);
-    const uniqueValues = new Set(inputHexValues);
-    if (inputHexValues.length !== uniqueValues.size) {
+
+    const TAMANHO_MINIMO_SEGMENTO_HEX = 0x1000;
+
+    const segmentosParaValidar = [
+      { nome: "Segmento de Código", valor: parseInt(inputs.codeSegment, 16) },
+      { nome: "Segmento de Dados", valor: parseInt(inputs.dataSegment, 16) },
+      { nome: "Segmento de Pilha", valor: parseInt(inputs.stackSegment, 16) },
+      { nome: "Segmento Extra", valor: parseInt(inputs.extraSegment, 16) },
+    ];
+
+    const valoresUnicos = new Set(segmentosParaValidar.map((s) => s.valor));
+    if (valoresUnicos.size < segmentosParaValidar.length) {
       iframeWindow.alert(
-        "Os valores dos segmentos devem ser diferentes um dos outros",
+        "Os valores dos segmentos de memória (CS, DS, SS, ES) devem ser diferentes um dos outros.",
       );
       return;
     }
     
-    // Atualiza a "fonte da verdade"
+    segmentosParaValidar.sort((a, b) => a.valor - b.valor);
+
+    for (let i = 1; i < segmentosParaValidar.length; i++) {
+      const segAnterior = segmentosParaValidar[i - 1];
+      const segAtual = segmentosParaValidar[i];
+
+      const diferenca = segAtual.valor - segAnterior.valor;
+
+      if (diferenca < TAMANHO_MINIMO_SEGMENTO_HEX) {
+        const msg = `Conflito de Segmento! Cada segmento ocupa 64KB, então os valores de início devem ter uma diferença de pelo menos 1000h.`;
+        iframeWindow.alert(msg);
+        return; 
+      }
+    }
+
+    // Atualiza o objeto para mapeamento
     Object.assign(valoresSegmentos, inputs);
 
     // Funções de atualização da UI
     alternarParaPopupInstrucoes();
     carregarSegmentosNosRegistradores();
-    carregarSegmentosNaRAM(); 
+    carregarSegmentosNaRAM();
   });
 };
 

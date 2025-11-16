@@ -1,5 +1,17 @@
 import { fecharModal } from "./controleModal.js";
 import { executarXCHG_Reg_Mem } from "../instrucoes/importacaoInstrucoes.js";
+import { valoresSegmentos } from "./logicaPopupSegmentos.js";
+
+const MAPA_SIMULACAO_INSTRUCAO = {
+  xchg_reg_mem: executarXCHG_Reg_Mem,
+  mov_reg_mem: simularMOV,
+  mov_reg_val: simularMOV,
+  add_reg_mem: simularADD,
+  add_reg_val: simularADD,
+  inc_reg: simularINC,
+  jmp: simularJMP,
+  not_reg: simularNot,
+};
 
 export function animarBarramentoEndereco() {
   const endereco = document.getElementById("address_bus");
@@ -86,16 +98,6 @@ function simularADD(params) {
   animarBarramentoEndereco();
 }
 
-const MAPA_SIMULACAO_INSTRUCAO = {
-  xchg_reg_mem: executarXCHG_Reg_Mem,
-  mov_reg_mem: simularMOV,
-  mov_reg_val: simularMOV,
-  add_reg_mem: simularADD,
-  add_reg_val: simularADD,
-  inc_reg: simularINC,
-  jmp: simularJMP,
-  not_reg: simularNot,
-};
 
 export function prepararExecucaoInstrucao(params) {
   fecharModal();

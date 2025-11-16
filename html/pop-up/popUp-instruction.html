@@ -50,7 +50,6 @@
                         <option value="cmp_reg_mem">Cmp (Reg, Mem)</option>
                         <option value="cmp_reg_val">Cmp (Reg, Valor)</option>
                         <option value="jmp">Jmp (Endereço)</option>
-                        <option value="jxx">Jxx (Endereço)</option>
                         <option value="call">Call (Endereço)</option>
                         <option value="ret">Ret</option>
                         <option value="iret">Iret</option>
@@ -62,74 +61,71 @@
             </div>
 
             <div class="inputs_area">
-                <div id="cont_registrador" class="input-container row hidden">
-                    <div class="input-group">
-                        <label for="input_registrador"
-                            >Operando 1 (Registrador):</label
-                        >
-                        <select name="input_registrador" id="input_registrador">
-                            <option value="" disabled selected>
-                                Registrador
-                            </option>
-                            <option value="AX">AX</option>
-                            <option value="BX">BX</option>
-                            <option value="CX">CX</option>
-                            <option value="DX">DX</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="value_reg"
-                            >Valor Inicial do Registrador:</label
-                        >
-                        <input
-                            type="text"
-                            name="value_reg"
-                            id="value_reg"
-                            placeholder="Valor inicial (ex: 1000h)"
-                        />
-                    </div>
-                </div>
-                <div id="cont_memoria" class="input-container hidden">
-                    <label for="input_memoria">Endereço operando 2 (Memória):</label>
-                    <input
-                        type="text"
-                        name="input_memoria"
-                        id="input_memoria"
-                        placeholder="Endereço (ex: [100h])"
-                    />
-                </div>
-
-                <div id="cont_imediato" class="input-container hidden">
-                    <label for="input_imediato"
-                        >Operando 2 (Valor Imediato):</label
-                    >
-                    <input
-                        type="text"
-                        name="input_imediato"
-                        id="input_imediato"
-                        placeholder="Valor (ex: 1234h)"
-                    />
-                </div>
-
+              <div id="cont_registrador" class="input-container row hidden">
                 <div class="input-group">
-                    <label for="value_mem">Valor Inicial na Memória:</label>
-                    <input
-                        type="text"
-                        name="value_mem"
-                        id="value_mem"
-                        placeholder="Valor (ex: F0F0h)"
-                    />
+                  <label for="input_registrador">Operando 1 (Registrador):</label>
+                  <select name="input_registrador" id="input_registrador">
+                    <option value="" disabled selected>Registrador</option>
+                    <option value="AX">AX</option>
+                    <option value="BX">BX</option>
+                    <option value="CX">CX</option>
+                    <option value="DX">DX</option>
+                  </select>
                 </div>
-
-                <div id="cont_endereco" class="input-container hidden">
-                    <label for="input_endereco">Endereço (JMP/CALL):</label>
-                    <input
-                        type="text"
-                        name="input_endereco"
-                        id="input_endereco"
-                        placeholder="Valor/Endereço (ex: 1000h)"
-                    />
+                <div class="input-group">
+                  <label for="value_reg">Valor Inicial do Registrador:</label>
+                  <input
+                    type="text"
+                    name="value_reg"
+                    id="value_reg"
+                    placeholder="Valor inicial na base 10 (ex: 100)"
+                  />
                 </div>
+              </div>
+            
+              <div id="cont_memoria" class="input-container row hidden">
+                
+                <div class="input-group">
+                  <label for="input_memoria">Endereço operando 2 (Memória):</label>
+                  <input
+                    type="text"
+                    name="input_memoria"
+                    id="input_memoria"
+                    placeholder="Endereço (ex: [100h])"
+                  />
+                </div>
+            
+                <div class="input-group">
+                  <label for="value_mem">Valor Inicial na Memória:</label>
+                  <input
+                    type="text"
+                    name="value_mem"
+                    id="value_mem"
+                    placeholder="Valor em decimal (ex: 50)"
+                  />
+                </div>
+            
+              </div>
+              
+              <div id="cont_imediato" class="input-container hidden">
+                <label for="input_imediato">Operando 2 (Valor Imediato):</label>
+                <input
+                  type="text"
+                  name="input_imediato"
+                  id="input_imediato"
+                  placeholder="Valor (ex: 123)"
+                />
+              </div>
+            
+              <div id="cont_endereco" class="input-container hidden">
+                <label for="input_endereco">Endereço (JMP/CALL):</label>
+                <input
+                  type="text"
+                  name="input_endereco"
+                  id="input_endereco"
+                  placeholder="Valor/Endereço (ex: 1000h)"
+                />
+              </div>
             </div>
 
             <div class="cont_btns">

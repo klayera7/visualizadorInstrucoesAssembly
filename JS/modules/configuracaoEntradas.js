@@ -1,5 +1,3 @@
-// Este objeto é uma constante de configuração, o nome original está bom,
-// mas podemos traduzir para ficar 100% em português.
 export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
   push_reg: { inputs: ["cont_registrador"] },
   pop_reg: { inputs: ["cont_registrador"] },
@@ -25,7 +23,6 @@ export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
   cmp_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
 
   jmp: { inputs: ["cont_endereco"] },
-  jxx: { inputs: ["cont_endereco"] },
   call: { inputs: ["cont_endereco"] },
   loop: { inputs: ["cont_endereco"] },
 
@@ -36,7 +33,6 @@ export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
   iret: { inputs: [] },
 };
 
-// Renomeado de updateInputs
 export function atualizarCamposDeEntrada(iframeDoc) {
   const instructionSelect =
     iframeDoc.contentDocument.getElementById("instruction");
@@ -58,7 +54,7 @@ export function atualizarCamposDeEntrada(iframeDoc) {
   const config = CONFIGURACAO_ENTRADAS_INSTRUCAO[selectedInstruction] || {
     inputs: [],
   };
-  
+
   config.inputs.forEach((containerId) => {
     const containerToShow =
       iframeDoc.contentDocument.getElementById(containerId);

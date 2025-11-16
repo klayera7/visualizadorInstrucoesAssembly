@@ -17,10 +17,12 @@ export function alternarParaPopupSegmentos() {
 function obterDadosDaInstrucao(doc) {
   if (!doc) doc = iframeInstruction.contentDocument;
   const instrucao = doc.getElementById("instruction").value;
-  const offset_instrucao = doc.getElementById("offset-address-instruction").value.trim();
+  const offset_instrucao = doc
+    .getElementById("offset-address-instruction")
+    .value.trim();
 
-  let op1 = null;
-  let op2 = null;
+  let op1;
+  let op2;
 
   const contRegistrador = doc.getElementById("cont_registrador");
   const contMemoria = doc.getElementById("cont_memoria");
@@ -65,21 +67,21 @@ function obterDadosDaInstrucao(doc) {
 
 function eHexValido16Bit(valorHex) {
   if (!valorHex) return false;
-  
+
   let valorLimpo = valorHex.toUpperCase();
-  if (valorLimpo.endsWith('H')) {
+  if (valorLimpo.endsWith("H")) {
     valorLimpo = valorLimpo.slice(0, -1);
   }
-  if (!valorLimpo) return false; 
+  if (!valorLimpo) return false;
   const charsHex = "0123456789ABCDEF";
   for (const char of valorLimpo) {
     if (!charsHex.includes(char)) {
-      return false; 
+      return false;
     }
   }
 
   const valorNum = parseInt(valorLimpo, 16);
-  return valorNum >= 0 && valorNum <= 0xFFFF;
+  return valorNum >= 0 && valorNum <= 0xffff;
 }
 
 function eDecimalValido16Bit(valorDecimal) {
@@ -89,7 +91,7 @@ function eDecimalValido16Bit(valorDecimal) {
 
   for (const char of valorDecimal) {
     if (!charsDec.includes(char)) {
-      return false; 
+      return false;
     }
   }
 
@@ -112,46 +114,60 @@ function validarEntradasDaInstrucao(dados, janelaAlerta) {
   }
 
   if (!eHexValido16Bit(dados.deslocamento)) {
-    alertar("Erro: O 'Endereço da instrução' (IP) deve ser um valor HEXADECIMAL válido (0000-FFFF).");
+    alertar(
+      "Erro: O 'Endereço da instrução' (IP) deve ser um valor HEXADECIMAL válido (0000-FFFF).",
+    );
     return false;
   }
-  
+
   if (dados.op1) {
-    if (dados.op1.tipo === 'registrador') {
+    if (dados.op1.tipo === "registrador") {
       if (!dados.op1.nome) {
         alertar("Erro: O Registrador (Operando 1) não foi selecionado.");
         return false;
       }
       if (!eDecimalValido16Bit(dados.op1.valorInicial)) {
-        alertar("Erro: O 'Valor Inicial do Registrador' deve ser um valor DECIMAL válido (0-65535).");
+        alertar(
+          "Erro: O 'Valor Inicial do Registrador' deve ser um valor DECIMAL válido (0-65535).",
+        );
         return false;
       }
     }
-    if (dados.op1.tipo === 'endereco' && !eHexValido16Bit(dados.op1.valor)) {
-      alertar("Erro: O 'Endereço (JMP/CALL)' deve ser um valor HEXADECIMAL válido (0000-FFFF).");
+    if (dados.op1.tipo === "endereco" && !eHexValido16Bit(dados.op1.valor)) {
+      alertar(
+        "Erro: O 'Endereço (JMP/CALL)' deve ser um valor HEXADECIMAL válido (0000-FFFF).",
+      );
       return false;
     }
   }
 
-  
   if (dados.op2) {
-    if (dados.op2.tipo === 'memoria') {
+    if (dados.op2.tipo === "memoria") {
       if (!dados.op2.endereco) {
-          alertar("Erro: O 'Endereço de Memória' (Operando 2) não foi preenchido.");
-          return false;
+        alertar(
+          "Erro: O 'Endereço de Memória' (Operando 2) não foi preenchido.",
+        );
+        return false;
       }
-     
+
       if (!eDecimalValido16Bit(dados.op2.valorInicial)) {
-        alertar("Erro: O 'Valor Inicial na Memória' deve ser um valor DECIMAL válido (0-65535).");
+        alertar(
+          "Erro: O 'Valor Inicial na Memória' deve ser um valor DECIMAL válido (0-65535).",
+        );
         return false;
       }
     }
-    if (dados.op2.tipo === 'imediato' && !eDecimalValido16Bit(dados.op2.valor)) {
-      alertar("Erro: O 'Valor Imediato' (Operando 2) deve ser um valor DECIMAL válido (0-65535).");
+    if (
+      dados.op2.tipo === "imediato" &&
+      !eDecimalValido16Bit(dados.op2.valor)
+    ) {
+      alertar(
+        "Erro: O 'Valor Imediato' (Operando 2) deve ser um valor DECIMAL válido (0-65535).",
+      );
       return false;
     }
   }
-  
+
   return true;
 }
 
@@ -174,16 +190,15 @@ export const inicializarLogicaPopupInstrucao = () => {
 
       if (select) {
         select.addEventListener("change", () =>
-          atualizarCamposDeEntrada(iframeInstruction)
-        ); 
-        atualizarCamposDeEntrada(iframeInstruction); 
+          atualizarCamposDeEntrada(iframeInstruction),
+        );
+        atualizarCamposDeEntrada(iframeInstruction);
       }
 
-      // Listener do botão de confirmação (sem mudanças)
       if (confirmButton) {
         confirmButton.addEventListener("click", (e) => {
           const dadosDaInstrucao = obterDadosDaInstrucao(doc);
-          
+
           if (validarEntradasDaInstrucao(dadosDaInstrucao, doc.defaultView)) {
             prepararExecucaoInstrucao(dadosDaInstrucao);
           }

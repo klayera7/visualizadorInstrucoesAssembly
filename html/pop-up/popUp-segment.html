@@ -51,27 +51,20 @@
                         name="code_segment"
                         placeholder="ex: 8A00"
                 /></span>
-
-                <span class="segment">
-                    <label for="cx_register"
-                        >CX (Contador de instruções loop)</label
-                    >
-                    <input
-                        id="cx_counter"
-                        type="number"
-                        name="cx_register"
-                        placeholder="ex: 10"
-                        min="0"
-                /></span>
             </div>
 
             <span id="buttons_container">
                 <button type="button" id="confirm_btn">Confirmar</button>
-                <button type="button" id="cancel_btn" data-modal="cancel_segment_input">Cancelar</button>
+                <button
+                    type="button"
+                    id="cancel_btn"
+                    data-modal="cancel_segment_input"
+                >
+                    Cancelar
+                </button>
             </span>
         </div>
     </body>
     <script type="module" src="../../JS/modules/controleModal.js"></script>
     <script type="module" src="../../JS/principal.js"></script>
-    
 </html>

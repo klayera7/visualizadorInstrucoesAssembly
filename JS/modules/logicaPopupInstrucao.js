@@ -31,7 +31,6 @@ function obterDadosDaInstrucao(doc) {
   const contImediato = doc.getElementById("cont_imediato");
   const contEndereco = doc.getElementById("cont_endereco");
 
-  // Lógica de coleta (estava correta)
   if (contRegistrador && !contRegistrador.classList.contains("hidden")) {
     op1 = {
       tipo: "registrador",
@@ -60,7 +59,6 @@ function obterDadosDaInstrucao(doc) {
     };
   }
 
-  // Retorna o objeto limpo
   return {
     instrucaoCompleta: instrucao,
     endereco: endereco_instrucao,

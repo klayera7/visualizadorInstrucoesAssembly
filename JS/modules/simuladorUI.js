@@ -141,7 +141,7 @@ export async function lerDaMemoria(
   const valorNum = parseInt(valorHex, 16);
 
   await animarBarramentos(endFisicoStr, valorNum, 500);
-  return valorNum; // Retorna um NÚMERO
+  return valorNum; 
 }
 
 export async function escreverNaMemoria(nomeSegmento, offsetHex, valorNum) {

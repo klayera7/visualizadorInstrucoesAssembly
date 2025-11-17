@@ -143,20 +143,26 @@ div.cont_btns button {
 
 button#btn_confirm_instruction {
   background-color: #25884e;
+  height: 60px;
+  width: 180px;
+  border: none;
 }
 
 button#btn_confirm_instruction:hover {
   background-color: #1a5f37;
   transform: translateY(-4px);
+  box-shadow: 0 0 10px rgb(37, 136, 78);
 }
 
 button#btn_cancel_instruction {
   background-color: #a12a2a;
+  border: none;
 }
 
 button#btn_cancel_instruction:hover {
   background-color: #701c1c;
   transform: translateY(-4px);
+  box-shadow: 0 0 10px rgb(161, 42, 42);
 }
 
 .input-container.hidden {

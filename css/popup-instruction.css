@@ -21,29 +21,24 @@ body {
   padding: 10px;
   font-size: 1.6rem;
   font-weight: bold;
-  /* Alinha o label com os outros (opcional, mas recomendado) */
   width: 100%;
-  max-width: 512px; /* (250px + 250px + 12px de gap) */
+  max-width: 512px;
   padding-left: 0;
 }
 
-/* * === REGRA DE PADRONIZAÇÃO (REQ 2) === 
- * Estilo base para TODOS os inputs e selects no popup.
-*/
 .pop_up_instruction input[type="text"],
 .pop_up_instruction select {
-  width: 250px; /* Largura padrão */
-  padding: 0.7rem; /* Padding padrão */
-  font-size: 1rem; /* Fonte padrão */
+  width: 250px; 
+  padding: 0.7rem; 
+  font-size: 1rem; 
   font-family: Arial, sans-serif;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 4px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  margin-top: 4px; /* Espaço entre label e input */
+  margin-top: 4px;
 }
 
-/* Regra de foco para os elementos padronizados */
 .pop_up_instruction input[type="text"]:focus,
 .pop_up_instruction select:focus {
   outline: none;
@@ -51,7 +46,6 @@ body {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Cor do placeholder para os inputs padronizados */
 .pop_up_instruction input[type="text"]::placeholder {
   color: #0000008a;
 }

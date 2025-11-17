@@ -9,35 +9,52 @@ import {
   calcularEnderecoFisico,
   formatarEnderecoFisico,
   esperar,
+  escreverNoRegistrador,
 } from "./simuladorUI.js";
 
-async function executarCicloCompleto(params) {
+async function executarCicloCompleto(params, jaBuscada = false) {
   try {
-    await animarEtapa("Busca");
+    if (!jaBuscada) {
+      await animarEtapa("Busca");
 
-    const endFisicoInstrucao = calcularEnderecoFisico(
-      "codeSegment",
-      params.deslocamento,
-    );
-    const endFisicoStr = formatarEnderecoFisico(endFisicoInstrucao);
+      const valorIP = parseInt(params.deslocamento, 16);
+      if (!isNaN(valorIP)) {
+        await escreverNoRegistrador("IP", valorIP);
+      } else {
+        throw new Error(`Offset (IP) inválido: ${params.deslocamento}`);
+      }
 
-    const nomeInstrucao = params.instrucaoCompleta.split("_")[0].toUpperCase();
-    const op1Str = params.op1?.nome || params.op1?.valor || "";
+      if (params.op2 && params.op2.tipo === "memoria") {
+        const valorOffsetMemoria = parseInt(params.op2.endereco, 16);
+        if (!isNaN(valorOffsetMemoria)) {
+          await escreverNoRegistrador("SI", valorOffsetMemoria);
+        }
+      }
 
-    const op2Str = params.op2 ? params.op2.endereco || params.op2.valor : "";
-    const instrucaoCompletaStr = `${nomeInstrucao} ${op1Str}, ${op2Str}`.trim();
+      const endFisicoInstrucao = calcularEnderecoFisico(
+        "codeSegment",
+        params.deslocamento,
+      );
+      const endFisicoStr = formatarEnderecoFisico(endFisicoInstrucao);
+      const nomeInstrucao = params.instrucaoCompleta
+        .split("_")[0]
+        .toUpperCase();
+      const op1Str = params.op1?.nome || params.op1?.valor || "";
+      const op2Str = params.op2 ? params.op2.endereco || params.op2.valor : "";
+      const instrucaoCompletaStr =
+        `${nomeInstrucao} ${op1Str}, ${op2Str}`.trim();
 
-    await animarBarramentos(endFisicoStr, "...", 400);
-    const elemInstrucao = obterElementoMemoria(
-      "codeSegment",
-      endFisicoStr,
-      instrucaoCompletaStr,
-    );
+      await animarBarramentos(endFisicoStr, "...", 400);
+      const elemInstrucao = obterElementoMemoria(
+        "codeSegment",
+        endFisicoStr,
+        instrucaoCompletaStr,
+      );
 
-    elemInstrucao.innerText = instrucaoCompletaStr.padEnd(20, " ");
-
-    await animarBarramentos(endFisicoStr, instrucaoCompletaStr, 800);
-    await animarDestaque(elemInstrucao);
+      elemInstrucao.innerText = instrucaoCompletaStr.padEnd(20, " ");
+      await animarBarramentos(endFisicoStr, instrucaoCompletaStr, 800);
+      await animarDestaque(elemInstrucao);
+    }
 
     await animarEtapa("Decodificação");
     const funcaoDeSimulacao = MAPA_DE_INSTRUCOES[params.instrucaoCompleta];
@@ -50,32 +67,31 @@ async function executarCicloCompleto(params) {
       await esperar(500);
 
       await animarEtapa("Execução");
-
       await funcaoDeSimulacao(params);
     }
-
     await animarEtapa("Busca");
     await animarBarramentos("----", "----", 200);
+    return true;
   } catch (error) {
     console.error("Erro na simulação:", error);
     alert("Erro na simulação: " + error.message);
+    return false;
   }
 }
 
 export function prepararExecucaoInstrucao(params) {
   fecharModal();
-
   const botaoIniciar = document.querySelector(".btn_icon_play");
-
   if (botaoIniciar) {
     const novoBotao = botaoIniciar.cloneNode(true);
     botaoIniciar.parentNode.replaceChild(novoBotao, botaoIniciar);
-
-    novoBotao.addEventListener("click", () => {
-      console.log(
-        `Botão 'Play' clicado. Iniciando ciclo para: ${params.instrucaoCompleta}`,
-      );
-      executarCicloCompleto(params);
+    let instrucaoJaBuscada = false;
+    novoBotao.addEventListener("click", async () => {
+      console.log(`Botão 'Play' clicado. Já buscada: ${instrucaoJaBuscada}`);
+      const sucesso = await executarCicloCompleto(params, instrucaoJaBuscada);
+      if (sucesso) {
+        instrucaoJaBuscada = true;
+      }
     });
   }
 }

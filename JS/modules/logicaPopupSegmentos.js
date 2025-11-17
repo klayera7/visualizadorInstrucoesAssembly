@@ -100,9 +100,12 @@ const anexarListenerPopupSegmentos = () => {
 
     for (const key in configSegmentos) {
       const inputId = configSegmentos[key].inputId;
+      const valorResgatado = iframeWindow.document.querySelector(`#${inputId}`).value
+      const valorConvertido = parseInt(valorResgatado, 16)
+      if (isNaN(valorConvertido)) return iframeWindow.alert("Insira um valor hexadecimal válido")
       const inputElement = iframeWindow.document.querySelector(`#${inputId}`);
       if (inputElement) {
-        inputs[key] = inputElement.value.trim().toUpperCase().padStart(4, "0");
+        inputs[key] = valorResgatado.trim().toUpperCase().padStart(4, "0");
       }
     }
 

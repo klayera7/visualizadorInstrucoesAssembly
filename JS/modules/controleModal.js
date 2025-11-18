@@ -9,8 +9,6 @@ const cancelarInputModal = document.querySelector(
 ); 
 
 
-// No seu arquivo controleModal.js
-
 const abrirModal = () => {
   const iframeSegmento = document.getElementById("segment_popup");
   const iframeInstrucao = document.getElementById("instruction_iframe");

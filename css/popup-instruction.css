@@ -50,14 +50,7 @@ body {
   color: #0000008a;
 }
 
-/* === FIM DA PADRONIZAÇÃO === */
 
-
-/* Regras antigas removidas pois foram substituídas pela regra geral acima */
-/* input[name="adress"] { ... } */
-/* input[name="operand1"], [name="operand2"] { ... } */
-/* input[name="adress"]:focus, [name="operand1"]:focus, [name="operand2"]:focus { ... } */
-/* input[name="adress"], [name="operand1"], [name="operand2"]::placeholder { ... } */
 
 
 div.pop_up_instruction {
@@ -77,7 +70,7 @@ div.cont_selection {
   gap: 1.7rem;
   margin: 1.7rem 0;
 }
-/* Regra 'div.cont_selection select' removida, coberta pela padronização */
+
 
 div.inputs_area {
   display: flex;
@@ -85,41 +78,34 @@ div.inputs_area {
   flex-wrap: wrap;
   gap: 1.3rem;
   margin: 1.7rem 0;
-  width: 100%; /* Garante que a área use o espaço disponível */
+  width: 100%;
 }
-/* Regra 'div.inputs_area input' removida, coberta pela padronização */
 
 
-/* * === REQ 3: Layout Lado-a-Lado === 
-*/
-
-/* O container de input padrão (vertical: label em cima, input embaixo) */
 .input-container {
   display: flex;
   flex-direction: column;
 }
 
-/* Um grupo para agrupar verticalmente um label e seu input */
 .input-group {
   display: flex;
   flex-direction: column;
 }
 
-/* O container especial .row (para #cont_registrador) */
 .input-container.row {
-  flex-direction: row; /* Faz os .input-group ficarem lado a lado */
-  gap: 1.3rem; /* Espaço entre as duas colunas */
+  flex-direction: row; 
+  gap: 1.3rem; 
   justify-content: center;
-  flex-wrap: wrap; /* Permite quebrar em telas menores */
+  flex-wrap: wrap; 
 }
 
-/* Ajusta a largura dos inputs/selects DENTRO do container .row */
+
 .input-container.row .input-group input,
 .input-container.row .input-group select {
-  width: 250px; /* Mantém a largura padrão de 250px */
+  width: 250px; 
 }
 
-/* === FIM DO LAYOUT LADO-A-LADO === */
+
 
 
 div.cont_btns {

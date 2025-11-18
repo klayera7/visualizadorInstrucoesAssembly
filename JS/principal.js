@@ -9,3 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarLogicaSegmentos();
   inicializarLogicaPopupInstrucao();
 });
+
+// Funcionalidade do botão reset
+document.getElementById("btn_reset_program").addEventListener("click", () => {
+  location.reload(true);
+});

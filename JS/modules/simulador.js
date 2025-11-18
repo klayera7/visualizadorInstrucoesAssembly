@@ -16,7 +16,6 @@ async function executarCicloCompleto(params, jaBuscada = false) {
   try {
     if (!jaBuscada) {
       await animarEtapa("Busca");
-
       const valorIP = parseInt(params.deslocamento, 16);
       if (!isNaN(valorIP)) {
         await escreverNoRegistrador("IP", valorIP);
@@ -24,8 +23,11 @@ async function executarCicloCompleto(params, jaBuscada = false) {
         throw new Error(`Offset (IP) inválido: ${params.deslocamento}`);
       }
 
+
       if (params.op2 && params.op2.tipo === "memoria") {
-        const valorOffsetMemoria = parseInt(params.op2.endereco, 16);
+        const enderecoLimpo = params.op2.endereco.replace(/[\[\]]/g, '');
+        const valorOffsetMemoria = parseInt(enderecoLimpo, 16);
+        
         if (!isNaN(valorOffsetMemoria)) {
           await escreverNoRegistrador("SI", valorOffsetMemoria);
         }
@@ -36,13 +38,22 @@ async function executarCicloCompleto(params, jaBuscada = false) {
         params.deslocamento,
       );
       const endFisicoStr = formatarEnderecoFisico(endFisicoInstrucao);
-      const nomeInstrucao = params.instrucaoCompleta
-        .split("_")[0]
-        .toUpperCase();
+      const nomeInstrucao = params.instrucaoCompleta.split("_")[0].toUpperCase();
       const op1Str = params.op1?.nome || params.op1?.valor || "";
-      const op2Str = params.op2 ? params.op2.endereco || params.op2.valor : "";
-      const instrucaoCompletaStr =
-        `${nomeInstrucao} ${op1Str}, ${op2Str}`.trim();
+      
+      let op2Str = "";
+      if (params.op2) {
+        if (params.op2.tipo === "memoria") {
+           const end = params.op2.endereco;
+           op2Str = end.startsWith("[") ? end : `[${end}]`;
+        } else {
+           op2Str = params.op2.valor || "";
+        }
+      }
+      let instrucaoCompletaStr = `${nomeInstrucao} ${op1Str}, ${op2Str}`.trim();
+      if (instrucaoCompletaStr.endsWith(",")) {
+          instrucaoCompletaStr = instrucaoCompletaStr.slice(0, -1);
+      }
 
       await animarBarramentos(endFisicoStr, "...", 400);
       const elemInstrucao = obterElementoMemoria(
@@ -69,6 +80,7 @@ async function executarCicloCompleto(params, jaBuscada = false) {
       await animarEtapa("Execução");
       await funcaoDeSimulacao(params);
     }
+
     await animarEtapa("Busca");
     await animarBarramentos("----", "----", 200);
     return true;

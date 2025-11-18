@@ -9,10 +9,12 @@ export async function animarBarramentos(endereco, dado, duracao = 500) {
   const busDado = document.getElementById("data_bus");
 
   busEnd.innerText = endereco.toUpperCase();
+
   const dadoStr =
     typeof dado === "number"
       ? dado.toString(16).toUpperCase().padStart(4, "0")
       : dado;
+
   busDado.innerText = dadoStr.toUpperCase();
 
   busEnd.classList.add("bus-active");
@@ -77,7 +79,7 @@ function obterElementoRegistrador(regNome) {
 export function obterElementoMemoria(
   nomeSegmento,
   deslocamentoFisicoStr,
-  valorInicial = "0000",
+  valorInicial = 0,
 ) {
   const mapaRam = {
     codeSegment: "ram_code_segment",
@@ -94,7 +96,6 @@ export function obterElementoMemoria(
   }
 
   const enderecoFisico = deslocamentoFisicoStr.toUpperCase();
-
   let linhas = [...memContainer.querySelectorAll(".linha-codigo")];
 
   let linhaMem = linhas.find(
@@ -116,20 +117,27 @@ export function obterElementoMemoria(
     `;
     memContainer.prepend(linhaMem);
   }
-  return linhaMem.querySelector("h4"); // Retorna o <h4>
+  return linhaMem.querySelector("h4");
+}
+
+function parseDecimalInput(valorStr) {
+  if (!valorStr) return 0;
+  const num = parseInt(valorStr, 10);
+  return isNaN(num) ? 0 : num;
 }
 
 export async function lerDaMemoria(
   nomeSegmento,
   offsetHex,
-  valorInicialDecimal,
+  valorInicialDecimalStr,
 ) {
   const endFisico = calcularEnderecoFisico(nomeSegmento, offsetHex);
   const endFisicoStr = formatarEnderecoFisico(endFisico);
 
   await animarBarramentos(endFisicoStr, "----", 500);
 
-  const valorInicialNum = parseInt(valorInicialDecimal, 10);
+  const valorInicialNum = parseDecimalInput(valorInicialDecimalStr);
+
   const elemMem = obterElementoMemoria(
     nomeSegmento,
     endFisicoStr,
@@ -137,11 +145,12 @@ export async function lerDaMemoria(
   );
   await animarDestaque(elemMem);
 
-  const valorHex = elemMem.innerText.trim();
-  const valorNum = parseInt(valorHex, 16);
+  const valorHexNaUI = elemMem.innerText.trim();
+
+  const valorNum = parseInt(valorHexNaUI, 16);
 
   await animarBarramentos(endFisicoStr, valorNum, 500);
-  return valorNum; 
+  return valorNum;
 }
 
 export async function escreverNaMemoria(nomeSegmento, offsetHex, valorNum) {
@@ -156,21 +165,23 @@ export async function escreverNaMemoria(nomeSegmento, offsetHex, valorNum) {
   await animarDestaque(elemMem);
 }
 
-export async function lerDoRegistrador(regNome, valorInicialDecimal) {
+export async function lerDoRegistrador(regNome, valorInicialDecimalStr) {
   const elemReg = obterElementoRegistrador(regNome);
   await animarDestaque(elemReg);
 
-  let valorHex = elemReg.innerText.trim();
+  let valorHexNaUI = elemReg.innerText.trim();
 
-  if (valorHex === "0000" || valorHex === "") {
-    return parseInt(valorInicialDecimal, 10);
+  if (valorHexNaUI === "0000" || valorHexNaUI === "") {
+    return parseDecimalInput(valorInicialDecimalStr);
   }
-  return parseInt(valorHex, 16);
+  return parseInt(valorHexNaUI, 16);
 }
 
 export async function escreverNoRegistrador(regNome, valorNum) {
   const elemReg = obterElementoRegistrador(regNome);
+
   const valorFormatado = valorNum.toString(16).toUpperCase().padStart(4, "0");
+
   elemReg.innerText = valorFormatado;
   await animarDestaque(elemReg);
 }

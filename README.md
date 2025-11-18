@@ -24,6 +24,8 @@ Você pode carregar um programa na tela inicial, clicando no botão **"Carregar 
 
 **📝 Por que definir segmentos?** Na arquitetura x86 modo real, o Sistema Operacional aloca automaticamente os segmentos. **Aqui, você tem o controle** para definir isso e entender como funciona o endereçamento de 20 bits e a lógica de segmentação, que é fundamental no modo real.
 
+🔍 **Por que os segmentos distam 0x1000 entre si?** No modo real do x86, cada segmento possui um tamanho máximo de 64KB. Em hexadecimal, 64KB equivale a 0x10000. Como o cálculo do endereço físico é (Segmento * 16) + Offset, um valor de 0x1000 no registrador de segmento, multiplicado por 16, resulta exatamente no início do próximo bloco de 64KB (0x10000). Isso garante que os segmentos de Código, Dados e Pilha não se sobreponham.
+
 **Registradores de Segmento em Foco:** A ferramenta permite visualizar como os registradores **CS (Code Segment), DS (Data Segment), SS (Stack Segment) e ES (Extra Segment)** definem os limites de memória para o programa.
 
 #### 2. Definindo as Instruções

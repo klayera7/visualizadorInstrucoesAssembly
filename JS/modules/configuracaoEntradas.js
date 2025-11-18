@@ -17,10 +17,6 @@ export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
   xor_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
   cmp_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
 
-  mov_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
-  add_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
-  sub_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
-  cmp_reg_val: { inputs: ["cont_registrador", "cont_imediato"] },
 
   jmp: { inputs: ["cont_endereco"] },
   call: { inputs: ["cont_endereco"] },

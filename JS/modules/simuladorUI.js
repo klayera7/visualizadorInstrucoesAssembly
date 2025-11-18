@@ -22,13 +22,13 @@ export async function animarBarramentos(endereco, dado, duracao = 500) {
 
   busDado.innerText = formatarWord(dado);
 
-  busEnd.classList.add("bus-active");
-  busDado.classList.add("bus-active");
+  busEnd.classList.add("active_bus_address");
+  busDado.classList.add("active_bus_data");
 
   await esperar(duracao);
 
-  busEnd.classList.remove("bus-active");
-  busDado.classList.remove("bus-active");
+  busEnd.classList.remove("active_bus_address");
+  busDado.classList.remove("active_bus_data");
 
   await esperar(100);
 }

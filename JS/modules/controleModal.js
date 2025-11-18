@@ -9,7 +9,24 @@ const cancelarInputModal = document.querySelector(
 ); 
 
 
+// No seu arquivo controleModal.js
+
 const abrirModal = () => {
+  const iframeSegmento = document.getElementById("segment_popup");
+  const iframeInstrucao = document.getElementById("instruction_iframe");
+
+  const carregarIframeSeNecessario = (iframe) => {
+    const srcAtual = iframe.getAttribute("src");
+    const srcReal = iframe.getAttribute("data-src");
+    
+    if (!srcAtual || srcAtual === "") {
+      iframe.setAttribute("src", srcReal);
+    }
+  };
+
+  carregarIframeSeNecessario(iframeSegmento);
+  carregarIframeSeNecessario(iframeInstrucao);
+
   alternarParaPopupSegmentos();
   containerModal.classList.add("ativo");
 };

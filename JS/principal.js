@@ -12,5 +12,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Funcionalidade do botão reset
 document.getElementById("btn_reset_program").addEventListener("click", () => {
-  location.reload();
+    location.reload();
 });

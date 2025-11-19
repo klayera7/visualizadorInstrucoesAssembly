@@ -7,6 +7,7 @@ import { simularADD_Reg_Mem } from "./logicaAdd.js";
 import {subFunction} from "./subInstruction.js";
 import {executarNot} from "./logicaNot.js";
 import { simularOR_Reg_Mem } from "./logicaOR.js";
+import {mul} from "./logicaMul.js"
 
 // Mapa que será usado pelo Simulador
 export const MAPA_DE_INSTRUCOES = {
@@ -14,11 +15,12 @@ export const MAPA_DE_INSTRUCOES = {
   inc_reg: simularINC_Reg,
   dec_reg: simularDecReg,
   mov_reg_mem: movRegMem,
-  // 'mov_reg_val': simularMOV_Reg_Val,
   add_reg_mem: simularADD_Reg_Mem,
   sub_reg_mem: subFunction,
   // 'add_reg_val': simularADD_Reg_Val,
   not_reg: executarNot,
   or_reg_mem: simularOR_Reg_Mem,
   // 'jmp': simularJMP,
+  not_reg: executarNot,
+  mul_reg: mul
 };

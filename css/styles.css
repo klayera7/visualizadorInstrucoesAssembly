@@ -375,11 +375,16 @@ button#btn_reset_program:hover {
 
 .active_bus_address {
   background-color: rgb(14, 10, 250) !important;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .active_bus_data {
   background-color: rgb(4, 241, 12) !important;
+  font-size: 1rem;
+  font-weight: bold;
 }
+
 /* =================================
   Section Cálculo Endereço Físico
 ==================================== */

@@ -4,85 +4,100 @@ import { MAPA_DE_INSTRUCOES } from "../instrucoes/importacaoInstrucoes.js";
 import {
   animarEtapa,
   animarBarramentos,
-  animarDestaque,
-  obterElementoMemoria,
-  calcularEnderecoFisico,
-  formatarEnderecoFisico,
   esperar,
   escreverNoRegistrador,
+  lerDoRegistrador,
+  salvarInstrucaoNaMemoria,
+  recuperarInstrucaoDaMemoria,
 } from "./simuladorUI.js";
 
-async function executarCicloCompleto(params, jaBuscada = false) {
+async function executarCicloCompleto(paramsDoPopup) {
   try {
-    if (!jaBuscada) {
-      await animarEtapa("Busca");
-      const valorIP = parseInt(params.deslocamento, 16);
-      if (!isNaN(valorIP)) {
-        await escreverNoRegistrador("IP", valorIP);
+    await animarEtapa("Busca");
+
+    const ipAtualNum = await lerDoRegistrador(
+      "IP",
+      parseInt(paramsDoPopup.deslocamento, 16),
+    );
+    const ipAtualHex = ipAtualNum.toString(16).toUpperCase().padStart(4, "0");
+
+    console.log(`FETCH: Buscando instrução em CS:[${ipAtualHex}]...`);
+
+    let instrucaoParaExecutar = await recuperarInstrucaoDaMemoria(ipAtualHex);
+
+    if (instrucaoParaExecutar) {
+      console.log("Instrução encontrada");
+    } else {
+      const ipPopupNum = parseInt(paramsDoPopup.deslocamento, 16);
+
+      if (ipAtualNum === ipPopupNum) {
+        console.log("Memória vazia. Gravando a nova instrução do usuário...");
+
+        if (paramsDoPopup.op2 && paramsDoPopup.op2.tipo === "memoria") {
+          const enderecoLimpo = paramsDoPopup.op2.endereco.replace(
+            /[\[\]]/g,
+            "",
+          ); //regex p remover colchetes
+          const valorOffsetMemoria = parseInt(enderecoLimpo, 16);
+          if (!isNaN(valorOffsetMemoria)) {
+            await escreverNoRegistrador("SI", valorOffsetMemoria);
+          }
+        }
+
+        const nome = paramsDoPopup.instrucaoCompleta
+          .split("_")[0]
+          .toUpperCase();
+        const op1 = paramsDoPopup.op1?.nome || paramsDoPopup.op1?.valor || "";
+        let op2 = "";
+        if (paramsDoPopup.op2) {
+          if (paramsDoPopup.op2.tipo === "memoria") {
+            const end = paramsDoPopup.op2.endereco;
+            op2 = end.startsWith("[") ? end : `[${end}]`;
+          } else {
+            op2 = paramsDoPopup.op2.valor || "";
+          }
+        }
+        // regex q remove vírgula final se não tiver Op2
+        const textoVisual = `${nome} ${op1}, ${op2}`
+          .replace(/,\s*$/, "")
+          .trim();
+
+        await salvarInstrucaoNaMemoria(ipAtualHex, textoVisual, paramsDoPopup);
+        instrucaoParaExecutar = paramsDoPopup;
       } else {
-        throw new Error(`Offset (IP) inválido: ${params.deslocamento}`);
+        throw new Error(
+          `Nenhuma instrução em CS:[${ipAtualHex}]`
+        );
       }
-
-
-      if (params.op2 && params.op2.tipo === "memoria") {
-        const enderecoLimpo = params.op2.endereco.replace(/[\[\]]/g, ''); //regex p remover todos os colchetes(lembrar!!)
-        const valorOffsetMemoria = parseInt(enderecoLimpo, 16);
-        
-        if (!isNaN(valorOffsetMemoria)) {
-          await escreverNoRegistrador("SI", valorOffsetMemoria);
-        }
-      }
-
-      const endFisicoInstrucao = calcularEnderecoFisico(
-        "codeSegment",
-        params.deslocamento,
-      );
-      const endFisicoStr = formatarEnderecoFisico(endFisicoInstrucao);
-      const nomeInstrucao = params.instrucaoCompleta.split("_")[0].toUpperCase();
-      const op1Str = params.op1?.nome || params.op1?.valor || "";
-      
-      let op2Str = "";
-      if (params.op2) {
-        if (params.op2.tipo === "memoria") {
-           const end = params.op2.endereco;
-           op2Str = end.startsWith("[") ? end : `[${end}]`;
-        } else {
-           op2Str = params.op2.valor || "";
-        }
-      }
-      let instrucaoCompletaStr = `${nomeInstrucao} ${op1Str}, ${op2Str}`.trim();
-      if (instrucaoCompletaStr.endsWith(",")) {
-          instrucaoCompletaStr = instrucaoCompletaStr.slice(0, -1);
-      }
-
-      await animarBarramentos(endFisicoStr, "...", 400);
-      const elemInstrucao = obterElementoMemoria(
-        "codeSegment",
-        endFisicoStr,
-        instrucaoCompletaStr,
-      );
-
-      elemInstrucao.innerText = instrucaoCompletaStr.padEnd(20, " ");
-      await animarBarramentos(endFisicoStr, instrucaoCompletaStr, 800);
-      await animarDestaque(elemInstrucao);
     }
 
     await animarEtapa("Decodificação");
-    const funcaoDeSimulacao = MAPA_DE_INSTRUCOES[params.instrucaoCompleta];
+    const funcaoDeSimulacao =
+      MAPA_DE_INSTRUCOES[instrucaoParaExecutar.instrucaoCompleta];
     if (!funcaoDeSimulacao) {
       console.warn(
-        `Função de simulação não encontrada: ${params.instrucaoCompleta}. Pulando execução.`,
+        `Instrução não implementada: ${instrucaoParaExecutar.instrucaoCompleta}`,
       );
       await esperar(500);
     } else {
       await esperar(500);
-
       await animarEtapa("Execução");
-      await funcaoDeSimulacao(params);
-    }
+      await funcaoDeSimulacao(instrucaoParaExecutar);
 
+      const tipoInstrucao = instrucaoParaExecutar.instrucaoCompleta;
+      const instrucoesDePulo = ["jmp", "call", "ret", "iret", "loop", "jxx"];
+      const ehPulo = instrucoesDePulo.some((pulo) =>
+        tipoInstrucao.startsWith(pulo),
+      );
+
+      if (!ehPulo) {
+        const proximoIP = ipAtualNum + 4;
+        await escreverNoRegistrador("IP", proximoIP);
+      }
+    }
     await animarEtapa("Busca");
     await animarBarramentos("----", "----", 200);
+
     return true;
   } catch (error) {
     console.error("Erro na simulação:", error);
@@ -90,20 +105,18 @@ async function executarCicloCompleto(params, jaBuscada = false) {
     return false;
   }
 }
-
 export function prepararExecucaoInstrucao(params) {
   fecharModal();
+
   const botaoIniciar = document.querySelector(".btn_icon_play");
+
   if (botaoIniciar) {
     const novoBotao = botaoIniciar.cloneNode(true);
+    //tava bugando antes
     botaoIniciar.parentNode.replaceChild(novoBotao, botaoIniciar);
-    let instrucaoJaBuscada = false;
     novoBotao.addEventListener("click", async () => {
-      console.log(`Botão 'Play' clicado. Já buscada: ${instrucaoJaBuscada}`);
-      const sucesso = await executarCicloCompleto(params, instrucaoJaBuscada);
-      if (sucesso) {
-        instrucaoJaBuscada = true;
-      }
+      console.log("Play clicado.");
+      await executarCicloCompleto(params);
     });
   }
 }

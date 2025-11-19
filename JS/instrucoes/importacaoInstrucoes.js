@@ -4,12 +4,12 @@ import { simularINC_Reg } from "./logicaInc.js";
 import { simularDecReg } from "./logicaDecReg.js";
 import { movRegMem } from "./logicaMovRegMem.js";
 import { simularADD_Reg_Mem } from "./logicaAdd.js";
-import {subFunction} from "./subInstruction.js";
-import {executarNot} from "./logicaNot.js";
+import { subFunction } from "./subInstruction.js";
+import { executarNot } from "./logicaNot.js";
 import { simularOR_Reg_Mem } from "./logicaOR.js";
-import {mul} from "./logicaMul.js"
+import { mul } from "./logicaMul.js";
 import { push_reg } from "./logicaPush.js";
-
+import { jmpADDR } from "./logicaJMP.js";
 // Mapa que será usado pelo Simulador
 export const MAPA_DE_INSTRUCOES = {
   xchg_reg_mem: simularXCHG_Reg_Mem,
@@ -22,5 +22,6 @@ export const MAPA_DE_INSTRUCOES = {
   or_reg_mem: simularOR_Reg_Mem,
   not_reg: executarNot,
   mul_reg: mul,
-  push_reg: push_reg
+  push_reg: push_reg,
+  jmp: jmpADDR,
 };

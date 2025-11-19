@@ -194,9 +194,50 @@ export async function lerDoRegistrador(regNome, valorInicialDecimalStr) {
     valorParaUsar = parseInt(valorHexNaUI, 16);
   } else {
     valorParaUsar = parseDecimalInput(valorInicialDecimalStr);
-
     elemReg.innerText = formatarWord(valorParaUsar);
   }
 
   return valorParaUsar;
+}
+
+export async function salvarInstrucaoNaMemoria(
+  offsetHex,
+  textoVisual,
+  objetoParams,
+) {
+  const endFisico = calcularEnderecoFisico("codeSegment", offsetHex);
+  const endFisicoStr = formatarEnderecoFisico(endFisico);
+
+  await animarBarramentos(endFisicoStr, "WRITE", 500);
+  const elemH4 = obterElementoMemoria("codeSegment", endFisicoStr, textoVisual);
+
+  elemH4.innerText = textoVisual.padEnd(20, " ");
+
+  const linhaDiv = elemH4.parentElement;
+  linhaDiv.dataset.instrucao = JSON.stringify(objetoParams);
+
+  await animarDestaque(elemH4);
+}
+
+export async function recuperarInstrucaoDaMemoria(offsetHex) {
+  const endFisico = calcularEnderecoFisico("codeSegment", offsetHex);
+  const endFisicoStr = formatarEnderecoFisico(endFisico);
+
+  const container = document.getElementById("ram_code_segment");
+  if (!container) return null;
+
+  const linha = [...container.querySelectorAll(".linha-codigo")].find(
+    (l) => l.querySelector("h5").innerText.trim() === endFisicoStr,
+  );
+
+  if (linha && linha.dataset.instrucao) {
+    await animarBarramentos(endFisicoStr, "FETCH", 400);
+
+    const elemH4 = linha.querySelector("h4");
+    await animarDestaque(elemH4);
+
+    return JSON.parse(linha.dataset.instrucao);
+  }
+
+  return null;
 }

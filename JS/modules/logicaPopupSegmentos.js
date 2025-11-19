@@ -26,6 +26,7 @@ const configSegmentos = {
     inputId: "stack_segment",
     registerSelector: '[data-name-segment="stack"]',
     ramContainerId: "ram_stack_segment",
+    isStack: true
   },
   codeSegment: {
     inputId: "code_segment",
@@ -48,22 +49,28 @@ const carregarSegmentosNosRegistradores = () => {
 };
 
 // Atualiza a UI dos endereços na RAM
-function atualizarVisualizacaoRAM(containerId, segmentAddressHex) {
+function atualizarVisualizacaoRAM(containerId, segmentAddressHex, isStack=false) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   const segmentAddress = parseInt(segmentAddressHex, 16);
   if (isNaN(segmentAddress)) return;
 
-  const physicalBaseAddress = segmentAddress * 16;
+  const endFisico = segmentAddress * 16;
   const linhas = container.querySelectorAll(".linha-codigo");
-  const numLinhas = linhas.length;
 
-  linhas.forEach((linha, offset) => {
+  linhas.forEach((linha, index) => {
     const addressElement = linha.querySelector("h5");
     if (addressElement) {
-      const reverseOffset = numLinhas - 1 - offset;
-      const novoEnderecoNum = physicalBaseAddress + reverseOffset;
+      let offSetDoSegmento;
+      if (isStack){
+        offSetDoSegmento = 0xFFFF - index
+      }
+      else{
+        const numLinhas = linhas.length
+        offSetDoSegmento = (numLinhas-1) - index
+      }
+      const novoEnderecoNum = endFisico + offSetDoSegmento;
       const novoEnderecoHex = novoEnderecoNum.toString(16).toUpperCase();
       addressElement.textContent = novoEnderecoHex.padStart(5, "0");
     }
@@ -77,7 +84,7 @@ const carregarSegmentosNaRAM = () => {
     const valorLido = valoresSegmentos[key];
 
     if (info.ramContainerId && valorLido !== undefined) {
-      atualizarVisualizacaoRAM(info.ramContainerId, valorLido);
+      atualizarVisualizacaoRAM(info.ramContainerId, valorLido, info.isStack);
     }
   }
 };

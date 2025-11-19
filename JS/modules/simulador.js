@@ -25,7 +25,7 @@ async function executarCicloCompleto(params, jaBuscada = false) {
 
 
       if (params.op2 && params.op2.tipo === "memoria") {
-        const enderecoLimpo = params.op2.endereco.replace(/[\[\]]/g, '');
+        const enderecoLimpo = params.op2.endereco.replace(/[\[\]]/g, ''); //regex p remover todos os colchetes(lembrar!!)
         const valorOffsetMemoria = parseInt(enderecoLimpo, 16);
         
         if (!isNaN(valorOffsetMemoria)) {

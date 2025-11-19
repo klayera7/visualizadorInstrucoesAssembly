@@ -1,6 +1,5 @@
 import { alternarParaPopupSegmentos } from "./logicaPopupInstrucao.js"; // Importa o "alternador"
 
-// Seletores dos elementos principais do modal
 const botaoAbrir = document.querySelector('[data-modal="abrir"]');
 const botaoFechar = document.querySelector('[data-modal="fechar"]');
 const containerModal = document.querySelector('[data-modal="container"]');
@@ -8,8 +7,6 @@ const cancelarInputModal = document.querySelector(
   '[data-modal="cancel_segment_input"]'
 ); 
 
-
-// No seu arquivo controleModal.js
 
 const abrirModal = () => {
   const iframeSegmento = document.getElementById("segment_popup");

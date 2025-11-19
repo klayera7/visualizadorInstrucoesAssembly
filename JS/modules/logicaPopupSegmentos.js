@@ -93,12 +93,23 @@ const carregarSegmentosNaRAM = () => {
 const anexarListenerPopupSegmentos = () => {
   const iframeWindow = iframeSegmentPopup.contentWindow;
   const confirmBtn = iframeWindow.document.querySelector("#confirm_btn");
+  const cancelBtn = iframeWindow.document.querySelector("#cancel_btn");
 
   if (!confirmBtn) {
     console.error(
       "Botão de confirmação de segmentos não encontrado no iframe.",
     );
     return;
+  }
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      const modalNoParent = window.parent.document.querySelector(
+        '[data-modal="container"]',
+      );
+      if (modalNoParent) {
+        modalNoParent.classList.remove("ativo");
+      }
+    });
   }
 
   confirmBtn.addEventListener("click", () => {

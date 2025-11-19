@@ -91,7 +91,7 @@ async function executarCicloCompleto(paramsDoPopup) {
       );
 
       if (!ehPulo) {
-        const proximoIP = ipAtualNum + 4;
+        const proximoIP = ipAtualNum + 1;
         await escreverNoRegistrador("IP", proximoIP);
       }
     }

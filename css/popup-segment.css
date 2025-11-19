@@ -1,17 +1,18 @@
-
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: black;
-  color: #fff;
-  font-family: "Arial", sans-serif;
+    color: #fff;
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
-#popup_container{
+#popup_container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,11 +24,11 @@ body {
     padding: 1rem;
 }
 
-#title_subtitle{
+#title_subtitle {
     margin: 1rem;
 }
 
-#segments_container{
+#segments_container {
     flex-wrap: wrap;
     display: flex;
     align-items: center;
@@ -39,8 +40,7 @@ span > input {
     padding: 0.5rem;
 }
 
-
-.segment{
+.segment {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -52,39 +52,39 @@ span > input {
 .segment > input {
     margin-left: auto;
 }
-#buttons_container{
+#buttons_container {
     display: flex;
     gap: 0.5rem;
     margin-top: 1rem;
 }
 
 button {
-  color: white;
-  border: none;
-  outline: none;
-  border-radius: 0.4rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 140px;
-  padding: 0.75rem;
-  transition: all 0.3s ease-in-out;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 140px;
+    padding: 0.75rem;
+    transition: all 0.3s ease-in-out;
 }
 
-#confirm_btn{
+#confirm_btn {
     background-color: #25884e;
 }
 
 button#confirm_btn:hover {
-  background-color: #1a5f37;
-  transform: translateY(-4px);
+    background-color: #1a5f37;
+    transform: translateY(-4px);
 }
 
-#cancel_btn{
-  background-color: #a12a2a;
+#cancel_btn {
+    background-color: #a12a2a;
 }
 
 button#cancel_btn:hover {
-  background-color: #701c1c;
-  transform: translateY(-4px); 
+    background-color: #701c1c;
+    transform: translateY(-4px);
 }

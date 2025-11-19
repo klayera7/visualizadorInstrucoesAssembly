@@ -408,9 +408,13 @@ div.cont_calc {
   font-weight: 600;
   font-size: 1.2rem;
   width: 95%;
-
   padding: 1rem;
   margin-top: 0.7rem;
+}
+
+div.cont_calc > span{
+    width: 100%;
+    display: block;
 }
 
 /* =================================

@@ -14,6 +14,36 @@ function formatarWord(valor) {
   return word16Bit.toString(16).toUpperCase().padStart(4, "0");
 }
 
+function atualizarDisplayCalculo(nomeSegmento, offsetHex, enderecoFisicoVal) {
+  const MAPA_NOMES_SEGMENTOS = {
+    codeSegment: "CS",
+    dataSegment: "DS",
+    stackSegment: "SS",
+    extraSegment: "ES",
+  };
+  const containerCalc = document.querySelector(".cont_calc #calc");
+  const segment = document.querySelector(".cont_calc #segment");
+  const offset = document.querySelector(".cont_calc #offset");
+  if (!containerCalc || !offset || !segment) return;
+
+  const valorSegmentoHex = valoresSegmentos[nomeSegmento];
+
+  const nomeCurto = MAPA_NOMES_SEGMENTOS[nomeSegmento] || "SEG";
+  const endFisicoHex = formatarEnderecoFisico(enderecoFisicoVal);
+
+  const textoEquacao = {
+    nomeSegment: nomeCurto,
+    resultado: endFisicoHex,
+    multiplicador: "10H",
+    valorBase: valorSegmentoHex,
+  };
+  segment.innerText = `Segmento: ${textoEquacao.nomeSegment}`
+  offset.innerHTML = `Deslocamento: ${offsetHex}`
+  containerCalc.innerText = `(${valorSegmentoHex}H x ${textoEquacao.multiplicador}) + ${offsetHex} = ${textoEquacao.resultado}`;
+
+  animarDestaque(containerCalc.parentElement);
+}
+
 export async function animarBarramentos(endereco, dado, duracao = 500) {
   const busEnd = document.getElementById("address_bus");
   const busDado = document.getElementById("data_bus");
@@ -144,6 +174,8 @@ export async function lerDaMemoria(
   const endFisico = calcularEnderecoFisico(nomeSegmento, offsetHex);
   const endFisicoStr = formatarEnderecoFisico(endFisico);
 
+  atualizarDisplayCalculo(nomeSegmento, offsetHex, endFisico);
+
   await animarBarramentos(endFisicoStr, "----", 500);
 
   const valorInicialNum = parseDecimalInput(valorInicialDecimalStr);
@@ -154,11 +186,8 @@ export async function lerDaMemoria(
     valorInicialNum,
   );
   await animarDestaque(elemMem);
-
   const valorHexNaUI = elemMem.innerText.trim();
-
   const valorNum = parseInt(valorHexNaUI, 16);
-
   await animarBarramentos(endFisicoStr, valorNum, 500);
   return valorNum;
 }
@@ -166,7 +195,7 @@ export async function lerDaMemoria(
 export async function escreverNaMemoria(nomeSegmento, offsetHex, valorNum) {
   const endFisico = calcularEnderecoFisico(nomeSegmento, offsetHex);
   const endFisicoStr = formatarEnderecoFisico(endFisico);
-
+  atualizarDisplayCalculo(nomeSegmento, offsetHex, endFisico);
   await animarBarramentos(endFisicoStr, valorNum, 500);
 
   const elemMem = obterElementoMemoria(nomeSegmento, endFisicoStr);
@@ -206,12 +235,13 @@ export async function salvarInstrucaoNaMemoria(
   objetoParams,
 ) {
   const endFisico = calcularEnderecoFisico("codeSegment", offsetHex);
+  atualizarDisplayCalculo("codeSegment", offsetHex, endFisico);
   const endFisicoStr = formatarEnderecoFisico(endFisico);
-
   await animarBarramentos(endFisicoStr, "WRITE", 500);
   const elemH4 = obterElementoMemoria("codeSegment", endFisicoStr, textoVisual);
 
   elemH4.innerText = textoVisual.padEnd(20, " ");
+  elemH4.dataset.modificado = "true";
 
   const linhaDiv = elemH4.parentElement;
   linhaDiv.dataset.instrucao = JSON.stringify(objetoParams);
@@ -221,6 +251,7 @@ export async function salvarInstrucaoNaMemoria(
 
 export async function recuperarInstrucaoDaMemoria(offsetHex) {
   const endFisico = calcularEnderecoFisico("codeSegment", offsetHex);
+  atualizarDisplayCalculo("codeSegment", offsetHex, endFisico);
   const endFisicoStr = formatarEnderecoFisico(endFisico);
 
   const container = document.getElementById("ram_code_segment");

@@ -1,26 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <title>Visualizador de Instruções Assembly x86 | Simulador e Debugger Online</title>
-    
-    <meta name="description" content="Simule e visualize o funcionamento interno de instruções Assembly x86 em tempo real. Ferramenta educativa para entender registradores de segmento (CS, DS, SS) e fluxo de execução." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="keywords" content="Assembly, x86, Simulador Assembly, Registradores, CS, DS, SS, CX, Debugger Online, Programação de Baixo Nível, Computação" />
+  <title>
+    Visualizador de Instruções Assembly x86 | Simulador e Debugger Online
+  </title>
 
-    <link rel="icon" type="image/png" href="./assets/ula_representacao.png">
-    <link rel="stylesheet" href="./css/styles.css" />
-    
-    <meta property="og:title" content="Visualizador de Instruções Assembly x86" />
-    <meta property="og:description" content="Simule e visualize o funcionamento interno de instruções Assembly x86 em tempo real. Ferramenta educativa para entender registradores de segmento e fluxo de execução." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://klayera7.github.io/visualizadorInstrucoesAssembly/" />
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Visualizador de Instruções Assembly x86">
-    <meta name="twitter:description" content="Simule e visualize o funcionamento interno de instruções Assembly x86 em tempo real. Ferramenta educativa para entender registradores de segmento e fluxo de execução." />
-    
-    <link rel="stylesheet" type="text/css" />
+  <meta
+    name="description"
+    content="Simule e visualize o funcionamento interno de instruções Assembly x86 em tempo real. Ferramenta educativa para entender registradores de segmento (CS, DS, SS) e fluxo de execução."
+  />
+
+  <meta
+    name="keywords"
+    content="Assembly, x86, Simulador Assembly, Registradores, CS, DS, SS, CX, Debugger Online, Programação de Baixo Nível, Computação"
+  />
+
+  <link rel="icon" type="image/png" href="./assets/ula_representacao.png" />
+  <link rel="stylesheet" href="./css/styles.css" />
+
+  <meta property="og:title" content="Visualizador de Instruções Assembly x86" />
+  <meta
+    property="og:description"
+    content="Simule e visualize o funcionamento interno de instruções Assembly x86 em tempo real. Ferramenta educativa para entender registradores de segmento e fluxo de execução."
+  />
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:url"
+    content="https://klayera7.github.io/visualizadorInstrucoesAssembly/"
+  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta
+    name="twitter:title"
+    content="Visualizador de Instruções Assembly x86"
+  />
+  <meta
+    name="twitter:description"
+    content="Simule e visualize o funcionamento interno de instruções Assembly x86 em tempo real. Ferramenta educativa para entender registradores de segmento e fluxo de execução."
+  />
+
+  <link rel="stylesheet" type="text/css" />
   <body>
     <header>
       <button class="btn_icon_play">
@@ -52,8 +72,8 @@
             <h2>Cálculo de Endereço Físico</h2>
 
             <div class="cont_calc">
-                <span id="segment"></span>
-                <span id="offset"></span>
+              <span id="segment"></span>
+              <span id="offset"></span>
               <p id="calc">CS * 10H + IP / DS,ES * 10H + SI, DI</p>
             </div>
           </section>
@@ -201,7 +221,7 @@
         <h2 class="title_container">RAM</h2>
         <div class="ram_base">
           <div class="separador_visualizadores">
-              <p>Segmento de código</p>
+            <p>Segmento de código</p>
             <div class="visualizador" id="ram_code_segment">
               <div class="linha-codigo">
                 <h5>1000</h5>
@@ -229,7 +249,7 @@
               </div>
             </div>
 
-              <p>Segmento de pilha</p>
+            <p>Segmento de pilha</p>
             <div class="visualizador" id="ram_stack_segment">
               <div class="linha-codigo">
                 <h5>1000</h5>
@@ -259,7 +279,7 @@
           </div>
 
           <div class="separador_visualizadores">
-              <p>Segmento de dados</p>
+            <p>Segmento de dados</p>
             <div class="visualizador" id="ram_data_segment">
               <div class="linha-codigo">
                 <h5>1000</h5>
@@ -287,7 +307,7 @@
               </div>
             </div>
 
-              <p>Segmento de Ext. D</p>
+            <p>Segmento de Ext. D</p>
             <div class="visualizador" id="ram_extra_segment">
               <div class="linha-codigo">
                 <h5>1000</h5>

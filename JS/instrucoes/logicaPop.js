@@ -4,13 +4,7 @@ import {
   lerDaMemoria
 } from "../modules/simuladorUI.js";
 
-/**
- * Simula a instrução POP (Desempilhar)
- * Sintaxe: POP destino
- * Lógica:
- * 1. DESTINO = Memória[SS:SP]
- * 2. SP = SP + 1 (Incrementa/Libera espaço)
- */
+
 export async function POP_Reg(params) {
   const regDestino = params.op1.nome;
   let spAtual = await lerDoRegistrador("SP", "0000");

@@ -13,6 +13,8 @@ import { jmpADDR } from "./logicaJMP.js";
 import { jeADDR, jneADDR, jgADDR, jgeADDR, jlADDR, jleADDR } from "./logicaJcc.js";
 import { simularCMP_Reg_Mem } from "./logicaCMP.js";
 import { POP_Reg } from "./logicaPop.js";
+import { divReg } from "./logicaDiv.js";
+
 // Mapa que será usado pelo Simulador
 export const MAPA_DE_INSTRUCOES = {
   xchg_reg_mem: simularXCHG_Reg_Mem,
@@ -26,6 +28,7 @@ export const MAPA_DE_INSTRUCOES = {
   not_reg: executarNot,
   mul_reg: mul,
   push_reg: push_reg,
+  div_reg: divReg,
   pop_reg: POP_Reg,
   jmp: jmpADDR,
   je: jeADDR,

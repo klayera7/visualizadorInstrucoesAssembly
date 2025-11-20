@@ -236,7 +236,7 @@ export async function escreverFlag(nomeFlag, valor) {
   const dataContainer = obterElementoFlag(nomeFlag);
   if (!dataContainer) return;
 
-  dataContainer.innerText = String(valor);
+  dataContainer.innerText = formatarWord(valor);
   await animarDestaque(dataContainer);
 }
 

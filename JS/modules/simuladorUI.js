@@ -123,6 +123,14 @@ function obterElementoFlag(flagNome) {
   return container.querySelector(".register_data_container");
 }
 
+export function lerFlag(flagNome) {
+  const dataContainer = obterElementoFlag(flagNome);
+  if (!dataContainer) return 0;
+  const text = dataContainer.innerText.trim();
+  const num = parseInt(text, 10);
+  return isNaN(num) ? 0 : num;
+}
+
 export function obterElementoMemoria(
   nomeSegmento,
   deslocamentoFisicoStr,

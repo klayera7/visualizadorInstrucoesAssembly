@@ -38,7 +38,11 @@ export async function simularCMP_Reg_Mem(params) {
   // OF = ((a ^ b) & (a ^ result)) & 0x8000 ? 1 : 0
   const of = (((a ^ b) & (a ^ resultado16)) & 0x8000) ? 1 : 0;
 
+  // SF (sign flag) = MSB of result (1 if negative in two's complement)
+  const sf = (resultado16 & 0x8000) ? 1 : 0;
+
   await escreverFlag("ZF", zf);
   await escreverFlag("CF", cf);
   await escreverFlag("OF", of);
+  await escreverFlag("SF", sf);
 }

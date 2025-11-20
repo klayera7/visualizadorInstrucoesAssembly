@@ -240,7 +240,6 @@ export async function escreverFlag(nomeFlag, valor) {
   const valorAtual = dataContainer.innerText ? dataContainer.innerText.trim() : "";
 
   if (valorAtual === novoValor) {
-    // Sem alteração, não anima nem atualiza
     return;
   }
 

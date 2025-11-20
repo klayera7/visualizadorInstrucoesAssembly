@@ -85,7 +85,7 @@ async function executarCicloCompleto(paramsDoPopup) {
       await funcaoDeSimulacao(instrucaoParaExecutar);
 
       const tipoInstrucao = instrucaoParaExecutar.instrucaoCompleta;
-      const instrucoesDePulo = ["jmp", "call", "ret", "iret", "loop", "jxx"];
+      const instrucoesDePulo = ["jmp", "call", "ret", "iret", "loop", "jxx", "je", "jne", "jg", "jge", "jl", "jle"];
       const ehPulo = instrucoesDePulo.some((pulo) =>
         tipoInstrucao.startsWith(pulo),
       );

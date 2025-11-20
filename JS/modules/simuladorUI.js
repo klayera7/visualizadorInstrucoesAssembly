@@ -111,6 +111,26 @@ function obterElementoRegistrador(regNome) {
   return null;
 }
 
+function obterElementoFlag(flagNome) {
+  const nome = String(flagNome).toUpperCase();
+  const selector = ".flags_container .register h2";
+  const h2 = [...document.querySelectorAll(selector)].find(
+    (el) => el.innerText && el.innerText.trim().toUpperCase() === nome,
+  );
+  if (!h2) return null;
+  const container = h2.closest(".register");
+  if (!container) return null;
+  return container.querySelector(".register_data_container");
+}
+
+export function lerFlag(flagNome) {
+  const dataContainer = obterElementoFlag(flagNome);
+  if (!dataContainer) return 0;
+  const text = dataContainer.innerText.trim();
+  const num = parseInt(text, 10);
+  return isNaN(num) ? 0 : num;
+}
+
 export function obterElementoMemoria(
   nomeSegmento,
   deslocamentoFisicoStr,
@@ -210,6 +230,14 @@ export async function escreverNoRegistrador(regNome, valorNum) {
   elemReg.innerText = valorFormatado;
   elemReg.dataset.modificado = "true";
   await animarDestaque(elemReg);
+}
+
+export async function escreverFlag(nomeFlag, valor) {
+  const dataContainer = obterElementoFlag(nomeFlag);
+  if (!dataContainer) return;
+
+  dataContainer.innerText = String(valor);
+  await animarDestaque(dataContainer);
 }
 
 export async function lerDoRegistrador(regNome, valorInicialDecimalStr) {

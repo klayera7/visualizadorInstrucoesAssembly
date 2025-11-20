@@ -19,6 +19,12 @@ export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
 
 
   jmp: { inputs: ["cont_endereco"] },
+  je: { inputs: ["cont_endereco"] },
+  jne: { inputs: ["cont_endereco"] },
+  jg: { inputs: ["cont_endereco"] },
+  jge: { inputs: ["cont_endereco"] },
+  jl: { inputs: ["cont_endereco"] },
+  jle: { inputs: ["cont_endereco"] },
   call: { inputs: ["cont_endereco"] },
   loop: { inputs: ["cont_endereco"] },
 

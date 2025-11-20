@@ -232,7 +232,8 @@ button#btn_reset_program:hover {
 
 .general_registers_container,
 .segment_registers_container,
-.pointers_container {
+.pointers_container,
+.flags_container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -257,6 +258,14 @@ button#btn_reset_program:hover {
   font-size: 1.4rem;
   background-color: #3c3c3c;
   font-family: "Courier New", Courier, monospace;
+}
+
+/* Otimiza a aparência dos flags de 1 bit */
+.flags_container .register_data_container {
+    padding: 0.4rem 1.5rem; /* Menor padding para parecer um único bit */
+    width: fit-content;    /* Encolhe a caixa para o tamanho do '0' ou '1' */
+    min-width: 20px;       /* Garante um tamanho mínimo */
+    
 }
 
 /* =================================

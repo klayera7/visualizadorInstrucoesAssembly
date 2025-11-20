@@ -53,6 +53,13 @@ async function executarCicloCompleto(paramsDoPopup) {
           if (paramsDoPopup.op2.tipo === "memoria") {
             const end = paramsDoPopup.op2.endereco;
             op2 = end.startsWith("[") ? end : `[${end}]`;
+
+            // Instrução CMP estava mostrando o deslocamento ao invés do valor, essa função corrige esse comportamento.
+                if (paramsDoPopup.instrucaoCompleta && paramsDoPopup.instrucaoCompleta.startsWith("cmp")) {
+                  op2 = paramsDoPopup.op2.valorInicial
+                    ? `[${paramsDoPopup.op2.valorInicial}]`
+                    : op2;
+                }
           } else {
             op2 = paramsDoPopup.op2.valor || "";
           }

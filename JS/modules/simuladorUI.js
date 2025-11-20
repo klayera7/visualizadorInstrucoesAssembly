@@ -236,9 +236,19 @@ export async function escreverFlag(nomeFlag, valor) {
   const dataContainer = obterElementoFlag(nomeFlag);
   if (!dataContainer) return;
 
-  dataContainer.innerText = String(valor);
+  const novoValor = String(valor).trim();
+  const valorAtual = dataContainer.innerText ? dataContainer.innerText.trim() : "";
+
+  if (valorAtual === novoValor) {
+    // Sem alteração, não anima nem atualiza
+    return;
+  }
+
+  dataContainer.innerText = novoValor;
+  dataContainer.dataset.modificado = "true";
   await animarDestaque(dataContainer);
 }
+
 
 export async function lerDoRegistrador(regNome, valorInicialDecimalStr) {
   const elemReg = obterElementoRegistrador(regNome);

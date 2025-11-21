@@ -25,6 +25,8 @@ import { simularLoop } from "./logicaLoop.js";
 import { simularIN_AX } from "./logicaIN.js";
 import { simularOUT_AX } from "./logicaOUT.js";
 import { simular_AND_Reg_Mem } from "./logicaAnd.js";
+import { RET } from "./logicaRet.js";
+import { CALL } from "./logicaCall.js";
 // Mapa que será usado pelo Simulador
 export const MAPA_DE_INSTRUCOES = {
   xchg_reg_mem: simularXCHG_Reg_Mem,
@@ -52,4 +54,6 @@ export const MAPA_DE_INSTRUCOES = {
   in_ax: simularIN_AX,
   out: simularOUT_AX,
   and_reg_mem: simular_AND_Reg_Mem,
+  call: CALL,
+  ret: RET
 };

@@ -33,7 +33,7 @@ Você pode carregar um programa na tela inicial, clicando no botão **"Carregar 
 
 As instruções disponíveis estão visíveis no *select menu* do visualizador. Você pode definir a instrução e o seu endereço.
 
-**⚠️ Nota Importante sobre Endereçamento:** Primeiro, verifique se a instrução está **onde aponta IP**. Ele é atualizado após a execução de cada instrução, certifique-se de carregar a instrução desejada informando os operandos, caso não estejam inicializados e então **dê o play** e se divirta!
+**⚠️ Nota Importante sobre Endereçamento:** Primeiro, verifique se a instrução está **onde aponta IP**. Ele é atualizado após a execução de cada instrução, certifique-se de carregar a instrução desejada informando os operandos. A visualização de dados acontece sempre em **Hexadecimal**, o seu input de valores para endereçamento também deve ser em Hexa, mas o seu input de dados (valores para AX, BX, CX, DX) devem ser em base **decimal**.
 
 ---
 ### 📘 Guia do Usuário: Instruções Suportadas

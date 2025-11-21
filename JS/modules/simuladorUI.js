@@ -140,7 +140,7 @@ export function obterElementoMemoria(
     codeSegment: "ram_code_segment",
     dataSegment: "ram_data_segment",
     stackSegment: "ram_stack_segment",
-    extraSegment: "ram_extra_segment",
+    extraSegment: "ram_extra_segment"
   };
 
   const ramContainerId = mapaRam[nomeSegmento];

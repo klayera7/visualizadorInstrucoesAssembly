@@ -132,6 +132,7 @@ const anexarListenerPopupSegmentos = () => {
       { nome: "Segmento de Dados", valor: parseInt(inputs.dataSegment, 16) },
       { nome: "Segmento de Pilha", valor: parseInt(inputs.stackSegment, 16) },
       { nome: "Segmento Extra", valor: parseInt(inputs.extraSegment, 16) },
+      { nome: "Segmento de I/O", valor: parseInt(inputs.ioSegment, 16) },
     ];
 
     const valoresUnicos = new Set(segmentosParaValidar.map((s) => s.valor));

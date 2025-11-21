@@ -28,8 +28,8 @@ export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
   call: { inputs: ["cont_endereco"] },
   loop: { inputs: ["cont_endereco"] },
 
-  in_ax: { inputs: ["cont_endereco"] },
-  out: { inputs: ["cont_endereco"] },
+  in_ax: { inputs: ["cont_registrador"] },
+  out: { inputs: ["cont_registrador"] },
 
   ret: { inputs: [] },
   iret: { inputs: [] },

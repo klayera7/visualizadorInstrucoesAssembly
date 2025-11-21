@@ -20,6 +20,7 @@ function atualizarDisplayCalculo(nomeSegmento, offsetHex, enderecoFisicoVal) {
     dataSegment: "DS",
     stackSegment: "SS",
     extraSegment: "ES",
+    ioSegment: "IO",
   };
   const containerCalc = document.querySelector(".cont_calc #calc");
   const segment = document.querySelector(".cont_calc #segment");
@@ -140,7 +141,8 @@ export function obterElementoMemoria(
     codeSegment: "ram_code_segment",
     dataSegment: "ram_data_segment",
     stackSegment: "ram_stack_segment",
-    extraSegment: "ram_extra_segment"
+    extraSegment: "ram_extra_segment",
+    ioSegment: "ram_io_segment"
   };
 
   const ramContainerId = mapaRam[nomeSegmento];

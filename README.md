@@ -34,6 +34,46 @@ Você pode carregar um programa na tela inicial, clicando no botão **"Carregar 
 As instruções disponíveis estão visíveis no *select menu* do visualizador. Você pode definir a instrução e o seu endereço.
 
 **⚠️ Nota Importante sobre Endereçamento:** Primeiro, verifique se a instrução está **dentro do Segmento de Código (CS)**. O segmento de código possui um tamanho total de 64KB, e o endereço da instrução deve estar nesse intervalo, tendo como base o valor base do segmento de código definido por você. **Endereços fora do segmento de código causarão erros de execução.**
+---
+### 📘 Guia do Usuário: Instruções Suportadas
+
+O simulador suporta um subconjunto essencial das instruções x86, divididas em categorias. Aqui está o que cada uma faz na nossa "máquina virtual":
+
+#### 📦 Transferência de Dados
+
+  * **`MOV` (Move):** Copia dados de uma origem para um destino.
+      * *Ex:* `MOV AX, BX` (Copia o valor de BX para AX).
+      * *Ex:* `MOV AX, [100h]` (Busca o valor na memória e coloca em AX).
+  * **`PUSH`:** Empilha um valor no topo da Pilha (Stack). O registrador `SP` é decrementado automaticamente.
+  * **`POP`:** Desempilha um valor do topo da Pilha para um registrador. O registrador `SP` é incrementado.
+  * **`XCHG` (Exchange):** Troca os valores entre dois lugares (ex: troca o valor de AX com BX).
+
+#### ➕ Aritmética
+
+  * **`ADD` / `SUB`:** Soma ou Subtrai valores. O resultado fica no primeiro operando.
+  * **`INC` / `DEC`:** Incrementa (+1) ou Decrementa (-1) um registrador.
+  * **`MUL` (Multiplicação):** Multiplica `AX` pelo operando. O resultado é armazenado em `DX:AX` (parte alta em DX, baixa em AX).
+  * **`DIV` (Divisão):** Divide o valor de `DX:AX` pelo operando. O quociente vai para `AX` e o resto para `DX`.
+  * **`NEG`:** Inverte o sinal do número (Complemento de 2).
+
+#### 🧠 Lógica e Comparação
+
+  * **`AND` / `OR` / `XOR`:** Realiza operações lógicas bit-a-bit.
+  * **`NOT`:** Inverte todos os bits (Complemento de 1).
+  * **`CMP` (Compare):** Subtrai os valores temporariamente apenas para atualizar as **Flags** (usado antes de saltos condicionais).
+
+#### 🔀 Controle de Fluxo (Saltos)
+
+  * **`JMP` (Jump):** Salto incondicional. Força o registrador `IP` a apontar para um novo endereço.
+  * **`Jxx` (Saltos Condicionais):** Pula apenas se uma condição for atendida (baseado nas Flags). Ex: `JE` (Jump if Equal), `JG` (Jump if Greater).
+  * **`LOOP`:** Decrementa `CX` e pula para um endereço se `CX` ainda não for zero. Ideal para repetições.
+  * **`CALL` / `RET`:** Usado para funções. `CALL` salva o endereço de retorno na pilha e pula. `RET` recupera o endereço da pilha e volta.
+
+#### 🔌 Entrada e Saída (I/O)
+
+  * **`IN`:** Lê um dado de uma porta de hardware simulada (via Prompt) para `AX`.
+  * **`OUT`:** Envia um dado de `AX` para uma porta de hardware simulada (Visualizador de I/O).
+
 
 ---
 

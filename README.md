@@ -43,12 +43,10 @@ Este projeto foi desenvolvido utilizando uma *stack* de tecnologias e práticas 
 
 #### 💻 Tecnologias Utilizadas
 
-| Ferramenta | Descrição |
-| :--- | :--- |
-| **HTML** | Estruturação e organização do conteúdo visual do simulador. |
-| **CSS** | Estilização da interface, garantindo uma visualização clara e intuitiva. |
-| **JavaScript (JS)** | Lógica principal do simulador, responsável pela interpretação das instruções Assembly, manipulação dos registradores e atualização dinâmica da interface. |
-| **VS Code (Visual Studio Code)** | Ambiente de Desenvolvimento Integrado (IDE) utilizado para a codificação e *debugging*. |
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=html,css,js,git,vscode" />
+</p>
+
 
 #### 🚀 Metodologia de Desenvolvimento
 

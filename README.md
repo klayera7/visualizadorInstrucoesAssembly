@@ -1,6 +1,6 @@
 # 💻 Visualizador de Instruções Assembly x86
 
-**Link do visualizador:** [https://klayera7.github.io/visualizadorInstrucoesAssembly/](https://klayera7.github.io/visualizadorInstrucoesAssembly/)
+**Link do visualizador:** [https://simulador-de-instrucoes-assembly.vercel.app/](https://simulador-de-instrucoes-assembly.vercel.app/)
 <img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/dedc8057-0e43-4365-a191-d7767abc1ad7" />
 
 ---

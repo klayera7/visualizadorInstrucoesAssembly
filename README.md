@@ -205,7 +205,7 @@ O objeto mapeia com base no value do select e determina quantos inputs deverão 
 
 ### Registrando a instrução
 
-Escreva a sua instrução no na pasta instrucoes, com o nome que preferir, após escrever toda a sua lógica e suas importações, basta mapear para o objeto que faz  leitura e passa para ela os params
+Escreva a sua instrução no na pasta instrucoes/importacaoInstrucoes.js, com o nome que preferir, após escrever toda a sua lógica e suas importações, basta mapear para o objeto que faz a leitura.
 
 ```
 import { nomeFuncao } from "./nomeArquivo.js";

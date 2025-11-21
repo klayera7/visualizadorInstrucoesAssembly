@@ -157,6 +157,8 @@ button#btn_reset_program:hover {
   align-items: flex-start;
   margin-top: 1px;
   padding: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .cpu_section,

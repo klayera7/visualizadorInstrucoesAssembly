@@ -34,6 +34,7 @@ Você pode carregar um programa na tela inicial, clicando no botão **"Carregar 
 As instruções disponíveis estão visíveis no *select menu* do visualizador. Você pode definir a instrução e o seu endereço.
 
 **⚠️ Nota Importante sobre Endereçamento:** Primeiro, verifique se a instrução está **dentro do Segmento de Código (CS)**. O segmento de código possui um tamanho total de 64KB, e o endereço da instrução deve estar nesse intervalo, tendo como base o valor base do segmento de código definido por você. **Endereços fora do segmento de código causarão erros de execução.**
+
 ---
 ### 📘 Guia do Usuário: Instruções Suportadas
 

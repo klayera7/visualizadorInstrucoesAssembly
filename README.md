@@ -97,3 +97,124 @@ O projeto adotou o uso de **Metodologias Ágeis** (Agile) para gerenciar o desen
 * **Controle de Versão:** O **Git** e o **GitHub** foram utilizados para o controle de versão, permitindo a colaboração organizada, a criação de *branches* isoladas (`feature/`) e a integração segura através de *pull requests*.
 
 ---
+
+### 🏗️ Implementando Instruções: um guia
+
+A arquitetura do simulador é modular. Para adicionar uma nova instrução, você não precisa mexer no motor principal (simulador.js). Siga este roteiro:
+
+### 1. A Estrutura do Objeto params
+
+Cada função de instrução recebe um objeto params contendo os dados do popup:
+JavaScript
+
+```
+const params = {
+  instrucaoCompleta: "mov_reg_mem", // ID da instrução
+  deslocamento: "0100",             // Endereço da instrução (IP) em Hex
+  op1: {
+    tipo: "registrador", // ou "endereco"
+    nome: "AX",
+    valorInicial: "10"   // Valor Decimal (String)
+  },
+  op2: {
+    tipo: "memoria",     // ou "imediato", "registrador"
+    endereco: "0050",    // Offset Hex (se for memória)
+    valorInicial: "99"   // Valor Decimal (String)
+  }
+};
+```
+
+### 2. Funções importantes (simuladorUI.js)
+
+Você deve usar apenas as funções importadas de JS/modules/simuladorUI.js. Elas lidam automaticamente com:
+- Conversão de Decimal (Lógica) para Hexadecimal (Visual).
+- Animação dos barramentos e destaque de elementos.
+- Criação dinâmica de células de memória.
+
+|Função | Descrição |Retorno |
+|-------|-----------|--------|
+|"lerDoRegistrador(nome, valorIni)" | Lê um registrador. Usa valorIni se estiver vazio. | Promise<number>|
+|"escreverNoRegistrador(nome, valor)" | Escreve um número decimal no registrador (converte p/ Hex). | Promise<void>|
+|"lerDaMemoria(seg, offset, valorIni)"| Lê da RAM. Cria a célula se não existir.| Promise<number>|
+|"escreverNaMemoria(seg, offset, valor)"| Escreve na RAM no endereço físico calculado.| Promise<void>|
+|"animarBarramentos(end, dado)"| Faz os barramentos piscarem (efeito visual).| Promise<void>|
+|"lerFlag(flagNome)" | Lê a flag com base no nome indicado | number|
+|"escreverFlag(flagNome, valor)" | Escreve na flag com base no nome e valor indicados | Promise<void>|
+| "escreverNaPorta(portaHex, valorNum)" | Escreve na porta indicada o determinado valor | Promise<void>|
+| "lerDaPorta(portaHex)" | Lê na porta indicada pelo determinado valor | Promise<number>|
+
+Os nomes são sugestivos e exemplificações do uso podem ser encontradas nas lógicas das instruções
+
+#### 3. Mapeando com base no HTML
+
+Na pasta **HTMl/Popup** existe um arquivo que armazena as instruções e suas opções, chamado **PopUp-instruction.html**, ele é mapeado em modules/configuracaoEntradas.js.
+
+```
+// HTML/PopUp-instruction.html
+ <optgroup label="Moves">
+                        <option value="mov_reg_mem">Mov (Reg, Mem)</option>
+                        <option value="push_reg">Push (Reg)</option>
+                        <option value="pop_reg">Pop (Reg)</option>
+                        <option value="xchg_reg_mem">Xchg (Reg, Mem)</option>
+ </optgroup>
+
+//modules/configuracaoEntradas.js
+export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
+  push_reg: { inputs: ["cont_registrador"] },
+  pop_reg: { inputs: ["cont_registrador"] },
+  inc_reg: { inputs: ["cont_registrador"] },
+  dec_reg: { inputs: ["cont_registrador"] },
+  mul_reg: { inputs: ["cont_registrador"] },
+  neg_reg: { inputs: ["cont_registrador"] },
+  div_reg: { inputs: ["cont_registrador"] },
+  not_reg: { inputs: ["cont_registrador"] },
+
+  mov_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  xchg_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  add_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  sub_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  and_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  or_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  xor_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  cmp_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+
+
+  jmp: { inputs: ["cont_endereco"] },
+  je: { inputs: ["cont_endereco"] },
+  jne: { inputs: ["cont_endereco"] },
+  jg: { inputs: ["cont_endereco"] },
+  jge: { inputs: ["cont_endereco"] },
+  jl: { inputs: ["cont_endereco"] },
+  jle: { inputs: ["cont_endereco"] },
+  call: { inputs: ["cont_endereco"] },
+  loop: { inputs: ["cont_endereco"] },
+
+  in_ax: { inputs: ["cont_registrador", "cont_imediato"] },
+  out: { inputs: ["cont_registrador", "cont_imediato"] },
+
+  ret: { inputs: [] },
+  iret: { inputs: [] },
+};
+
+```
+
+O objeto mapeia com base no value do select e determina quantos inputs deverão ser exibidos de acordo com a instrução, desta forma, para criar uma nova instrução, deve-se:
+- 1º Criar um novo select com um atributo value específico
+- 2º Mapear esse value no objeto, informando o mesmo nome do select
+- 3º informar a quantidade de inputs
+
+### Registrando a instrução
+
+Escreva a sua instrução no na pasta instrucoes, com o nome que preferir, após escrever toda a sua lógica e suas importações, basta mapear para o objeto que faz  leitura e passa para ela os params
+
+```
+import { nomeFuncao } from "./nomeArquivo.js";
+
+export const MAPA_DE_INSTRUCOES = {
+  // ...
+  'novaOpcaoSelect': nomeFuncao,
+};
+```
+
+Agora basta selecionar no simulador e testar, observe o console para ver se nenhum warning foi enviado, e, se tudo ocorrer bem, está feito!
+

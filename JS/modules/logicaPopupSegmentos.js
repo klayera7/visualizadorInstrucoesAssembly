@@ -8,6 +8,7 @@ export const valoresSegmentos = {
   extraSegment: "0000",
   stackSegment: "0000",
   codeSegment: "0000",
+  ioSegment: "0000",
 };
 
 // Objeto para mapear os campos (dentro do popup e no index)
@@ -32,7 +33,7 @@ const configSegmentos = {
     inputId: "code_segment",
     registerSelector: '[data-name-segment="code"]',
     ramContainerId: "ram_code_segment",
-  },
+  }
 };
 
 // Atualiza a UI dos registradores na CPU

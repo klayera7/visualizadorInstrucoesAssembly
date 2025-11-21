@@ -8,6 +8,7 @@ export const valoresSegmentos = {
   extraSegment: "0000",
   stackSegment: "0000",
   codeSegment: "0000",
+  ioSegment: "0000",
 };
 
 // Objeto para mapear os campos (dentro do popup e no index)
@@ -32,7 +33,7 @@ const configSegmentos = {
     inputId: "code_segment",
     registerSelector: '[data-name-segment="code"]',
     ramContainerId: "ram_code_segment",
-  },
+  }
 };
 
 // Atualiza a UI dos registradores na CPU
@@ -131,6 +132,7 @@ const anexarListenerPopupSegmentos = () => {
       { nome: "Segmento de Dados", valor: parseInt(inputs.dataSegment, 16) },
       { nome: "Segmento de Pilha", valor: parseInt(inputs.stackSegment, 16) },
       { nome: "Segmento Extra", valor: parseInt(inputs.extraSegment, 16) },
+      { nome: "Segmento de I/O", valor: parseInt(inputs.ioSegment, 16) },
     ];
 
     const valoresUnicos = new Set(segmentosParaValidar.map((s) => s.valor));

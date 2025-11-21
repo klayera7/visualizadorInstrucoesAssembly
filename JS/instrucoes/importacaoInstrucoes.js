@@ -15,6 +15,8 @@ import { simularCMP_Reg_Mem } from "./logicaCMP.js";
 import { POP_Reg } from "./logicaPop.js";
 import { divReg } from "./logicaDiv.js";
 import { simularLoop } from "./logicaLoop.js";
+import { simularIN_AX } from "./logicaIN.js";
+import { simularOUT_AX } from "./logicaOUT.js";
 // Mapa que será usado pelo Simulador
 export const MAPA_DE_INSTRUCOES = {
   xchg_reg_mem: simularXCHG_Reg_Mem,
@@ -39,4 +41,6 @@ export const MAPA_DE_INSTRUCOES = {
   jl: jlADDR,
   jle: jleADDR,
   cmp_reg_mem: simularCMP_Reg_Mem,
+  in_ax: simularIN_AX,
+  out: simularOUT_AX,
 };

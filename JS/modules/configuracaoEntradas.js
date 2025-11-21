@@ -28,8 +28,8 @@ export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
   call: { inputs: ["cont_endereco"] },
   loop: { inputs: ["cont_endereco"] },
 
-  in_ax: { inputs: ["cont_endereco"] },
-  out: { inputs: ["cont_endereco"] },
+  in_ax: { inputs: ["cont_registrador", "cont_imediato"] },
+  out: { inputs: ["cont_registrador", "cont_imediato"] },
 
   ret: { inputs: [] },
   iret: { inputs: [] },
@@ -64,4 +64,16 @@ export function atualizarCamposDeEntrada(iframeDoc) {
       containerToShow.classList.remove("hidden");
     }
   });
+  
+  const labelImediato = iframeDoc.contentDocument.querySelector("#cont_imediato label");
+  const inputImediato = iframeDoc.contentDocument.querySelector("#input_imediato");
+ 
+    if (selectedInstruction === "in_ax" || selectedInstruction === "out") {
+        if (labelImediato) labelImediato.innerText = "Número da Porta (Hex):";
+        if (inputImediato) inputImediato.placeholder = "Ex: 60 (Teclado)";
+    } 
+    else {
+        if (labelImediato) labelImediato.innerText = "Operando 2 (Valor Imediato):";
+        if (inputImediato) inputImediato.placeholder = "Valor em decimal";
+    }
 }

@@ -1,13 +1,10 @@
-import { lerDaMemoria, escreverNoRegistrador, animarBarramentos } from "../modules/simuladorUI.js";
-
+import { escreverNoRegistrador, lerDaPorta } from "../modules/simuladorUI.js";
 
 export async function simularIN_AX(params) {
-  const regNome = params.op1?.nome;
-  const ioSegment = "ioSegment";
-  const offsetHex = "0000";
+  const regDestino = params.op1.nome;
+  const portaHex = params.op2.valor;
 
-  const valorDaPorta = await lerDaMemoria("ioSegment", offsetHex, 0);
+  const valorRecebido = await lerDaPorta(portaHex);
 
-  await animarBarramentos("----", valorDaPorta, 600);
-  await escreverNoRegistrador(regNome, valorDaPorta);
+  await escreverNoRegistrador(regDestino, valorRecebido);
 }

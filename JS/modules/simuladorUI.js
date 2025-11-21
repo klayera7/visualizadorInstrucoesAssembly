@@ -311,3 +311,64 @@ export async function recuperarInstrucaoDaMemoria(offsetHex) {
 
   return null;
 }
+
+function obterElementoPorta(portaHex) {
+  const container = document.getElementById("io_ports_container");
+  if (!container) return null;
+
+  const placeholder = container.querySelector("span");
+  if (placeholder) placeholder.parentElement.remove();
+
+  const portaFormatada = portaHex.toUpperCase().padStart(4, "0");
+
+  let linhaPorta = [...container.querySelectorAll(".linha-codigo")].find(
+    (l) => l.querySelector("h5").innerText.trim() === portaFormatada
+  );
+
+  if (!linhaPorta) {
+    linhaPorta = document.createElement("div");
+    linhaPorta.classList.add("linha-codigo");
+    linhaPorta.innerHTML = `
+      <h5>${portaFormatada}</h5>
+      <h4>0000</h4>
+    `;
+    container.prepend(linhaPorta);
+  }
+  return linhaPorta.querySelector("h4");
+}
+
+export async function escreverNaPorta(portaHex, valorNum) {
+  const valorFormatado = valorNum.toString(16).toUpperCase().padStart(4, "0");
+
+  await animarBarramentos("I/O " + portaHex, valorFormatado, 500);
+
+  const elemPorta = obterElementoPorta(portaHex);
+  if (elemPorta) {
+    elemPorta.innerText = valorFormatado;
+    await animarDestaque(elemPorta);
+  }
+}
+
+export async function lerDaPorta(portaHex) {
+  await animarBarramentos("I/O " + portaHex, "READ", 500);
+
+  const elemPorta = obterElementoPorta(portaHex);
+  let valorNum = 0;
+
+  if (elemPorta) {
+    const valorAtual = elemPorta.innerText.trim();
+    if (valorAtual === "0000") {
+       const entrada = prompt(`\nA CPU está lendo da Porta ${portaHex}h.\nDigite o valor (Hex) que este dispositivo deve enviar:`);
+       if (entrada) {
+         valorNum = parseInt(entrada, 16);
+         if (isNaN(valorNum)) valorNum = 0;
+         elemPorta.innerText = valorNum.toString(16).toUpperCase().padStart(4, "0");
+       }
+    } else {
+       valorNum = parseInt(valorAtual, 16);
+    }
+    await animarDestaque(elemPorta);
+  }
+  await animarBarramentos("I/O " + portaHex, valorNum, 500);
+  return valorNum;
+}

@@ -9,6 +9,8 @@ export const CONFIGURACAO_ENTRADAS_INSTRUCAO = {
   not_reg: { inputs: ["cont_registrador"] },
 
   mov_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
+  mov_mem_reg: { inputs: ["cont_registrador", "cont_memoria"] },
+  mov_reg_val: { inputs: ["cont_registrador"]},
   xchg_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
   add_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },
   sub_reg_mem: { inputs: ["cont_registrador", "cont_memoria"] },

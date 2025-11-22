@@ -17,7 +17,7 @@ async function executarCicloCompleto(paramsDoPopup) {
 
     const ipAtualNum = await lerDoRegistrador(
       "IP",
-      parseInt(paramsDoPopup.deslocamento, 16),
+      parseInt(paramsDoPopup.deslocamento, 16)
     );
     const ipAtualHex = ipAtualNum.toString(16).toUpperCase().padStart(4, "0");
 
@@ -26,69 +26,74 @@ async function executarCicloCompleto(paramsDoPopup) {
     let instrucaoParaExecutar = await recuperarInstrucaoDaMemoria(ipAtualHex);
 
     if (instrucaoParaExecutar) {
-      console.log("Instrução encontrada");
+      console.log("Instrução encontrada na memória.");
     } else {
       const ipPopupNum = parseInt(paramsDoPopup.deslocamento, 16);
 
       if (ipAtualNum === ipPopupNum) {
         console.log("Memória vazia. Gravando a nova instrução do usuário...");
 
-        if (paramsDoPopup.op2 && paramsDoPopup.op2.tipo === "memoria") {
-          const enderecoLimpo = paramsDoPopup.op2.endereco.replace(
-            /[\[\]]/g,
-            "",
-          ); //regex p remover colchetes
-          const valorOffsetMemoria = parseInt(enderecoLimpo, 16);
-          if (!isNaN(valorOffsetMemoria)) {
-            await escreverNoRegistrador("SI", valorOffsetMemoria);
-          }
-        }
-
-        const nome = paramsDoPopup.instrucaoCompleta
-          .split("_")[0]
-          .toUpperCase();
+        const nome = paramsDoPopup.instrucaoCompleta.split("_")[0].toUpperCase();
         const op1 = paramsDoPopup.op1?.nome || paramsDoPopup.op1?.valor || "";
+        
         let op2 = "";
+        
         if (paramsDoPopup.op2) {
           if (paramsDoPopup.op2.tipo === "memoria") {
-            const end = paramsDoPopup.op2.valorInicial;
+            const end = paramsDoPopup.op2.endereco || ""; 
             op2 = end.startsWith("[") ? end : `[${end}]`;
           } else {
             op2 = paramsDoPopup.op2.valor || "";
           }
         }
-        // regex q remove vírgula final se não tiver Op2
-        const textoVisual = `${nome} ${op1}, ${op2}`
-          .replace(/,\s*$/, "")
-          .trim();
+        let textoVisual;
+        
+        if (paramsDoPopup.instrucaoCompleta === "mov_mem_reg" || paramsDoPopup.instrucaoCompleta === "out") {
+          textoVisual = `${nome} ${op2}, ${op1}`; 
+        }
+        else if (paramsDoPopup.instrucaoCompleta === "mov_reg_val"){
+          textoVisual = `${nome} ${op1} ${paramsDoPopup.op1.valorInicial}`
+        }
+        else {
+          textoVisual = `${nome} ${op1}, ${op2}`; 
+        }
+        
 
+        textoVisual = textoVisual.replace(/,\s*$/, "").trim();
+      
         await salvarInstrucaoNaMemoria(ipAtualHex, textoVisual, paramsDoPopup);
+        
         instrucaoParaExecutar = paramsDoPopup;
       } else {
-        throw new Error(
-          `Nenhuma instrução em CS:[${ipAtualHex}]`
-        );
+        throw new Error(`Segmentation Fault: Nenhuma instrução em CS:[${ipAtualHex}]`);
       }
     }
-
+    if (instrucaoParaExecutar.op2 && instrucaoParaExecutar.op2.tipo === "memoria") {
+      const enderecoLimpo = instrucaoParaExecutar.op2.endereco.replace(/[\[\]]/g, "");
+      const valorOffsetMemoria = parseInt(enderecoLimpo, 16);
+      
+      if (!isNaN(valorOffsetMemoria)) {
+        await escreverNoRegistrador("SI", valorOffsetMemoria);
+      }
+    }
     await animarEtapa("Decodificação");
-    const funcaoDeSimulacao =
-      MAPA_DE_INSTRUCOES[instrucaoParaExecutar.instrucaoCompleta];
+    
+    const funcaoDeSimulacao = MAPA_DE_INSTRUCOES[instrucaoParaExecutar.instrucaoCompleta];
+    
     if (!funcaoDeSimulacao) {
-      console.warn(
-        `Instrução não implementada: ${instrucaoParaExecutar.instrucaoCompleta}`,
-      );
+      console.warn(`Instrução não implementada: ${instrucaoParaExecutar.instrucaoCompleta}`);
       await esperar(500);
     } else {
       await esperar(500);
+      
       await animarEtapa("Execução");
       await funcaoDeSimulacao(instrucaoParaExecutar);
 
       const tipoInstrucao = instrucaoParaExecutar.instrucaoCompleta;
+
       const instrucoesDePulo = ["jmp", "call", "ret", "iret", "loop", "jxx", "je", "jne", "jg", "jge", "jl", "jle"];
-      const ehPulo = instrucoesDePulo.some((pulo) =>
-        tipoInstrucao.startsWith(pulo),
-      );
+      
+      const ehPulo = instrucoesDePulo.some((pulo) => tipoInstrucao.startsWith(pulo));
 
       if (!ehPulo) {
         const proximoIP = ipAtualNum + 1;

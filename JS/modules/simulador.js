@@ -31,51 +31,56 @@ async function executarCicloCompleto(paramsDoPopup) {
       const ipPopupNum = parseInt(paramsDoPopup.deslocamento, 16);
 
       if (ipAtualNum === ipPopupNum) {
-        console.log("Memória vazia. Gravando a nova instrução do usuário...");
+        console.log("Memória vazia. Gravando nova instrução...");
 
         const nome = paramsDoPopup.instrucaoCompleta.split("_")[0].toUpperCase();
         const op1 = paramsDoPopup.op1?.nome || paramsDoPopup.op1?.valor || "";
-        
         let op2 = "";
         
         if (paramsDoPopup.op2) {
           if (paramsDoPopup.op2.tipo === "memoria") {
-            const end = paramsDoPopup.op2.endereco || ""; 
+            const end = paramsDoPopup.op2.endereco || "";
             op2 = end.startsWith("[") ? end : `[${end}]`;
           } else {
             op2 = paramsDoPopup.op2.valor || "";
           }
         }
-        let textoVisual;
-        
-        if (paramsDoPopup.instrucaoCompleta === "mov_mem_reg" || paramsDoPopup.instrucaoCompleta === "out") {
-          textoVisual = `${nome} ${op2}, ${op1}`; 
-        }
-        else if (paramsDoPopup.instrucaoCompleta === "mov_reg_val"){
-          textoVisual = `${nome} ${op1} ${paramsDoPopup.op1.valorInicial}`
-        }
-        else {
-          textoVisual = `${nome} ${op1}, ${op2}`; 
-        }
-        
 
+        let textoVisual;
+        // Inverte visualmente se for Store ou Out
+        if (paramsDoPopup.instrucaoCompleta === "mov_mem_reg" || paramsDoPopup.instrucaoCompleta === "out") {
+          textoVisual = `${nome} ${op2}, ${op1}`;
+        } else {
+          textoVisual = `${nome} ${op1}, ${op2}`;
+        }
         textoVisual = textoVisual.replace(/,\s*$/, "").trim();
-      
+
         await salvarInstrucaoNaMemoria(ipAtualHex, textoVisual, paramsDoPopup);
-        
         instrucaoParaExecutar = paramsDoPopup;
       } else {
         throw new Error(`Segmentation Fault: Nenhuma instrução em CS:[${ipAtualHex}]`);
       }
     }
+
     if (instrucaoParaExecutar.op2 && instrucaoParaExecutar.op2.tipo === "memoria") {
-      const enderecoLimpo = instrucaoParaExecutar.op2.endereco.replace(/[\[\]]/g, "");
-      const valorOffsetMemoria = parseInt(enderecoLimpo, 16);
-      
-      if (!isNaN(valorOffsetMemoria)) {
-        await escreverNoRegistrador("SI", valorOffsetMemoria);
-      }
+        
+        // Remove colchetes se houver para pegar o número puro
+        const enderecoLimpo = instrucaoParaExecutar.op2.endereco.replace(/[\[\]]/g, "");
+        const valorOffset = parseInt(enderecoLimpo, 16);
+
+        if (!isNaN(valorOffset)) {
+            // DECISÃO: É escrita ou leitura?
+            if (instrucaoParaExecutar.instrucaoCompleta === "mov_mem_reg") {
+                // Destino = Memória -> Usa DI (Destination Index)
+                await escreverNoRegistrador("DI", valorOffset);
+            } else {
+                // Fonte = Memória -> Usa SI (Source Index)
+                // (Isso cobre MOV Reg,Mem; ADD Reg,Mem; CMP Reg,Mem; etc.)
+                await escreverNoRegistrador("SI", valorOffset);
+            }
+        }
     }
+    
     await animarEtapa("Decodificação");
     
     const funcaoDeSimulacao = MAPA_DE_INSTRUCOES[instrucaoParaExecutar.instrucaoCompleta];
@@ -90,16 +95,16 @@ async function executarCicloCompleto(paramsDoPopup) {
       await funcaoDeSimulacao(instrucaoParaExecutar);
 
       const tipoInstrucao = instrucaoParaExecutar.instrucaoCompleta;
-
-      const instrucoesDePulo = ["jmp", "call", "ret", "iret", "loop", "jxx", "je", "jne", "jg", "jge", "jl", "jle"];
-      
+      const instrucoesDePulo = ["jmp", "call", "ret", "iret", "loop", "jxx", "je", "jne", "jg", "jge", "jl", "jle", "int"];
       const ehPulo = instrucoesDePulo.some((pulo) => tipoInstrucao.startsWith(pulo));
 
       if (!ehPulo) {
-        const proximoIP = ipAtualNum + 1;
+        const proximoIP = ipAtualNum + 1; 
         await escreverNoRegistrador("IP", proximoIP);
       }
     }
+
+ 
     await animarEtapa("Busca");
     await animarBarramentos("----", "----", 200);
 

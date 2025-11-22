@@ -23,6 +23,8 @@ import { CALL } from "./logicaCall.js";
 import { IRET } from "./logicaIRET.js";
 import { simularXOR_Reg_Mem } from "./logicaXOR.js";
 import { simularNEG_Reg } from "./instrucaoNEG.js";
+import { movMemReg } from "./logicaMovMemReg.js";
+
 // Mapa que será usado pelo Simulador
 export const MAPA_DE_INSTRUCOES = {
   xchg_reg_mem: simularXCHG_Reg_Mem,
@@ -54,5 +56,6 @@ export const MAPA_DE_INSTRUCOES = {
   ret: RET,
   iret: IRET,
   xor_reg_mem: simularXOR_Reg_Mem,
-  neg_reg: simularNEG_Reg
+  neg_reg: simularNEG_Reg,
+  mov_mem_reg: movMemReg
 };

@@ -3,7 +3,6 @@ import {
   escreverNoRegistrador,
   escreverNaMemoria,
   lerDaMemoria,
-  esperar 
 } from "../modules/simuladorUI.js";
 
 import { valoresSegmentos } from "../modules/logicaPopupSegmentos.js"; 
@@ -38,6 +37,7 @@ export async function IRET() {
     
 
     const valorLido = await lerDaMemoria("stackSegment", spHex);
+    await escreverNaMemoria("stackSegment", spHex, "0000");
     
     let novoSP = spLocal + 1;
     if (novoSP > 0xFFFF) novoSP = 0;
@@ -46,7 +46,7 @@ export async function IRET() {
 
     await escreverNoRegistrador("SP", spLocal);
     
-    return normalizarValor(valorLido); 
+    return valorLido; 
   };
 
   await pushInterno(csNum);

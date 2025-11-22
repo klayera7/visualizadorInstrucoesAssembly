@@ -179,6 +179,11 @@ export function obterElementoMemoria(
     `;
     memContainer.prepend(linhaMem);
   }
+  if (nomeSegmento === "stackSegment") {
+      memContainer.append(linhaMem); // Adiciona na parte de baixo
+    } else {
+      memContainer.prepend(linhaMem); // Adiciona no início (padrão)
+    }
   return linhaMem.querySelector("h4");
 }
 

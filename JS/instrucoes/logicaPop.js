@@ -15,7 +15,6 @@ export async function POP_Reg(params) {
   };
   const spHex = spAtual.toString(16).toUpperCase().padStart(4, "0");
   const valorRecuperado = await lerDaMemoria("stackSegment", spHex, "0");
-  await escreverNaMemoria("stackSegment", spHex, "0000");
   spAtual = spAtual + 1;
 
   if (spAtual > 0xFFFF) {

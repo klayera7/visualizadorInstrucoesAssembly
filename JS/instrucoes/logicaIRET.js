@@ -58,7 +58,6 @@ export async function IRET() {
     const spHex = paraStringHexMemoria(spLocal);
     
     const valorLido = await lerDaMemoria("stackSegment", spHex);
-    await escreverNaMemoria("stackSegment", spHex, "0000");
     
     let novoSP = spLocal + 1;
     if (novoSP > 0xFFFF) novoSP = 0;

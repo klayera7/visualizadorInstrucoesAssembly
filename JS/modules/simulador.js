@@ -50,9 +50,14 @@ async function executarCicloCompleto(paramsDoPopup) {
         
         if (paramsDoPopup.instrucaoCompleta === "mov_mem_reg" || paramsDoPopup.instrucaoCompleta === "out") {
           textoVisual = `${nome} ${op2}, ${op1}`; 
-        } else {
+        }
+        else if (paramsDoPopup.instrucaoCompleta === "mov_reg_val"){
+          textoVisual = `${nome} ${op1} ${paramsDoPopup.op1.valorInicial}`
+        }
+        else {
           textoVisual = `${nome} ${op1}, ${op2}`; 
         }
+        
 
         textoVisual = textoVisual.replace(/,\s*$/, "").trim();
       

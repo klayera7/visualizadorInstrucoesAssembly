@@ -1,7 +1,7 @@
 import {
   escreverNaMemoria,
   lerDoRegistrador,
-  escreverNoRegistrador // <--- Importante
+  escreverNoRegistrador 
 } from "../modules/simuladorUI.js";
 
 export async function movMemReg(params) {

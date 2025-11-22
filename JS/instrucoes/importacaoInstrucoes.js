@@ -10,14 +10,7 @@ import { simularOR_Reg_Mem } from "./logicaOR.js";
 import { mul } from "./logicaMul.js";
 import { push_reg } from "./logicaPush.js";
 import { jmpADDR } from "./logicaJMP.js";
-import {
-  jeADDR,
-  jneADDR,
-  jgADDR,
-  jgeADDR,
-  jlADDR,
-  jleADDR,
-} from "./logicaJcc.js";
+import {jeADDR, jneADDR, jgADDR, jgeADDR, jlADDR, jleADDR} from "./logicaJcc.js";
 import { simularCMP_Reg_Mem } from "./logicaCMP.js";
 import { POP_Reg } from "./logicaPop.js";
 import { divReg } from "./logicaDiv.js";
@@ -27,6 +20,8 @@ import { simularOUT_AX } from "./logicaOUT.js";
 import { simular_AND_Reg_Mem } from "./logicaAnd.js";
 import { RET } from "./logicaRet.js";
 import { CALL } from "./logicaCall.js";
+import { IRET } from "./logicaIRET.js";
+
 // Mapa que será usado pelo Simulador
 export const MAPA_DE_INSTRUCOES = {
   xchg_reg_mem: simularXCHG_Reg_Mem,
@@ -55,5 +50,6 @@ export const MAPA_DE_INSTRUCOES = {
   out: simularOUT_AX,
   and_reg_mem: simular_AND_Reg_Mem,
   call: CALL,
-  ret: RET
+  ret: RET,
+  iret: IRET
 };

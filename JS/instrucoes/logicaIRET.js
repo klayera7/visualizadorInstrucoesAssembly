@@ -74,8 +74,9 @@ export async function IRET() {
   // PUSH 1-4: FLAGS (Armazenadas como 1-bit Word)
   await pushInterno(flagParaWord(ofBit)); // PUSH OF
   await pushInterno(flagParaWord(sfBit)); // PUSH SF
-  await pushInterno(flagParaWord(zfBit)); // PUSH ZF
   await pushInterno(flagParaWord(cfBit)); // PUSH CF
+  await pushInterno(flagParaWord(zfBit)); // PUSH ZF
+  
   
   await pushInterno(csNum);       // PUSH CS 
   await pushInterno(ipParaSalvar); // PUSH IP
@@ -90,12 +91,12 @@ export async function IRET() {
 
   // POP 3-6: FLAGS
   
-  const cfRecuperadoWord = await popInterno(); 
-  await escreverFlag("CF", wordParaFlag(cfRecuperadoWord)); // POP CF
-  
   const zfRecuperadoWord = await popInterno();
   await escreverFlag("ZF", wordParaFlag(zfRecuperadoWord)); // POP ZF
   
+  const cfRecuperadoWord = await popInterno(); 
+  await escreverFlag("CF", wordParaFlag(cfRecuperadoWord)); // POP CF
+
   const sfRecuperadoWord = await popInterno(); 
   await escreverFlag("SF", wordParaFlag(sfRecuperadoWord)); // POP SF
   

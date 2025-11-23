@@ -220,7 +220,7 @@ export async function lerDaMemoria(
 }
 
 export async function escreverNaMemoria(nomeSegmento, offsetHex, valorNum) {
-  const endFisico = calcularEnderecoFisico(nomeSegmento, offsetHex);
+  const endFisico = calcularEnderecoFisico(nomeSegmento, offsetHex) & 0xFFFFF;
   const endFisicoStr = formatarEnderecoFisico(endFisico);
   atualizarDisplayCalculo(nomeSegmento, offsetHex, endFisico);
   await animarBarramentos(endFisicoStr, valorNum, 500);

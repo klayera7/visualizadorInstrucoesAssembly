@@ -71,7 +71,7 @@ function atualizarVisualizacaoRAM(containerId, segmentAddressHex, isStack=false)
         const numLinhas = linhas.length
         offSetDoSegmento = (numLinhas-1) - index
       }
-      const novoEnderecoNum = endFisico + offSetDoSegmento;
+      const novoEnderecoNum = (endFisico + offSetDoSegmento) & 0xFFFFF;
       const novoEnderecoHex = novoEnderecoNum.toString(16).toUpperCase();
       addressElement.textContent = novoEnderecoHex.padStart(5, "0");
     }

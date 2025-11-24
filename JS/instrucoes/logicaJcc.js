@@ -1,13 +1,20 @@
-import { lerFlag, animarBarramentos, escreverNoRegistrador } from "../modules/simuladorUI.js";
+import { lerFlag, animarBarramentos, escreverNoRegistrador, lerDoRegistrador } from "../modules/simuladorUI.js";
 
 async function doJumpIf(params, cond, label) {
+
+  const ipAtual = await lerDoRegistrador("IP", 0);
+  
+  const proximoIP = ipAtual + 1;
+
   const destinoHex = params.op1.valor;
   const destinoNum = parseInt(destinoHex, 16);
 
   if (cond) {
     await animarBarramentos(destinoHex.padStart(5, "0"), label || "J", 600);
     await escreverNoRegistrador("IP", destinoNum);
-  } 
+  } else {
+    await escreverNoRegistrador("IP", proximoIP);
+  }
 }
 
 export async function jeADDR(params) {
